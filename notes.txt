@@ -1,0 +1,131 @@
+- PLAN ---------------------------------------------------------------
+Content of the seminar paper
+First draft
+ logical outline and clear message
+ description of topic and challenges with key references
+ two pages of readable English text
+Second draft
+ most of the text and the main ideas, almost final structure
+ relevant, authoritative and up-to-date references
+ 6–10 pages including figures, tables and references
+Final paper
+ complete technical content and improved outline
+ polished presentation and comprehensive bibliography
+ 12–15 pages including figures, tables and references
+---------------------------------------------------------------------
+
+
+
+
+
+A comparison of theorem provers. (theorem prover := an algorithm, not an implementation).
+
+
+== What do we want to discuss / research
+Theoretical boundaries of formal systems
+	1st order logic
+	Goedel's incompleteness theorems
+	...
+//Theoretical boundaries of automated deduction (in sense of algorithmic computability)
+	//show that this is NP-complete problem
+	//	[S. A. Cook. The complexity of theorem proving procedures. In Proceedings of the Third Annual ACM Symposium on the Theory of Computing, pages 151–158, 1971]
+	//existent algorithms for SAT problem
+	//	(1) using truth tables: O(2^n), n - num. of propositional symbols. 
+	//		To check whether α is satisfiable, form the truth table for α. If there is a row in which True appears as the value for α, then α is satisfiable. Otherwise, α is unsatisfiable.
+	//	(2) converting to CNF: O(2^n)
+	//		- [G. Tseitin. On the complexity of derivation in propositional calculus. Studies in Constructive Mathematics and Mathematical Logic, part II, pages 115–125, 1970] http://www.decision-procedures.org/handouts/Tseitin70.pdf
+	//		- Davis-Putnam (DP) Algorithm + Davis-Putnam-Logemann-Loveland (DPLL) [Martin Davis, George Logemann, and Donald Loveland. A machine program for theorem proving. Communications of the ACM, 5(7):394–397, July 1962]
+	//		
+	//? pseudo-code and analyse the algorithms
+	//...
+Existent realisations of SAT (+SMT?) solvers
+	? performance comparison
+	built-in theories (in case of SMT)
+	...
+	
+
+	
+	
+	
+	
+
+== Outline
+
+Introduction
+	General introduction to formal logic automated provers (briefly 1st and 2nd ordered logic, maybe completenes, Goedel theorems). Then several words about history of development of these methods.
+Previous work review (note key papers and implementations)
+Paper outline
+Proof system from-inside
+Comparison of some existing proof systems
+	Boyer-Moore Theorem Prover (NQTHM)
+	HOL Light
+	Coq
+Comparison of implementations
+Limitations of existing theorem provers (formal logic + execution time)
+Conclusion
+	what was compared
+	who won
+	what does it mean practically
+
+	
+	
+ONCE AGAIN
+
+1. Introduction
+	- discuss problem, why do we need it
+	- briefly: General introduction to formal logic automated provers (1st and 2nd ordered logic, maybe completenes, Goedel theorems).
+		- several words about history of development of these methods.
+	- basics of theorem provers (not comparison)
+		- perhaps, algorithms in pseudo-code
+		- perhaps, sat/smt as another type + other types of automated reasoning (AI?)
+	- limitations
+		- principal (theoretical, due to formal logic limitations)
+		- computable limitations (NP?)
+2. Comparison of TP <Coq VS Isabelle>
+	- Coq
+		- main ideas, history
+			- Curry–Howard correspondence
+	- Isabelle
+		- <same>
+		
+	= Properties:
+		- Functional:
+			- set of axioms (prob. extendable)
+			- set of reasoning rules
+			- reasoning algoritms (rules of inference?) <describe in pseudo-code; see proof tree (?) >
+			- expressional power <find examples when in one TP proof is long, and in other it is short >
+			- try to express differences in requirements to proofs in different TPs
+		- Usability:
+			- exetent of automation
+			- UI stuff
+			- computer resources consumption
+
+3. Results
+	
+	
+	
+NOTES:
+- Логическое программирование - то же? + prolog
+- intro: " История знает множество случаев, когда переполнение счетчика или необработанное исключение приводило к большим материальным затратам и человеческим жертвам. Так, например, 4 июня 1996 года европейская ракета-носитель «Ariane 5» буквально развалилась на части на 39-й секунде полета. Анализ инцидента показал, что авария произошла из-за ошибки в программном обеспечении. Ущерб составил около $7 млрд. В феврале 1991 года ракета «Patriot» промахнулась мимо цели из-за ошибки округления, успела пролететь лишние 500 метров. Ущерб: 28 убитых и более сотни раненых. Подобного рода ошибки встречаются и в аппаратном обеспечении. Недавний баг в процессорах Pentium, связанный с неправильным делением чисел с плавающей точкой, вынудил Intel пойти на замену бракованных чипов. Эта ошибка стоила компании $475 млн." https://habrahabr.ru/post/182442/
+- list: https://github.com/johnyf/tool_lists/blob/master/verification_synthesis.md#theorem-provers
+
+REFERENCES (pre):
+'Comparing mathematical provers' https://www.cs.ru.nl/~freek/comparison/diffs.pdf
+'An Experimental Comparison of Theorem Provers for CTL' http://users.cecs.anu.edu.au/~rpg/Publications/TIME2011/time2011.pdf
+'A Qualitative Comparison of the Suitability of Four Theorem Provers for Basic Auction Theory' https://arxiv.org/pdf/1303.4193.pdf
+//nonfree: 'Comparison of Theorem Provers for Modal Logics — Introduction and Summary' https://link.springer.com/chapter/10.1007%2F3-540-69778-0_4?LI=true
+
+
+===== COQ =====
+
+[Source: https://habrahabr.ru/post/182442/]
+
+1. В языке Coq нет никаких встроенных батареек – ни логических значений, ни чисел (на самом деле существует стандартная библиотека со множеством полезных определений и лемм, но в академических целях будем считать, что этого ничего нет)
+
+2. В Coq есть вывод типов, сопоставление с образцом и прочие вещи, свойственные функциональным языкам программирования.
+
+3. Третий способ заключается в экстракции определения в какой-нибудь язык программирования (OCaml, Scheme или Haskell). Это одна из основных фич системы Coq, ради которой все и разрабатывалось
+
+4. [wiki about coq]  Coq основан на изоморфизме Карри — Ховарда, поэтому доказательство есть терм лямбда-исчисления.
+
+===============
