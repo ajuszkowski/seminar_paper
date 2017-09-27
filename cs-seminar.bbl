@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{Com00}
+Douglas~E. Comer.
+\newblock {\em Internetworking with TCP/IP, Volume I}.
+\newblock Prentice-Hall Inc, 4th edition, 2000.
+
+\bibitem{RFC2408}
+D.~Maughan, M.~Schertler, M.~Schneider, and J.~Turner.
+\newblock {Internet Security Association and Key Management Protocol (ISAKMP)}.
+\newblock RFC 2408, The Internet Engineering Task Force, November 1998.
+\newblock http://ietf.org/rfc/rfc2408.txt.
+
+\bibitem{Nik99}
+Pekka Nikander.
+\newblock {\em An Architecture for Authorization and Delegation in Distributed
+  Object-Oriented Agent Systems}.
+\newblock PhD thesis, Helsinki University of Technology, March 1999.
+
+\bibitem{Suo98}
+Sanna Suoranta.
+\newblock {An Object-Oriented Implementation of an Authentication Protocol}.
+\newblock Master's thesis, Helsinki University of Technology, November 1998.
+
+\bibitem{HTS03}
+{Tim Hsin-ting Hu and Binh Thai and Aruna Seneviratne}.
+\newblock {Supporting Mobile Devices in Gnutella File Sharing Network with
+  Mobile Agents}.
+\newblock In {\em IEEE International Symposium on Computers and Communication},
+  volume~3, pages 1530--1346, April 2003.
+
+\end{thebibliography}
