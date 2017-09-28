@@ -44,197 +44,117 @@ In current paper we consider only the systems, which are built to achieve the fi
 \label{sec:formal_theory}
 // TODO
 
-set theory, Zermelo–Fraenkel, briefly 1st and 2nd ordered logic, 
+Basics: set theory, its problems (paradoxes), Zermelo–Fraenkel, propositional and 1st ordered logic (all with unified formal notation), formal languages, ...
 
-an example from wiki: A formal system or logical calculus is any well-defined system of abstract thought based on the model of mathematics. A formal system need not be mathematical as such; for example, Spinoza's Ethics imitates the form of Euclid's Elements. Spinoza employed Euclidiean elements such as "axioms" or "primitive truths", rules of inferences etc. so that a calculus can be built using these. For nature of such primitive truths, one can consult Tarski's "Concept of truth for a formalized language".
+% maybe Higher-Order Logic, Non-classical Logics - for interest. See https://plato.stanford.edu/entries/reasoning-automated/
 
-%============================================================
+MOCK from plato: % see https://plato.stanford.edu/entries/reasoning-automated/#DedCal
+A third important consideration in the building of an automated reasoning program is the selection of the actual deduction calculus that will be used by the program to perform its inferences. As indicated before, the choice is highly dependent on the nature of the problem domain and there is a fair range of options available: General-purpose theorem proving and problem solving (first-order logic, simple type theory), program verification (first-order logic), distributed and concurrent systems (modal and temporal logics), program specification (intuitionistic logic), hardware verification (higher-order logic), logic programming (Horn logic), and so on.
 
-\subsection{History of logic calculi}
-\label{sec:history}
+MOCK from wiki: A formal system or logical calculus is any well-defined system of abstract thought based on the model of mathematics. A formal system need not be mathematical as such; for example, Spinoza's Ethics imitates the form of Euclid's Elements. Spinoza employed Euclidiean elements such as "axioms" or "primitive truths", rules of inferences etc. so that a calculus can be built using these. For nature of such primitive truths, one can consult Tarski's "Concept of truth for a formalized language".
+
+Foundational crisis in mathematics (Intuitionism, Logicism, Formalism, ) Hilbert’s program
+
+%------------------------------------------------------------
+
+\subsection{Basic properties of logical system}
+\label{sec:logic_properties}
 // TODO
 
-A long time ago in a galaxy far, far away...
+According to Formalists: Independence, Consistency, Completeness, Decideability
 
-Hilbert's programme, ...
+Formalists defined four basic properties which every logical system must have:
+1. Independence, which means that there aren’t any superfluous axioms. There’s no axiom that can be derived from the other axioms.
+2. Consistency, which means that no theorem of the system contradicts another.
+3. Completeness, which means the ability to derive all true formulae from the axioms.
+4. Decideability, the Entscheidungsproblem, which asks for an algorithm that takes as input a statement and answers "Yes" or "No" according to whether the statement is universally valid, i.e., valid in every structure satisfying the axioms.
 
-Mock text from wiki: %https://en.wikipedia.org/wiki/History\_of\_logic#Traditional\_logic:
-\begin{itemize}
-	
-	\item The embryonic period from Leibniz to 1847, when the notion of a logical calculus was discussed and developed, particularly by Leibniz, but no schools were formed, and isolated periodic attempts were abandoned or went unnoticed.
-	
-	\item The algebraic period from Boole's Analysis to Schröder's Vorlesungen. In this period, there were more practitioners, and a greater continuity of development.
-	
-	\item The logicist period from the Begriffsschrift of Frege to the Principia Mathematica of Russell and Whitehead. The aim of the "logicist school" was to incorporate the logic of all mathematical and scientific discourse in a single unified system which, taking as a fundamental principle that all mathematical truths are logical, did not accept any non-logical terminology. The major logicists were Frege, Russell, and the early Wittgenstein.[92] It culminates with the Principia, an important work which includes a thorough examination and attempted solution of the antinomies which had been an obstacle to earlier progress.
-	
-	\item The metamathematical period from 1910 to the 1930s, which saw the development of metalogic, in the finitist system of Hilbert, and the non-finitist system of Löwenheim and Skolem, the combination of logic and metalogic in the work of Gödel and Tarski. Gödel's incompleteness theorem of 1931 was one of the greatest achievements in the history of logic. Later in the 1930s, Gödel developed the notion of set-theoretic constructibility.
-	The period after World War II, when mathematical logic branched into four inter-related but separate areas of research: model theory, proof theory, computability theory, and set theory, and its ideas and methods began to influence philosophy.
-	
-\end{itemize}
-
-
-
-
-
-
-%============================================================
+%------------------------------------------------------------
 
 \subsection{Limitations of logic systems}
 \label{sec:limitations}
 // TODO
 
-first-order logic
-
-%------------------------------------------------------------
-
-
-\subsection{Emphasizing text}
-\label{sec:emphasis}
-
-\textit{Italics} is a good way to emphasize printed text. However,
-\textbf{boldface} looks better when converted to HTML.
-
-Paragraphs are separated by an empty line in the Latex source code.
-Latex puts extra space between sentences, which you must suppress
-after a period that does not end a sentence, e.g.\ after this acronym.
-
-Cross-references to figures (Fig.~\ref{fig:mypicture1}), tables
-(Table~\ref{tab:mytable1}), other sections (Sec.~\ref{sec:math})
-are easy to create. 
-
-
-%------------------------------------------------------------
-
-
-\subsection{Mathematics}
-\label{sec:math}
-
-In the mathematics mode, you can have subscripts such as $K_{master}$
-and superscripts like $2^x$. Longer formulas may be put on a separate
-line:
-\[ \emptyset \in \emptyset \; \Rightarrow \; E \neq mc^2. \]
-
-You may also want to number the formulas like Eq.~(\ref{eqn:myequation1})
-below.
-\begin{equation}\label{eqn:myequation1}
-C = E_{K_{public}}(P) = P^e. \hspace{10mm}   P = D_{K_{private}}(C) = C^d.
-\end{equation}
-
-
-
-%------------------------------------------------------------
-
-
-\subsection{Make a list}
-\label{sec:list}
-
-Lists can have either bullets or numbers on them. 
-
-\begin{itemize}
-\item one item
-\item another item, which is an exceptionally long one for an item
-  and consequently continues on the next line.
-\end{itemize}
-
-Lists can have several levels. Item~\ref{kukkuu} below contains
-another list.
-\begin{enumerate}
-\item the fist item \label{kukkuu}
-  \begin{enumerate}
-  \item the first subitem 
-  \item the second subitem
-  \end{enumerate}
-\item the second item
-\end{enumerate}
+completenes, Gödel's incompleteness theorems
+% see: http://sakharov.net/foundation.html
+% http://settheory.net/model-theory/completeness
 
 
 %============================================================
 
+\section{Methods for automated reasoning}
+\label{sec:auto_reasoning}
+// TODO
 
-\section{More complex stuff}
+% from https://plato.stanford.edu/entries/reasoning-automated/#DedCal
 
-This section provides examples of more complex things.
+techniques in common words (and in introduced previously notation): clause rewriting, 
+- Resolution
+- Sequent Deduction
+- Natural Deduction
+- The Matrix Connection Method
+- Term Rewriting (+lambda calculus)
+- Mathematical Induction
 
-
-%------------------------------------------------------------
-
-
-\subsection{Data served on a table}
-
-
-Table~\ref{tab:mytable1} presents some data in tabular form. 
-
-\begin{table}[t!]
-  \begin{center}
-    \begin{tabular}{|l|lr|}
-    \hline
-    Protocol & Year &  RFC \\
-    \hline
-    TCP      & 1981 &  793 \\
-    ISAKMP   & 1998 & 2408 \\
-    Photuris & 1999 & 2522 \\
-    \hline
-    \end{tabular}
-    \caption{A table with some protocols}
-    \label{tab:mytable1}
-  \end{center}
-\end{table}
-
-
-%------------------------------------------------------------
-
-
-\subsection{Adding references}
-\label{sec:references}
-
-Do not forget to give pointers to the literature. If you are listing
-stuff related to your topic, you can give several references once
-\cite{Com00,HTS03,Nik99}. However, usually you should give only one, for example the standard describing the stuff \cite{RFC2408} and if you want to directly use someone else's words, use both quotation marks and refer to the source, for example that ``the developer does not need to know all about the framework to develop a working implementation'' \cite{Suo98}. Remember also to mark references to your pictures if they are not created by your own mind!
-
-If you plan to write with Latex regularly, create your own BibTeX
-database and use BibTeX to typeset the bibliographies automatically.
-In the long run, it will save you a lot of time and effort compared to
-compiling reference lists by hand.
-
-
-%------------------------------------------------------------
-
-
-\subsection{Embedded pictures}
-\label{sec:pictures}
-
-Fig.~\ref{fig:mypicture1} is an embedded picture. The supported formats for pictures
-depend on the actual LaTeX command used. For instance, regular \LaTeX supports
-pictures in EPS (Embedded PostScript) format, while pdf\LaTeX supports PDF (Portable
-Document Format), PNG (Portable Network Graphics) and JPEG (Joint Photographic Experts
-Group). It is recommended to use either EPS or PDF for diagrams as well as for any picture
-which includes vector images.
-
-\begin{figure}[t!]
-  \begin{center}
-    % Note how the file extension has been removed from the filename below
-    % so that the LaTeX command can automatically pick any supported file format
-    \includegraphics[width=.5\textwidth]{figures/sample}
-    \caption{An embedded picture}
-    \label{fig:mypicture1}
-  \end{center}
-\end{figure}
+% perhaps separate into subsections
 
 
 %============================================================
 
+\section{Some automated theorem provers}
+\label{sec:provers}
+// TODO
 
-\section{Yet another section title}
+in two words: here we consider Coq and Isabelle, bla-bla
 
-To be added.
+%------------------------------------------------------------
+
+\subsection{The Coq theorem prover}
+\label{sec:prover_coq}
+
+Describe Coq features
+
+%------------------------------------------------------------
+
+\subsection{The Isabelle theorem prover}
+\label{sec:prover_isabelle}
+
+Describe Isabelle features
 
 
 %============================================================
 
+\section{Comparison of selected theorem provers}
+\label{sec:comparison}
+// TODO
 
-\section{Conclusion}
+in table:
 
-To be added.
+- expressiveness of logic used
+- time of proving
+- num of supporting theories
+- set of techniques to prove automatically
+- V of theorem code
+- num of user interaction steps
+- usability
+- etc ...
+
+
+%============================================================
+
+\section{Results}
+\label{sec:results}
+// TODO
+
+Conclusions of comparison
+
+%============================================================
+
+\section{Future work}
+\label{sec:future_work}
+// TODO
+
+to apply this survey to software verification
 
 
 %============================================================
