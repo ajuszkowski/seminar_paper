@@ -1,24 +1,24 @@
 - PLAN ---------------------------------------------------------------
 Content of the seminar paper
 First draft
- logical outline and clear message
- description of topic and challenges with key references
- two pages of readable English text
+- logical outline and clear message
+- description of topic and challenges with key references
+- two pages of readable English text
 Second draft
- most of the text and the main ideas, almost final structure
- relevant, authoritative and up-to-date references
- 6–10 pages including figures, tables and references
+- most of the text and the main ideas, almost final structure
+- relevant, authoritative and up-to-date references
+- 6–10 pages including figures, tables and references
 Final paper
- complete technical content and improved outline
- polished presentation and comprehensive bibliography
- 12–15 pages including figures, tables and references
+- complete technical content and improved outline
+- polished presentation and comprehensive bibliography
+- 12–15 pages including figures, tables and references
 ---------------------------------------------------------------------
 
 
 
 
 
-A comparison of theorem provers. (theorem prover := an algorithm, not an implementation).
+A comparison of theorem provers.
 
 
 == What do we want to discuss / research

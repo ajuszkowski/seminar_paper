@@ -18,10 +18,10 @@
 %==========================================================
 
 \begin{abstract}
-  TODO
+One of the useful applications mathematical logic theory is the Automated theorem proving. This is a set of techniques that allow one to verify mathematical statements mechanically using logical reasoning. Although, it can be also used to solve engineering problems, for instance to prove security properties for a software system or an algorithm. Furthermore, automated theorem proving is an essential part of the Artificial Intelligence theory, which became highly evolving these days. In this paper, we describe bases of formal systems and automated deduction theory, and compare two widespread tools for automated theorem proving, Coq [1] and Isabelle [2].
 
 \vspace{3mm}
-\noindent KEYWORDS: to, do
+\noindent KEYWORDS: logic, automated theorem prover, Coq, Isabelle
 
 \end{abstract}
 
@@ -31,19 +31,59 @@
 
 \section{Introduction}
 
-One of the useful applications of theory of logic as is the Automated theorem proving. This is a set of techniques that allow one to verify some mathematical expressions using machine. Although, it can be also used to prove some properties of a system, for example to prove the security properties for a software or an algorithm. Also, Automated theorem proving is a essential part of the Artificial Intelligence theory, which became highly evolving these days. In this paper, we describe bases of logic and automated deduction theory and compare properties of two widespread tools for Automated theorem proving: Coq [1] and Isabelle [2].
+In general terms, \textit{formal proof} is the sequence of statements, based on finite set of fundamental axioms and satisfying the rules of logical inference. \textit{The axiom} is a statement claimed to be true evidently. \textit{The logical inference} is the transfer from one statement (premise) to another (consequence), which preserve truth, while the rule of logical inference is a principle that allows one to infer the validity of such transfer. In formal logic, inference is based entirely on the structure (i.e., form) of those statements, which allows one to apply basic logical rules to any type of proof and thus construct the formal system.
+
+The main goal of the formal system is to be verifiable, i.e. one could \textit{check} its validity. At present, a lot of tools are being developing to automate the process of such checking to run it on the computer. In particular, the systems \textit{Isabelle/ZF}~[???], \textit{Coq}~[???], PVS~[???], ACL~[???] work in a form of axiomatic set theory and allow the user to enter theorems and proofs into the computer, which then verifies that the proof is correct (these are also called sometimes "proof assistants").
+Another goal of constructing the formal system is having the computer to \textit{discover} formal proof. This goal is different from the previous one since the system must be optimised for efficient search. The output proofs can rely on induction, or on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~[???] and \textit{Prover9}~[???] are commonly recognized as the state-of-the-art tools~[Com00].
+
+In current paper we consider only the systems, which are built to achieve the first goal, i.e. to verify existing proof, since <...>. Two aforementioned theorem provers Coq and Isabelle are examined for the purpose of revealing expressiveness, computation power and usability. These properties are described in detail in section <???>. Section~\ref{sec:formal_theory} gives an overview of the history of logic providing thorough definitions, typology and properties of formal system and formal proof. Issues related to theoretical limitations of formal systems are discussed further as well. <... about comparison, results and author's personal contrubution>
+
+%============================================================
+
+\section{Theory of logical calculi}
+\label{sec:formal_theory}
+// TODO
+
+set theory, Zermelo–Fraenkel, briefly 1st and 2nd ordered logic, 
+
+an example from wiki: A formal system or logical calculus is any well-defined system of abstract thought based on the model of mathematics. A formal system need not be mathematical as such; for example, Spinoza's Ethics imitates the form of Euclid's Elements. Spinoza employed Euclidiean elements such as "axioms" or "primitive truths", rules of inferences etc. so that a calculus can be built using these. For nature of such primitive truths, one can consult Tarski's "Concept of truth for a formalized language".
+
+%============================================================
+
+\subsection{History of logic calculi}
+\label{sec:history}
+// TODO
+
+A long time ago in a galaxy far, far away...
+
+Hilbert's programme, ...
+
+Mock text from wiki: %https://en.wikipedia.org/wiki/History\_of\_logic#Traditional\_logic:
+\begin{itemize}
+	
+	\item The embryonic period from Leibniz to 1847, when the notion of a logical calculus was discussed and developed, particularly by Leibniz, but no schools were formed, and isolated periodic attempts were abandoned or went unnoticed.
+	
+	\item The algebraic period from Boole's Analysis to Schröder's Vorlesungen. In this period, there were more practitioners, and a greater continuity of development.
+	
+	\item The logicist period from the Begriffsschrift of Frege to the Principia Mathematica of Russell and Whitehead. The aim of the "logicist school" was to incorporate the logic of all mathematical and scientific discourse in a single unified system which, taking as a fundamental principle that all mathematical truths are logical, did not accept any non-logical terminology. The major logicists were Frege, Russell, and the early Wittgenstein.[92] It culminates with the Principia, an important work which includes a thorough examination and attempted solution of the antinomies which had been an obstacle to earlier progress.
+	
+	\item The metamathematical period from 1910 to the 1930s, which saw the development of metalogic, in the finitist system of Hilbert, and the non-finitist system of Löwenheim and Skolem, the combination of logic and metalogic in the work of Gödel and Tarski. Gödel's incompleteness theorem of 1931 was one of the greatest achievements in the history of logic. Later in the 1930s, Gödel developed the notion of set-theoretic constructibility.
+	The period after World War II, when mathematical logic branched into four inter-related but separate areas of research: model theory, proof theory, computability theory, and set theory, and its ideas and methods began to influence philosophy.
+	
+\end{itemize}
+
+
+
+
 
 
 %============================================================
 
+\subsection{Limitations of logic systems}
+\label{sec:limitations}
+// TODO
 
-\section{Simple things first}
-
-In this section, we give some simple examples of Latex mark-up.
-Sec.~\ref{sec:emphasis} emphasizes important points and
-Sec.~\ref{sec:math} gives examples of math formulas.
-Finally, \ref{sec:list} demonstrates lists.
-
+first-order logic
 
 %------------------------------------------------------------
 
