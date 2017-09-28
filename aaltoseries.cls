@@ -179,7 +179,7 @@
 	% Set the geometry
 	\geometry{%
 		paper=a4paper,%
-		left=5.5cm,%
+		left=2.5cm,%
 		right=2.5cm,%
 		top=1.5cm,%
 		bottom=2.7cm,%
