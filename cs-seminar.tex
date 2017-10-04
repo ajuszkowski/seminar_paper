@@ -45,7 +45,7 @@ In formal logic, inference is based entirely on the structure (i.e., form) of th
 The main goal of the formal system is to be verifiable, i.e. one could \textit{check} its validity. At present, a lot of tools are being developing to automate the process of such checking to run it on the computer. In particular, the systems \textit{Isabelle/ZF}~\cite{tool_Isabelle}, \textit{Coq}~\cite{tool_Coq} \textit{PVS}~\cite{tool_Pvs}, \textit{ACL2}~\cite{tool_Acl} work in a form of axiomatic set theory and allow the user to enter theorems and proofs into the computer, which then verifies that the proof is correct (these are also called sometimes 'proof assistants').
 Another goal of constructing the formal system is having the computer to automatically \textit{discover} the formal proof, which can rely either on induction, or on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~\cite{tool_Otter} and \textit{Prover9}~\cite{tool_Prover9} are commonly recognized as the state-of-the-art tools.
 
-In current paper we consider only the systems, which are built to achieve the first goal, i.e. to verify existing proof, since <...>. Two aforementioned theorem provers Coq and Isabelle are examined for the purpose of revealing expressiveness, computation power and usability. These properties are described in detail in Section~\ref{sec:comparison}. 
+In current paper we consider only the systems, which are built to achieve the first goal, i.e. to verify existing proof, since they can be sufficiently applied in software verification, the research area in which both authors are being involved. Two aforementioned theorem provers Coq and Isabelle are examined for the purpose of revealing expressiveness, computation power and usability. These properties are described in detail in Section~\ref{sec:comparison}. 
 In Section~\ref{sec:formal_history}, one can find an overview of the history of logic. Then, Section~\ref{sec:formal_theory} gives thorough definitions, typology and properties of formal system and formal proof; issues related to theoretical limitations of formal systems are discussed there as well. Section~\ref{sec:logic_properties} describes basic properties of formal system, which may be interesting for analysing automated theorem provers. General methods for automated reasoning are given in Section~\ref{sec:auto_reasoning}. Possible applications areas for automated theorem provers are enumerated in Section~\ref{sec:applications}. The comparison of selected theorem provers is given in Section~\ref{sec:comparison}.
 
 <... results and author's personal contribution >
@@ -69,34 +69,33 @@ Notwithstanding the fact that the whole mathematics can not be described in a si
 \section{Theory of logical calculi}
 \label{sec:formal_theory}
 
-// TODO
+// TODO (Paragraph is still in progress)
 
 % a very little banch of history
-MOCK from wiki: /* A formal system or logical calculus is any well-defined system of abstract thought based on the model of mathematics. A formal system need not be mathematical as such; for example, Spinoza's Ethics imitates the form of Euclid's Elements. Spinoza employed Euclidiean elements such as "axioms" or "primitive truths", rules of inferences etc. so that a calculus can be built using these. For nature of such primitive truths, one can consult Tarski's "Concept of truth for a formalized language".
-*/
-
-Basics briefly: set theory (?), its problems (paradoxes) (?), Zermelo–Fraenkel (?), formal languages (?), propositional and 1st ordered logic (introduce notation here), else?
-
-% maybe Higher-Order Logic, Non-classical Logics - for interest. See https://plato.stanford.edu/entries/reasoning-automated/
-
-MOCK from plato.stanford.edu:  % see https://plato.stanford.edu/entries/reasoning-automated/#DedCal
-/* A third important consideration in the building of an automated reasoning program is the selection of the actual deduction calculus that will be used by the program to perform its inferences. As indicated before, the choice is highly dependent on the nature of the problem domain and there is a fair range of options available: General-purpose theorem proving and problem solving (first-order logic, simple type theory), program verification (first-order logic), distributed and concurrent systems (modal and temporal logics), program specification (intuitionistic logic), hardware verification (higher-order logic), logic programming (Horn logic), and so on.
-*/
-
-Type system (+dependent type, where type checking although may be undecidable, but it verifies the correctness of ), Nominal vs. structural type system
+\begin{itemize}
+\itemsep0em
+	\item what the logical system is (formally: set of axioms, inference rules)
+	\item (?) a brief history of axiomatic approach (Euclid, Hilbert)
+	\item what the truth is: completeness
+	\item intro to set theory (for notation) +Zermelo–Fraenkel set theory (ZFC)
+	\item intro to formal languages
+	\item intro to propositional and 1st ordered logic (introduce notation here. Maybe Higher-Order Logic, Non-classical Logics)
+	\item type systems (+dependent type, where type checking although may be undecidable, but it verifies the correctness of ), Nominal vs. structural type system. \textbf{Curry–Howard correspondence} (the direct relationship between computer programs and mathematical proofs)
+	\item else?
+\end{itemize}
 
 %------------------------------------------------------------
 
 \section{Basic properties of logical system}
 \label{sec:logic_properties}
 
-// TODO: link with previous sections
+// TODO (Paragraph is still in progress): link with previous sections
 
 According to Formalists: Independence, Consistency, Completeness, Decideability.
 
 Formalists defined four basic properties which every logical system must have:
 \begin{enumerate}
-	\itemsep0em
+\itemsep0em
 	\item Independence, which means that there aren’t any superfluous axioms. There’s no axiom that can be derived from the other axioms.
 	\item Consistency, which means that no theorem of the system contradicts another.
 	\item Completeness, which means the ability to derive all true formulae from the axioms.
@@ -105,7 +104,7 @@ Formalists defined four basic properties which every logical system must have:
 
 Formula (i.e. statement, program) may be:
 \begin{itemize}
-	\itemsep0em
+\itemsep0em
 	\item provable (either true or false, according to selected set of axioms)
 	\item valid
 	\item sound
@@ -117,13 +116,13 @@ Formula (i.e. statement, program) may be:
 \section{Methods for automated reasoning}
 \label{sec:auto_reasoning}
 
-// TODO
+// TODO (Paragraph is still in progress)
 
 // MOCK from plato.stanford.edu:  % see https://plato.stanford.edu/entries/reasoning-automated/#DedCal
 
-/* techniques in common words (and in introduced previously notation), e.g.: 
+techniques in common words (and in introduced previously notation), e.g.: 
 \begin{itemize}
-	\itemsep0em
+\itemsep0em
 	\item Clause rewriting
 	\item Resolution
 	\item Sequent Deduction
@@ -132,7 +131,7 @@ Formula (i.e. statement, program) may be:
 	\item Term Rewriting (+lambda calculus)
 	\item Mathematical Induction
 \end{itemize}
-*/
+
 
 % perhaps separate into subsections
 
@@ -141,57 +140,72 @@ Formula (i.e. statement, program) may be:
 \section{Some applications of theorem provers}
 \label{sec:applications}
 
-// TODO 
+// TODO (Paragraph is still in progress) 
 
-// e.g. from slides: https://www.andrew.cmu.edu/user/avigad/Talks/baltimore.pdf
-
-/* Formal methods can be used to verify correctness:
-- verifying that a circuit description, an algorithm, or a network or security protocol meets its specification; or
-- verifying that a mathematical statement is true.
-Two approaches:
-- Model checking: reduce to a finite state space, and test exhaustively.
-- Interactive theorem proving: construct a formal axiomatic proof of correctness
-*/
-
-Also: Curry–Howard correspondence, the direct relationship between computer programs and mathematical proofs.
+Describe possible applications of formal methods:
+\begin{enumerate}
+	\itemsep0em
+	\item Interactive theorem proving: construct a formal axiomatic proof of correctness, 
+	\item verifying that a mathematical statement is true.
+	\item verifying that a circuit description, an algorithm, or a network or security protocol meets its specification:
+	\begin{itemize}
+		\item program verification (first-order logic), 
+		\item distributed and concurrent systems (modal and temporal logics), 
+		\item program specification (intuitionistic logic),
+		\item Model checking: reduce to a finite state space, and test exhaustively.
+		\item hardware verification (higher-order logic), 
+		\item logic programming (Horn logic), 
+		\item and so on.
+	\end{itemize}
+\end{enumerate}
 
 %============================================================
 
 \section{Comparison of some theorem provers}
 \label{sec:comparison}
 
-//TODO: in two words: here we consider Coq and Isabelle, bla-bla
+//TODO (Paragraph is still in progress) 
 
-MOCK from "Certified Programming with Dependent Types" by Adam Chlipala.
-/* ACL2 is notable in this field for having only a first-order language at its foundation. That is, you cannot work with functions over functions and all those other treats of functional programming. By giving up this facility, ACL2 can make broader assumptions about how well its proof automation will work, but we can generally recover the same advantages in other proof assistants when we happen to be programming in first-order fragments
+(in two words: here we consider Coq and Isabelle, bla-bla)
 
-Isabelle/HOL and Coq both support coding new proof manipulations in ML in ways that cannot lead to the acceptance of invalid proofs. Additionally, Coq includes a domain-specific language for coding decision procedures in normal Coq source code, with no need to break out into ML.
+%MOCK from "Certified Programming with Dependent Types" by Adam Chlipala.
+%/* ACL2 is notable in this field for having only a first-order language at its foundation. That is, you cannot work with functions over functions and all those other treats of functional programming. By giving up this facility, ACL2 can make broader assumptions about how well its proof automation will work, but we can generally recover the same advantages in other proof assistants when we happen to be programming in first-order fragments
 
-A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate.
-*/
+%Isabelle/HOL and Coq both support coding new proof manipulations in ML in ways that cannot lead to the acceptance of invalid proofs. Additionally, Coq includes a domain-specific language for coding decision procedures in normal Coq source code, with no need to break out into ML.
+
+%A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate. 
+%*/
 
 %------------------------------------------------------------
 
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
 
-// TODO
+// TODO (Paragraph is still in progress)
 
-Coq is a formal proof assistant system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs~\cite{tool_Coq}. Coq uses the Calculus of Construction, a higher-order formalism for constructive proofs in natural deduction style, developed by Thierry Coquand~\cite{Coq86}. The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
+Coq is a formal proof assistant system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs~\cite{tool_Coq}. Coq uses the Calculus of Construction, a higher-order formalism for constructive proofs in natural deduction style, developed by Thierry Coquand~\cite{Coq86}. 
+The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism. % in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
+
+(add some core features of Coq ...)
+
+(Coq has been used to formalize ...)
 
 %------------------------------------------------------------
 
 \subsection{The Isabelle theorem prover}
 \label{sec:prover_isabelle}
 
-// TODO
+// TODO (Paragraph is still in progress)
 
-The Isabelle theorem prover is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{tool_Isabelle}.
+The Isabelle is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{tool_Isabelle}. Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification.
 
-MOCK from wiki:
-/* it is based on a small logical core to ease logical correctness. Isabelle is generic: it provides a meta-logic (a weak type theory), which is used to encode object logics like first-order logic (FOL), higher-order logic (HOL) or Zermelo–Fraenkel set theory (ZFC). Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification. Though interactive, Isabelle also features efficient automatic reasoning tools, such as a term rewriting engine and a tableaux prover, as well as various decision procedures.
-Isabelle has been used to formalize numerous theorems from mathematics and computer science, like Gödel's completeness theorem, Gödel's theorem about the consistency of the axiom of choice, the prime number theorem, correctness of security protocols, and properties of programming language semantics. The Isabelle theorem prover is free software, released under the revised BSD license.
-*/
+(add some core features of Isabelle ...)
+
+(Isabelle has been used to formalize ...)
+
+%MOCK from wiki:
+%/* it is based on a small logical core to ease logical correctness. Isabelle is generic: it provides a meta-logic (a weak type theory), which is used to encode object logics like first-order logic (FOL), higher-order logic (HOL) or Zermelo–Fraenkel set theory (ZFC). Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification. Though interactive, Isabelle also features efficient automatic reasoning tools, such as a term rewriting engine and a tableaux prover, as well as various decision procedures. Isabelle has been used to formalize numerous theorems from mathematics and computer science, like Gödel's completeness theorem, Gödel's theorem about the consistency of the axiom of choice, the prime number theorem, correctness of security protocols, and properties of programming language semantics. The Isabelle theorem prover is free software, released under the revised BSD license.
+% */
 
 %------------------------------------------------------------
 
@@ -216,18 +230,18 @@ Isabelle has been used to formalize numerous theorems from mathematics and compu
 \section{Results}
 \label{sec:results}
 
-// TODO
+// TODO (Paragraph is still in progress)
 
-Conclusions of comparison
+conclusion of comparison
 
 %============================================================
 
 \section{Future work}
 \label{sec:future_work}
 
-// TODO
+// TODO (Paragraph is still in progress)
 
-< to apply this survey to software verification >
+< in future, we want to apply this survey to software verification >
 
 
 %============================================================
