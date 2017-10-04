@@ -31,16 +31,7 @@ One of the useful applications mathematical logic theory is the Automated theore
 
 \section{Introduction}
 
-Modern world cannot be imagined without mathematics. Almost every human technical achievement is based on the groundwork of mathematical methods. Formal models allow one both to describe existent phenomena and to develop new tools.
-Although in most cases formal models that one built work efficiently, in previous century mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very bases of mathematics. That time many paradoxes in some mathematics have been discovered, so, in 1920s, the three main confrontation schools appeared:
-the \textit{logicism} based on work of Gottlob Frege, Bertrand Russell, and Alfred Whitehead, which stated that mathematics is an extension of logic and therefore it can be reduced to logic partly or fully;
-the \textit{formalism} led by David Hilbert, also called the 'proof theory', which advocated classical mathematics with its axiomatic approach;
-and the radical \textit{intuitionism} led by Luitzen Brouwer, which rejected this formalisation as unnecessary and even meaningless, claiming that only the objects, which we know how to construct, may exist.
-Although the formalism was the leading school, all these schools have contributed important ideas and techniques to mathematics, philosophy and many other scientific and engineering areas~\cite{Fer08}.
-
-One solution for the foundational crisis was proposed by the school of formalism, it is known as Hilbert's program, and aimed to base all existing theories on finite set of axioms, and prove that these sets are consistent~\cite{Zac06}. Thus Hilbert proposed to reduce the consistency of all mathematics to basic arithmetic. 
-Unfortunately, these intentions turned out to be rather unrealisable, when in 1931 Kurt Gödel published his two famous incompleteness theorems, that demonstrated the limitations of any formal axiomatic system containing basic arithmetic~\cite{Raa15}. In particularly, he proved that all consistent axiomatic formulations of number theory are incomplete (such that there will always be statements which cannot be proved or disproved within that formulation), and that such formal system can not prove that itself it is consistent (i.e., it is able to prove that a statement and its negative are both true).
-Notwithstanding the fact that the whole mathematics can not be described in a single axiomatic system, the formal approach allows one to build though restricted, but fine, concise and verifiable theories.
+Modern world cannot be imagined without mathematics. Almost every human technical achievement is based on the groundwork of mathematical methods. Such formal methods allow one both to describe existent phenomena and to develop new tools in a verifiable way, using strict logical \textit{proof}.
 
 % // unnecessary
 % The search for foundations of mathematics is a central question of the philosophy of mathematics; the abstract nature of mathematical objects presents special philosophical challenges.
@@ -55,9 +46,23 @@ The main goal of the formal system is to be verifiable, i.e. one could \textit{c
 Another goal of constructing the formal system is having the computer to automatically \textit{discover} the formal proof, which can rely either on induction, or on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~\cite{tool_Otter} and \textit{Prover9}~\cite{tool_Prover9} are commonly recognized as the state-of-the-art tools.
 
 In current paper we consider only the systems, which are built to achieve the first goal, i.e. to verify existing proof, since <...>. Two aforementioned theorem provers Coq and Isabelle are examined for the purpose of revealing expressiveness, computation power and usability. These properties are described in detail in Section~\ref{sec:comparison}. 
-In Section~\ref{sec:formal_theory}, one can find an overview of the history of logic, providing thorough definitions, typology and properties of formal system and formal proof; issues related to theoretical limitations of formal systems are discussed there as well. Section~\ref{sec:logic_properties} describes basic properties of formal system, which may be interesting for analysing automated theorem provers. General methods for automated reasoning are given in Section~\ref{sec:auto_reasoning}. Possible applications areas for automated theorem provers are enumerated in Section~\ref{sec:applications}. The comparison of selected theorem provers is given in Section~\ref{sec:comparison}.
+In Section~\ref{sec:formal_history}, one can find an overview of the history of logic. Then, Section~\ref{sec:formal_theory} gives thorough definitions, typology and properties of formal system and formal proof; issues related to theoretical limitations of formal systems are discussed there as well. Section~\ref{sec:logic_properties} describes basic properties of formal system, which may be interesting for analysing automated theorem provers. General methods for automated reasoning are given in Section~\ref{sec:auto_reasoning}. Possible applications areas for automated theorem provers are enumerated in Section~\ref{sec:applications}. The comparison of selected theorem provers is given in Section~\ref{sec:comparison}.
 
 <... results and author's personal contribution >
+
+
+\section{History of formal approach}
+\label{sec:formal_history}
+
+Although in most cases formal models that one built work efficiently, in previous century mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very bases of mathematics. That time many paradoxes in some mathematics have been discovered, so, in 1920s, the three main confrontation schools appeared:
+the \textit{logicism} based on work of Gottlob Frege, Bertrand Russell, and Alfred Whitehead, which stated that mathematics is an extension of logic and therefore it can be reduced to logic partly or fully;
+the \textit{formalism} led by David Hilbert, also called the 'proof theory', which advocated classical mathematics with its axiomatic approach;
+and the radical \textit{intuitionism} led by Luitzen Brouwer, which rejected this formalisation as unnecessary and even meaningless, claiming that only the objects, which we know how to construct, may exist.
+Although the formalism was the leading school, all these schools have contributed important ideas and techniques to mathematics, philosophy and many other scientific and engineering areas~\cite{Fer08}.
+
+One solution for the foundational crisis was proposed by the school of formalism, it is known as Hilbert's program, and aimed to base all existing theories on finite set of axioms, and prove that these sets are consistent~\cite{Zac06}. Thus Hilbert proposed to reduce the consistency of all mathematics to basic arithmetic. 
+Unfortunately, these intentions turned out to be rather unrealisable, when in 1931 Kurt Gödel published his two famous incompleteness theorems, that demonstrated the limitations of any formal axiomatic system containing basic arithmetic~\cite{Raa15}. In particularly, he proved that all consistent axiomatic formulations of number theory are incomplete (such that there will always be statements which cannot be proved or disproved within that formulation), and that such formal system can not prove that itself it is consistent (i.e., it is able to prove that a statement and its negative are both true).
+Notwithstanding the fact that the whole mathematics can not be described in a single axiomatic system, the formal approach allows one to build though restricted, but fine, concise and verifiable theories.
 
 %============================================================
 
