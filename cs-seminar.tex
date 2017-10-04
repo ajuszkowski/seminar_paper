@@ -1,9 +1,9 @@
 \documentclass[article]{aaltoseries}
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem}  % remove spaces before enumerations and lists
-
+\usepackage{url}
 \begin{document}
- 
+
 %=========================================================
 
 \title{Comparison of theorem provers}
@@ -18,11 +18,11 @@
 %==========================================================
 
 \begin{abstract}
-One of the useful applications mathematical logic theory is the Automated theorem proving. This is a set of techniques that allow one to verify mathematical statements mechanically using logical reasoning. Although, it can be used to solve engineering problems as well, for instance to prove security properties for a software system or an algorithm. Furthermore, automated theorem proving is an essential part of the Artificial Intelligence theory, which became highly evolving these days. In this paper, the bases of formal systems and automated deduction theory are described. Then, two widespread tools for automated theorem proving, Coq~\cite{Coq} and Isabelle~\cite{Isabelle}, are compared with respect to expressive power and usability.
+One of the useful applications mathematical logic theory is the Automated theorem proving. This is a set of techniques that allow one to verify mathematical statements mechanically using logical reasoning. Although, it can be used to solve engineering problems as well, for instance to prove security properties for a software system or an algorithm. Furthermore, automated theorem proving is an essential part of the Artificial Intelligence theory, which became highly evolving these days. In this paper, the bases of formal systems and automated deduction theory are described. Then, two widespread tools for automated theorem proving, Coq~\cite{tool_Coq} and Isabelle~\cite{tool_Isabelle}, are compared with respect to expressive power and usability.
 
 \vspace{3mm}
 \noindent KEYWORDS: logic, proof theory, automated theorem prover, Coq, Isabelle.
-
+	
 \end{abstract}
 
 
@@ -51,8 +51,8 @@ Notwithstanding the fact that the whole mathematics can not be described in a si
 Informally, \textit{formal proof} is the sequence of statements, based on finite set of fundamental axioms and satisfying the rules of logical inference. \textit{The axiom} is a statement claimed to be true evidently. \textit{The logical inference} is the transfer from one statement (premise) to another (consequence), which preserve truth, while the rule of logical inference is a principle that allows one to infer the validity of such transfer. 
 
 In formal logic, inference is based entirely on the structure (i.e., form) of those statements, which allows one to apply basic logical rules to any type of proof and thus construct the formal system.
-The main goal of the formal system is to be verifiable, i.e. one could \textit{check} its validity. At present, a lot of tools are being developing to automate the process of such checking to run it on the computer. In particular, the systems \textit{Isabelle/ZF}~\cite{Isabelle}, \textit{Coq}~\cite{Coq} PVS~\cite{Pvs}, ACL2~\cite{Acl} work in a form of axiomatic set theory and allow the user to enter theorems and proofs into the computer, which then verifies that the proof is correct (these are also called sometimes 'proof assistants').
-Another goal of constructing the formal system is having the computer to automatically \textit{discover} the formal proof, which can rely either on induction, or on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~\cite{Otter} and \textit{Prover9}~\cite{Prover9} are commonly recognized as the state-of-the-art tools~\cite{Com00}.
+The main goal of the formal system is to be verifiable, i.e. one could \textit{check} its validity. At present, a lot of tools are being developing to automate the process of such checking to run it on the computer. In particular, the systems \textit{Isabelle/ZF}~\cite{tool_Isabelle}, \textit{Coq}~\cite{tool_Coq} \textit{PVS}~\cite{tool_Pvs}, \textit{ACL2}~\cite{tool_Acl} work in a form of axiomatic set theory and allow the user to enter theorems and proofs into the computer, which then verifies that the proof is correct (these are also called sometimes 'proof assistants').
+Another goal of constructing the formal system is having the computer to automatically \textit{discover} the formal proof, which can rely either on induction, or on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~\cite{tool_Otter} and \textit{Prover9}~\cite{tool_Prover9} are commonly recognized as the state-of-the-art tools.
 
 In current paper we consider only the systems, which are built to achieve the first goal, i.e. to verify existing proof, since <...>. Two aforementioned theorem provers Coq and Isabelle are examined for the purpose of revealing expressiveness, computation power and usability. These properties are described in detail in Section~\ref{sec:comparison}. 
 In Section~\ref{sec:formal_theory}, one can find an overview of the history of logic, providing thorough definitions, typology and properties of formal system and formal proof; issues related to theoretical limitations of formal systems are discussed there as well. Section~\ref{sec:logic_properties} describes basic properties of formal system, which may be interesting for analysing automated theorem provers. General methods for automated reasoning are given in Section~\ref{sec:auto_reasoning}. Possible applications areas for automated theorem provers are enumerated in Section~\ref{sec:applications}. The comparison of selected theorem provers is given in Section~\ref{sec:comparison}.
@@ -91,16 +91,16 @@ According to Formalists: Independence, Consistency, Completeness, Decideability.
 
 Formalists defined four basic properties which every logical system must have:
 \begin{enumerate}
-\itemsep0em
-\item Independence, which means that there aren’t any superfluous axioms. There’s no axiom that can be derived from the other axioms.
-\item Consistency, which means that no theorem of the system contradicts another.
-\item Completeness, which means the ability to derive all true formulae from the axioms.
-\item Decidability, the Entscheidungsproblem, which asks for an algorithm that takes as input a statement and answers "Yes" or "No" according to whether the statement is universally valid, i.e., valid in every structure satisfying the axioms.
+	\itemsep0em
+	\item Independence, which means that there aren’t any superfluous axioms. There’s no axiom that can be derived from the other axioms.
+	\item Consistency, which means that no theorem of the system contradicts another.
+	\item Completeness, which means the ability to derive all true formulae from the axioms.
+	\item Decidability, the Entscheidungsproblem, which asks for an algorithm that takes as input a statement and answers "Yes" or "No" according to whether the statement is universally valid, i.e., valid in every structure satisfying the axioms.
 \end{enumerate}
 
 Formula (i.e. statement, program) may be:
 \begin{itemize}
-\itemsep0em
+	\itemsep0em
 	\item provable (either true or false, according to selected set of axioms)
 	\item valid
 	\item sound
@@ -118,7 +118,7 @@ Formula (i.e. statement, program) may be:
 
 /* techniques in common words (and in introduced previously notation), e.g.: 
 \begin{itemize}
-\itemsep0em
+	\itemsep0em
 	\item Clause rewriting
 	\item Resolution
 	\item Sequent Deduction
@@ -172,7 +172,7 @@ A language with dependent types may include references to programs inside of typ
 
 // TODO
 
-Coq is a formal proof assistant system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs~\cite{Coq}. Coq uses the Calculus of Construction, a higher-order formalism for constructive proofs in natural deduction style, developed by Thierry Coquand~\cite{Coq86}. The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
+Coq is a formal proof assistant system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs~\cite{tool_Coq}. Coq uses the Calculus of Construction, a higher-order formalism for constructive proofs in natural deduction style, developed by Thierry Coquand~\cite{Coq86}. The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
 
 %------------------------------------------------------------
 
@@ -181,7 +181,7 @@ Coq is a formal proof assistant system. It provides a formal language to write m
 
 // TODO
 
-The Isabelle theorem prover is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{Isabelle}.
+The Isabelle theorem prover is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{tool_Isabelle}.
 
 MOCK from wiki:
 /* it is based on a small logical core to ease logical correctness. Isabelle is generic: it provides a meta-logic (a weak type theory), which is used to encode object logics like first-order logic (FOL), higher-order logic (HOL) or Zermelo–Fraenkel set theory (ZFC). Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification. Though interactive, Isabelle also features efficient automatic reasoning tools, such as a term rewriting engine and a tableaux prover, as well as various decision procedures.
@@ -195,7 +195,7 @@ Isabelle has been used to formalize numerous theorems from mathematics and compu
 
 //TODO: in table:
 \begin{itemize}
-\itemsep0em
+	\itemsep0em
 	\item expressiveness of logic used
 	\item time of proving
 	\item num of supporting theories
