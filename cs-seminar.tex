@@ -51,7 +51,7 @@ Informally, \textit{formal proof} is the sequence of statements, based on finite
 
 In formal logic, inference is based entirely on the structure (i.e., form) of those statements, which allows one to apply basic logical rules to any type of proof and thus construct the formal system.
 The main goal of the formal system is to be verifiable, i.e. one could \textit{check} its validity. At present, a lot of tools are being developing to automate the process of such checking to run it on the computer. In particular, the systems \textit{Isabelle/ZF}~\cite{Isabelle}, \textit{Coq}~\cite{Coq} PVS~\cite{Pvs}, ACL2~\cite{Acl} work in a form of axiomatic set theory and allow the user to enter theorems and proofs into the computer, which then verifies that the proof is correct (these are also called sometimes 'proof assistants').
-Another goal of constructing the formal system is having the computer to \textit{discover} formal proof. This goal is different from the previous one since the system must be optimised for efficient search. The output proofs can rely on induction, or on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~\cite{Otter} and \textit{Prover9}~\cite{Prover9} are commonly recognized as the state-of-the-art tools~\cite{Com00}.
+Another goal of constructing the formal system is having the computer to automatically \textit{discover} the formal proof, which can rely either on induction, or on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~\cite{Otter} and \textit{Prover9}~\cite{Prover9} are commonly recognized as the state-of-the-art tools~\cite{Com00}.
 
 In current paper we consider only the systems, which are built to achieve the first goal, i.e. to verify existing proof, since <...>. Two aforementioned theorem provers Coq and Isabelle are examined for the purpose of revealing expressiveness, computation power and usability. These properties are described in detail in section <???>. Section~\ref{sec:formal_theory} gives an overview of the history of logic providing thorough definitions, typology and properties of formal system and formal proof. Issues related to theoretical limitations of formal systems are discussed further as well. <... about comparison, results and author's personal contrubution>
 
@@ -61,14 +61,14 @@ In current paper we consider only the systems, which are built to achieve the fi
 \label{sec:formal_theory}
 // TODO
 
-basics: set theory, its problems (paradoxes), Zermelo–Fraenkel, propositional and 1st ordered logic (all with unified formal notation), formal languages, ...
+basics briefly: set theory (?), its problems (paradoxes) (?), Zermelo–Fraenkel (?), formal languages (?), propositional and 1st ordered logic (introduce notation here), else?
 
 % maybe Higher-Order Logic, Non-classical Logics - for interest. See https://plato.stanford.edu/entries/reasoning-automated/
 
-!!!MOCK from plato: % see https://plato.stanford.edu/entries/reasoning-automated/#DedCal
-A third important consideration in the building of an automated reasoning program is the selection of the actual deduction calculus that will be used by the program to perform its inferences. As indicated before, the choice is highly dependent on the nature of the problem domain and there is a fair range of options available: General-purpose theorem proving and problem solving (first-order logic, simple type theory), program verification (first-order logic), distributed and concurrent systems (modal and temporal logics), program specification (intuitionistic logic), hardware verification (higher-order logic), logic programming (Horn logic), and so on.
+MOCK from plato.stanford.edu: % see https://plato.stanford.edu/entries/reasoning-automated/#DedCal
+/* A third important consideration in the building of an automated reasoning program is the selection of the actual deduction calculus that will be used by the program to perform its inferences. As indicated before, the choice is highly dependent on the nature of the problem domain and there is a fair range of options available: General-purpose theorem proving and problem solving (first-order logic, simple type theory), program verification (first-order logic), distributed and concurrent systems (modal and temporal logics), program specification (intuitionistic logic), hardware verification (higher-order logic), logic programming (Horn logic), and so on. */
 
-!!!MOCK from wiki: A formal system or logical calculus is any well-defined system of abstract thought based on the model of mathematics. A formal system need not be mathematical as such; for example, Spinoza's Ethics imitates the form of Euclid's Elements. Spinoza employed Euclidiean elements such as "axioms" or "primitive truths", rules of inferences etc. so that a calculus can be built using these. For nature of such primitive truths, one can consult Tarski's "Concept of truth for a formalized language".
+MOCK from wiki: /* A formal system or logical calculus is any well-defined system of abstract thought based on the model of mathematics. A formal system need not be mathematical as such; for example, Spinoza's Ethics imitates the form of Euclid's Elements. Spinoza employed Euclidiean elements such as "axioms" or "primitive truths", rules of inferences etc. so that a calculus can be built using these. For nature of such primitive truths, one can consult Tarski's "Concept of truth for a formalized language". */
 
 Foundational crisis in mathematics (Intuitionism, Logicism, Formalism, ) Hilbert’s program
 
@@ -76,7 +76,8 @@ Foundational crisis in mathematics (Intuitionism, Logicism, Formalism, ) Hilbert
 
 \section{Basic properties of logical system}
 \label{sec:logic_properties}
-// TODO
+
+// TODO: link with previous sections
 
 According to Formalists: Independence, Consistency, Completeness, Decideability
 
@@ -90,20 +91,38 @@ Formalists defined four basic properties which every logical system must have:
 
 \section{Methods for automated reasoning}
 \label{sec:auto_reasoning}
+
 // TODO
 
-% from https://plato.stanford.edu/entries/reasoning-automated/#DedCal
+// MOCK from plato.stanford.edu:  % see https://plato.stanford.edu/entries/reasoning-automated/#DedCal
 
-techniques in common words (and in introduced previously notation): clause rewriting, 
+/* techniques in common words (and in introduced previously notation): clause rewriting, 
 - Resolution
 - Sequent Deduction
 - Natural Deduction
 - The Matrix Connection Method
 - Term Rewriting (+lambda calculus)
 - Mathematical Induction
+*/
 
 % perhaps separate into subsections
 
+%============================================================
+
+\section{Some applications of theorem provers}
+\label{sec:applications}
+
+// TODO 
+
+// e.g. from slides: https://www.andrew.cmu.edu/user/avigad/Talks/baltimore.pdf
+
+/* Formal methods can be used to verify correctness:
+• verifying that a circuit description, an algorithm, or a network or security protocol meets its specification; or
+• verifying that a mathematical statement is true.
+Two approaches:
+• Model checking: reduce to a finite state space, and test exhaustively.
+• Interactive theorem proving: construct a formal axiomatic proof of correctness
+*/
 
 %============================================================
 
