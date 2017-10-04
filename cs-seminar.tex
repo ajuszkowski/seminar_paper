@@ -78,7 +78,7 @@ MOCK from plato.stanford.edu:  % see https://plato.stanford.edu/entries/reasonin
 /* A third important consideration in the building of an automated reasoning program is the selection of the actual deduction calculus that will be used by the program to perform its inferences. As indicated before, the choice is highly dependent on the nature of the problem domain and there is a fair range of options available: General-purpose theorem proving and problem solving (first-order logic, simple type theory), program verification (first-order logic), distributed and concurrent systems (modal and temporal logics), program specification (intuitionistic logic), hardware verification (higher-order logic), logic programming (Horn logic), and so on.
 */
 
-
+Type system (+dependent type, where type checking although may be undecidable, but it verifies the correctness of ), Nominal vs. structural type system
 
 %------------------------------------------------------------
 
@@ -104,6 +104,7 @@ Formula (i.e. statement, program) may be:
 	\item provable (either true or false, according to selected set of axioms)
 	\item valid
 	\item sound
+	\item ...
 \end{itemize}
 
 %============================================================
@@ -147,9 +148,7 @@ Two approaches:
 - Interactive theorem proving: construct a formal axiomatic proof of correctness
 */
 
-Also: (find source) formal system ~ program:
-- statement ~ type of variable
-- 
+Also: Curry–Howard correspondence, the direct relationship between computer programs and mathematical proofs.
 
 %============================================================
 
@@ -158,19 +157,36 @@ Also: (find source) formal system ~ program:
 
 //TODO: in two words: here we consider Coq and Isabelle, bla-bla
 
+MOCK from "Certified Programming with Dependent Types" by Adam Chlipala.
+/* ACL2 is notable in this field for having only a first-order language at its foundation. That is, you cannot work with functions over functions and all those other treats of functional programming. By giving up this facility, ACL2 can make broader assumptions about how well its proof automation will work, but we can generally recover the same advantages in other proof assistants when we happen to be programming in first-order fragments
+
+Isabelle/HOL and Coq both support coding new proof manipulations in ML in ways that cannot lead to the acceptance of invalid proofs. Additionally, Coq includes a domain-specific language for coding decision procedures in normal Coq source code, with no need to break out into ML.
+
+A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate.
+*/
+
 %------------------------------------------------------------
 
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
 
-Describe Coq features
+// TODO
+
+Coq is a formal proof assistant system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs~\cite{Coq}. Coq uses the Calculus of Construction, a higher-order formalism for constructive proofs in natural deduction style, developed by Thierry Coquand~\cite{Coq86}. The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
 
 %------------------------------------------------------------
 
 \subsection{The Isabelle theorem prover}
 \label{sec:prover_isabelle}
 
-//TODO: Describe Isabelle features
+// TODO
+
+The Isabelle theorem prover is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{Isabelle}.
+
+MOCK from wiki:
+/* it is based on a small logical core to ease logical correctness. Isabelle is generic: it provides a meta-logic (a weak type theory), which is used to encode object logics like first-order logic (FOL), higher-order logic (HOL) or Zermelo–Fraenkel set theory (ZFC). Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification. Though interactive, Isabelle also features efficient automatic reasoning tools, such as a term rewriting engine and a tableaux prover, as well as various decision procedures.
+Isabelle has been used to formalize numerous theorems from mathematics and computer science, like Gödel's completeness theorem, Gödel's theorem about the consistency of the axiom of choice, the prime number theorem, correctness of security protocols, and properties of programming language semantics. The Isabelle theorem prover is free software, released under the revised BSD license.
+*/
 
 %------------------------------------------------------------
 
@@ -184,7 +200,7 @@ Describe Coq features
 	\item time of proving
 	\item num of supporting theories
 	\item set of techniques to prove automatically
-	\item V of theorem code
+	\item Volume of proof (as text)
 	\item num of user interaction steps
 	\item usability
 	\item etc ...
