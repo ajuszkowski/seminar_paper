@@ -60,13 +60,14 @@ The main goal of a formal system is to be verifiable, i.e. it is possible to \te
 % 20. This text is too similar with the original text. Rewrite it in your own words or use direct quotes to indicate identical wording.\\When you cite sources, you need to  use quotations, paraphrasing and summarizing. Careless use on identical  wording or even sentence structures can be interpreted as plagiarism, and you should use your own words as much as possible to avoid this.
 % 23. Why quotes are used here? Earlier you introduced new concepts using italics, which works well.
 Another goal of constructing the formal system is having the computer to automatically \textit{discover} the formal proof, which can rely either on induction, on meta argument, or on higher-order logic. McCune’s systems \textit{Otter}~\cite{tool_Otter} and \textit{Prover9}~\cite{tool_Prover9} are commonly recognized as the state-of-the-art tools.
+In this paper only the systems that aim the first goal were considered, since they can be sufficiently applied in software verification.
 
-This paper considers only the systems which are built to achieve the first goal, i.e. to verify existing proofs, since they can be sufficiently applied in software verification. Two aforementioned theorem provers, Coq and Isabelle, were examined for the purpose of revealing expressiveness, computation power and usability. These properties are described in detail in Section~\ref{sec:comparison}.
+This paper is organised as follows.
 % 27. Generic plural\\To signal that you are not referring to a particular instance of a thing, but rather talking in a "general way" about it, use the plural form without the definite article the (as well as without indefinite article a).\\Examples\\∅ ComputerS have changed the way we work. (Generalization)\\The Computer is broken again. (A particular computer, my work computer)
 % 29. Enclose parenthetical information and appositives within commas.
-In Section~\ref{sec:formal_history}, one can find an overview of the history of logic. Then, Section~\ref{sec:formal_theory} gives thorough definitions, typology and basic properties of formal system and formal proof; issues related to theoretical limitations of formal systems are discussed there as well. General methods for automated reasoning are given in Section~\ref{sec:auto_reasoning}. Possible applications areas for automated theorem provers are enumerated in Section~\ref{sec:applications}. The comparison of selected theorem provers is given in Section~\ref{sec:comparison}.
-
-<... results and author's personal contribution >
+Sections~\ref{sec:formal_history} and~\ref{sec:formal_theory} provide a brief history of logic, thorough definitions, basic properties and theoretical limitations of the formal systems. Section~\ref{sec:auto_reasoning} covers general methods for automated reasoning. Section~\ref{sec:applications} enumerates possible application areas for automated theorem provers. Finally, Section~\ref{sec:comparison} presents the comparison of two aforementioned theorem provers, Coq and Isabelle, with respect to criteria s.a. expressiveness, computation power and usability.
+% 30. Listing section in article structure\\Specifying the article structure and listing the sections is a useful form of metatext. However, it is not necessary make it more complicated and artificially interesting by adding variation into sentence structures and subjects. \\To keep such paragraph concise and systematic, write it as follows:\\This paper is organized/structured as follows. (There are other variations to this sentence).\\Section 2 <a reporting verb in present tense, e.g., discusses>\Section 3 . . . \\Section 4 . . . \\. . . and so on\\This approach also helps to avoid passive voice and end-verbs. For example phrases and expressions
+<... TODO: results and author's personal contribution >
 
 
 %============================================================
@@ -74,7 +75,7 @@ In Section~\ref{sec:formal_history}, one can find an overview of the history of 
 \section{History of formal approach}
 \label{sec:formal_history}
 
-Although in most cases our formal models work efficiently, in previous century mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis of mathematics. That time many paradoxes in some mathematics have been discovered, so, in 1920s, the three main confrontation schools appeared:
+Although in most cases formal models work efficiently, in previous century mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis of mathematics. That time many paradoxes in some mathematics have been discovered, so, in 1920s, the three main confrontation schools appeared:
 the \textit{logicism} based on work of Gottlob Frege, Bertrand Russell, and Alfred Whitehead, which stated that mathematics is an extension of logic and therefore it can be reduced to logic partly or fully;
 the \textit{formalism} led by David Hilbert, also called the 'proof theory', which advocated classical mathematics with its axiomatic approach;
 and the radical \textit{intuitionism} led by Luitzen Brouwer, which rejected this formalisation as unnecessary and even meaningless, claiming that only the objects, which we know how to construct, may exist.
