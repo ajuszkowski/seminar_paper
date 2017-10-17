@@ -1,0 +1,76 @@
+COQ
+
+https://coq.inria.fr/faq
+
+> Is Coq a theorem prover?
+Coq comes with decision and semi-decision procedures ( propositional calculus, Presburger's arithmetic, ring and field simplification, resolution, ...) but the main style for proving theorems is interactively by using LCF-style tactics.
+
+> What is Coq?
+The Coq tool is a formal proof management system: a proof done with Coq is mechanically checked by the machine. In particular, Coq allows:
+- the definition of mathematical objects and programming objects,
+- to state mathematical theorems and software specifications,
+- to interactively develop formal proofs of these theorems,
+- to check these proofs by a small certification “kernel”.
+Coq is based on a logical framework called “Calculus of Inductive Constructions” extended by a modular development system for theories.
+
+Programming in Coq [https://cel.archives-ouvertes.fr/inria-00001173v5/document]
+- In the Coq system, programs are usually represented by functions.
+
+> You have to trust:
+The theory behind Coq
+- The theory of Coq version 8.0 is generally admitted to be consistent wrt Zermelo-Fraenkel set theory + inaccessible cardinals. Proofs of consistency of subsystems of the theory of Coq can be found in the literature.
+Your axioms
+...
+- Your axioms must be consistent with the theory behind Coq.
+
+"we can ask Coq to extract, from our Definition, a program in some other, more conventional, programming language (OCaml, Scheme, or Haskell) with a high-performance compiler"
+
+Type verification strategy (function application, abstraction) (https://www.labri.fr/perso/casteran/CoqArt/Tsinghua/C1.pdf)
+Putting data together
+- Grouping several pieces of data : tuples,
+- fetching individual components : pattern-matching,
+
+Calculus of constructions (https://en.wikipedia.org/wiki/Calculus_of_constructions)
+- "It can serve as both a typed programming language and as constructive foundation for mathematics"
+- "The CoC is a higher-order typed lambda calculus"
+
+Guarantee of termination (Weak normalization)
+	// wiki: "A rewrite system may also have the weak normalization property, meaning that for every term, there exists at least one particular sequence of rewrites that eventually yields a normal form, i.e., an irreducible term"
+	- structural recursion: "The recursive call can only be made on a subterm of the initial argument. More
+precisely the argument of the recursive call must be a variable, and this variable must
+have been obtained from the initial argument through pattern matching. This constraint
+is used to ensure that every computation terminates, even if it involves recursive function." [https://cel.archives-ouvertes.fr/inria-00001173v5/document]
+
+3.2 Constructing new proofs  -> goal directed proof
+	
+
+-- 
+
+Well-formed formula < alphabet, formal languages (https://en.wikipedia.org/wiki/Well-formed_formula) 
+
+Curry–Howard correspondence ("It is the link between logic and computation that is usually attributed to Curry and Howard, although the idea is related to the operational interpretation of intuitionistic logic given in various formulations by L. E. J. Brouwer, Arend Heyting and Andrey Kolmogorov (see Brouwer–Heyting–Kolmogorov interpretation)[2] and Stephen Kleene (see Realizability). The relationship has been extended to include category theory as the three-way Curry–Howard–Lambek correspondence." https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence)
+Соответствие Карри — Ховарда в современном представлении не ограничивается какой-то одной логикой или системой типов. Например, логика высказываний соответствует простому типизированному λ-исчислению, логика высказываний второго порядка (англ.) — полиморфному λ-исчислению, исчисление предикатов — λ-исчислению с зависимыми типами.
+
+Intuitionistic_type_theory, Dependent_type
+
+
+Uses Gallina, specification language
+
+"The theories are built from axioms, hypotheses, parameters, lemmas, theorems and definitions of constants, functions, predicates and sets." (https://coq.inria.fr/refman/Reference-Manual003.html)
+tautology
+"We call the combination of local hypotheses with a goal a judgment" (https://coq.inria.fr/tutorial/1-basic-predicate-calculus)
+tactics=proof combining primitives
+
+
+
+// ADDITIONAL
+
+- SMTCoq (https://github.com/smtcoq/smtcoq)
+
+- Church encoding is a means of representing data and operators in the lambda calculus. https://en.wikipedia.org/wiki/Church_encoding#Church_Booleans
+ true	= \a \b . a
+ false 	= \a \b . b
+ if		= \p \a \b . p a b
+ and	= \p \q . p q p
+ or		= \p \q . p p q
+ xor	= \p \q . p (not q) q
