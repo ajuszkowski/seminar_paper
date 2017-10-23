@@ -165,6 +165,8 @@ techniques in common words (and in introduced previously notation), e.g.:
 \section{Some applications of theorem provers}
 \label{sec:applications}
 
+// TODO: think about merging information from this section to introduction.
+
 // TODO (Paragraph is still in progress) 
 
 Describe possible applications of formal methods:
@@ -189,12 +191,11 @@ Describe possible applications of formal methods:
 \section{Comparison of some theorem provers}
 \label{sec:comparison}
 
-//TODO (Paragraph is still in progress) 
-
-(in two words: here we consider Coq and Isabelle, bla-bla)
+We have chosen for our comparison two automated proof assistants, Coq and Isabelle. 
+In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion. They both have rather large libraries that contain considerable amount of already proven theorems. 
+Although, the key difference between these two systems is that they are based on different logical theories. Isabelle exploits higher order logic along with first order set theory, while Coq operates with dependent types in higher order type theory, representing an implementation of intuitionistic logic.
 
 %MOCK from "Certified Programming with Dependent Types" by Adam Chlipala.
-%/* ACL2 is notable in this field for having only a first-order language at its foundation. That is, you cannot work with functions over functions and all those other treats of functional programming. By giving up this facility, ACL2 can make broader assumptions about how well its proof automation will work, but we can generally recover the same advantages in other proof assistants when we happen to be programming in first-order fragments
 
 %Isabelle/HOL and Coq both support coding new proof manipulations in ML in ways that cannot lead to the acceptance of invalid proofs. Additionally, Coq includes a domain-specific language for coding decision procedures in normal Coq source code, with no need to break out into ML.
 
