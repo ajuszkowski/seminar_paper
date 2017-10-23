@@ -66,57 +66,38 @@ Section~\ref{sec:formal_theory} provides definition, basic properties and theore
 
 The formal approach appeared in the beginning of previous century when mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis. At that time, multiple paradoxes in several fields of mathematics have been discovered. Moreover, the completely new theories appeared just by modification of the set of axioms, e.g., reducing the parallel postulate of Euclidean geometry has lead to completely different non-Euclidian geometries s.a. Lobachevsky's hyperbolic geometry or Riemman's elliptic geometry, that eventually have a large number of applications in both natural sciences and engineering.
 
-\subsection{Definitions}
+\subsection{A logical formal system}
 \label{sec:definitions}
 
 % TODO: add citations!
 
 %\texttt{Definition.}
-The \textit{formal proof} of the formula $\phi$ is a finite sequence of statements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a statement evidently claimed to be true. \textit{A logical inference} is a transfer from one statement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those statements, thereby, the result formal system represents the abstract model describing part of real world.
+Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world. The proof system described above is called \textit{Hilbert proof system}.
 %The set of axioms and rules of logical inference form the \textit{logical system}.
 
-The formulae consists of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$,
+The formulae consists of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$,
 
-Let $\Gamma$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Gamma \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Gamma$, if there exists a proof that infers $\phi$ from $\Gamma$. The formula which is provable without additional premises (i.e. $\emptyset \vdash \phi$) is called \textit{tautology} and denoted as $ \vdash \phi $. The formula is called \textit{contradiction} if $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
-
-\vspace{10mm}
-<in progress below ...>
+Let $\Phi$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Phi \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Phi$, if there exists a proof that infers $\phi$ from $\Phi$. The formula which is provable without additional premises (i.e. $\emptyset \vdash \phi$) is called \textit{tautology} and denoted as $ \vdash \phi $. The formula is called \textit{contradiction} if $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
 
 % TODO: \subsection{ ? }
 
-Let $U$ be a set of all possible formulae, let $\Delta = \ <A, V, \Omega, R>$ be a formal system with set of axioms $A$, set of propositional variables $V$, set of logical operators $\Omega$, and set of propositional variables and set of inference rules $R$. Then $\Delta$ is called:
+Let $U$ be a set of all possible formulae, let $\Gamma = \ <A, V, \Omega, R>$ be a formal system with set of axioms $A$, set of propositional variables $V$, set of logical operators $\Omega$, and set of propositional variables and set of inference rules $R$. Then $\Gamma$ is called:
 \begin{itemize}
 	\itemsep0em
 	\item \textit{consistent}, if no formula of the system contradicts another: \\
-		$\nexists \phi \in \Delta: \ \Delta \vdash \phi \land \Delta \vdash \neg \phi  \ \Leftrightarrow \ \Delta \nvdash \bot$;
+		$\nexists \phi \in \Gamma: \ \Gamma \vdash \phi \land \Gamma \vdash \neg \phi  \ \Leftrightarrow \ \Gamma \nvdash \bot$;
 	\item \textit{complete}, if all truth statements can be inferred: \\
 		$\forall \phi \in U: \ A \vdash \phi \lor A \vdash \neg \phi$ ;
 	\item \textit{independent}, if no axiom can be inferred from another: \\
 		$\exists a \in A: \ A \vdash a$.
 \end{itemize}
 
-
-One possible axiomatisation of first-order logic is Hilber system [REFERENCE]
-
-\begin{enumerate}
-\item[$A_{1}:$] ${ A\rightarrow (B\rightarrow A) }$, the truth can be deduced from anything;
-\item[$A_{2}:$] ${ (A\rightarrow (B\rightarrow C))\rightarrow ((A\rightarrow B)\rightarrow (A\rightarrow C)) }$, the left distributivity of the implication regarding implication itself;
-\item[$A_{3}:$] ${ A\wedge B\rightarrow A }$;
-\item[$A_{4}:$] ${ A\wedge B\rightarrow B }$, conjunction of formulae infers both of them
-\item[$A_{5}:$] ${ A\rightarrow (B\rightarrow (A\wedge B)}$, if both of formulae are true, then their disjunction is also true;
-\item[$A_{6}:$] ${ A\rightarrow (A\vee B) }$;
-\item[$A_{7}:$] ${ B\rightarrow (A\vee B) }$, disjunction of two formulae follows from both of them;
-\item[$A_{8}:$] ${ (A\rightarrow C)\rightarrow ((B\rightarrow C)\rightarrow ((A\vee B)\rightarrow C) }$, if formula $C$ follows from both $A$ and $B$, it follows from their disjunction;
-\item[$A_{9}:$] ${ \neg A\rightarrow (A\rightarrow B) }$, false infers anything;
-\item[$A_{10}:$] ${ (A\rightarrow B)\rightarrow ((A\rightarrow \neg B)\rightarrow \neg A}$, the law of inference by contradiction, if one formula infers both true and false, then it is false;
-\item[$A_{11}:$] ${ A\vee \neg A}$, the law of excluded third.
-\end{enumerate}
-%вместе с единственным правилом:
-${ {\frac {A,\quad (A\rightarrow B)}{B}}}$ (Modus ponens)
-
 If the propositional variables have no restrictions on their form (i.e. they are 0-arity predicates), such logic is called \textit{propositional logic}. However, if these variables are quantified on some sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier '$\forall$' (means "for every"), and the existential quantifier '$\exists$' (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every term in .
 
-Although the higher-order logics have stronger semantics than lower-order logics, they have 
+% TODO -- finish it
+// TODO -- finish it
+
+Although the higher-order logics have stronger semantics than lower-order logics, they have ...
 
 Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating.
 
@@ -138,6 +119,76 @@ Note, that the first-order logic is \textit{undecidable}, so that there does not
 % // two words about intuitionism, if needed (in Coq, par exemple)
 
 
+\subsection{Lambda-calculus}
+
+$\lambda$-\textit{calculus} is a universal computation model invented by Alonzo Church in 1930s as a model for formalising the concept of effective computability. This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions. According to Church–Turing thesis, $\lambda$-calculus is equivalent to Turing machine in sense that any computable function can be expressed using this formalism.
+
+The central concept in $\lambda$-calculus is an \textit{expression}, which can be defined as a subject for application the rewriting rules~\cite{Bar88}. The basic rewriting rules of $\lambda$-calculus are listed below:
+
+\begin{itemize}
+\itemsep0em
+	\item Application:
+	$f a$ is the call of function $f$ with argument $a$
+	
+	\item Abstraction:
+	$\lambda x.t[x]$ is the function with formal parameter x and body $t[x]$
+	
+	\item Computation:
+	Replace formal parameter by actual argument ($\beta$-\textit{reduction}): \\
+	$(\lambda x.t[x]) a \rightarrow_{\beta} t[x:=a]$
+\end{itemize}
+
+$\lambda$-calculus described above is called the \textit{type-free} $\lambda$-calculus. By adding the types to expressions, one can construct more strong calculi and prove useful properties for them (e.g., non-termination 
+%Combining $\lambda$-expressions with types leads to the typed $\lambda$-calculus, which
+%non-termination of typed lambda?
+
+
+\subsection{Type systems}
+
+A \textit{type} is a collection of elements. In a type system, each element is associated with a type, which restricts set of possible operations with this element. Types can be thought as a structure of objects, that allows to reveal useful properties of the formal system. Type theory therefore serves as an alternative to classic set theory~\cite{Tho91}.
+% TODO: remove notation below if not used.
+In our notation, the $a =_{\tau} b$ means that $a$ equals $b$ and both of them are of type $\tau$. This notation is used for convenience to encode information about type to equality.
+
+% "the mixture of finite and infinite data types"
+
+\subsubsection{Simple Type Theory}
+%In the context of current paper, it is useful to describe 
+The type can be defined declaratively, by assigning a label to set of values. Such types are called \textit{simple types}, they can be useful to avoid some paradoxes of set theory, e.g., separating sets of individuals and sets of sets allows to avoid famous Russel's paradox~\cite{Irv95}. Simple type theory can extend $\lambda$-calculus to a Higher-order logic through connection between formulae and expressions of type Boolean~\cite{Paulson90}.
+
+%\subsubsection{Polymorphic Type Theory}
+% //not needed
+% --
+% \subsubsection{System F}
+% second-order lambda calculus, is a typed lambda calculus that differs from the simply typed lambda calculus by the introduction of a mechanism of universal quantification over types
+% //not needed
+
+\subsubsection{Martin-Löf Type Theory}
+also known as \textit{Intuitionistic type theory}, is based on the principles of mathematical constructivism which requires to find a way to "construct" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is hold by the \textit{inductive types} which were constructed recursively using a basic type (zero) and successor function which defines "next" element. The function that builds new type from another is called \textit{type constructor}.
+
+\subsubsection{Calculus of Constructions}
+// TODO
+Dependent types
+hence type checking may become undecidable.
+
+Inference rules for the calculus of constructions
+\begin{enumerate}
+	\item ${\displaystyle {{} \over {}\Gamma \vdash P:T}}$
+	\item ${\displaystyle {\Gamma \vdash A:K \over {\Gamma ,x:A\vdash x:A}}}$ %{\Gamma, x:A \vdash x : A}}$
+	\item ${\displaystyle {\Gamma ,x:A\vdash B:K\qquad \qquad \Gamma ,x:A\vdash N:B \over {\Gamma \vdash (\lambda x:A.N):(\forall x:A.B):K}}}$
+	\item ${\displaystyle {\Gamma \vdash M:(\forall x:A.B)\qquad \qquad \Gamma \vdash N:A \over {\Gamma \vdash MN:B[x:=N]}}}$
+	\item ${\displaystyle {\Gamma \vdash M:A\qquad \qquad A=_{\beta }B\qquad \qquad B:K \over {\Gamma \vdash M:B}}}$ % \over {\Gamma \vdash M : B}}
+\end{enumerate}
+
+%${ {\frac {A,\quad (A\rightarrow B)}{B}}}$ (Modus ponens)
+
+
+%----------------------------------------------------------
+
+\subsection{Curry-Howard isomorphism}
+// TODO
+bla-bla, correspondence, isomorphism...
+1934–1969
+
 %============================================================
 
 \section{Methods for automated reasoning}
@@ -149,6 +200,8 @@ techniques in common words (and in introduced previously notation), e.g.:
 \begin{itemize}
 \itemsep0em
 	\item Clause rewriting
+		Simplification - The concept of (conditional) term rewriting is introduced and its realization as the proof method simp is explained. (from http://isabelle.in.tum.de/coursematerial/PSV2009-1/)
+		
 	\item Resolution
 	\item Sequent Deduction
 	\item Natural Deduction
@@ -193,7 +246,9 @@ Describe possible applications of formal methods:
 
 We have chosen for our comparison two automated proof assistants, Coq and Isabelle. 
 In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion. They both have rather large libraries that contain considerable amount of already proven theorems. 
-Although, the key difference between these two systems is that they are based on different logical theories. Isabelle exploits higher order logic along with first order set theory, while Coq operates with dependent types in higher order type theory, representing an implementation of intuitionistic logic.
+Both systems can be used as functional programming languages since they allow to construct new data types and recursive functions.
+
+Although, the key difference between these two systems is that they are based on different logical theories. Isabelle exploits higher order logic along with first-order set theory, while Coq operates with dependent types in higher order type theory, representing an implementation of intuitionistic logic.
 
 %MOCK from "Certified Programming with Dependent Types" by Adam Chlipala.
 
@@ -201,6 +256,8 @@ Although, the key difference between these two systems is that they are based on
 
 %A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate. 
 %*/
+
+
 
 %------------------------------------------------------------
 
@@ -216,6 +273,7 @@ The Coq is a computer tool for verifying theorem proofs. These theorems may conc
 Coq is a formal proof assistant system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs~\cite{tool_Coq}. Coq uses the Calculus of Construction, a higher-order formalism for constructive proofs in natural deduction style, developed by Thierry Coquand~\cite{Coq86}. 
 The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism. % in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
 
+program extraction : Haskell, Scheme and OCaml
 (add some core features of Coq ...)
 
 (Coq has been used to formalize ...)
@@ -227,7 +285,12 @@ The Calculus of Construction can be considered as an extension of the Curry–Ho
 
 // TODO (Paragraph is still in progress)
 
+// overview good at: https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf
+
 Main people behind the system: Larry Paulson, Tobias Nipkow, Markus Wenzel
+
+is a theorem prover for various logics, including several first-order logics,
+Martin-Loef’s Type Theory, and Zermelo-Fraenkel set theory  (https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf)
 
 The Isabelle is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{tool_Isabelle}. Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification.
 
