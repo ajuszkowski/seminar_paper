@@ -45,13 +45,19 @@ The first class contains tools pursuing the aim of validating the input statemen
 
 The second class consists of tools that automatically \textit{discover} the formal proof, which can rely either on induction, on meta argument, or on higher-order logic. Such tools are often called \textit{automated theorem provers} so that they apply techniques of automated reasoning to find the proof. The systems \textit{Otter}~\cite{tool_Otter} and \textit{ACL2}~\cite{tool_Acl} are commonly known examples of such tools.
 
-In this paper only systems of the first class were considered, since they can be sufficiently applied in model checking and software verification.
+In this paper only systems of the first class were considered, since they can be sufficiently applied in model checking and software verification. 
 
+
+%------------------------------------------------------------
+
+\subsection{Related work}
+A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen 'state-of-the-art' systems for the formalization of mathematics were compared against various properties, in particular size of library with already proved lemmas, strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). As the continuation of that work, we propose more deep comparison of two aforementioned theorem provers -- Coq and Isabelle -- with respect to criteria s.a. expressiveness, computation power and usability.
+
+%------------------------------------------------------------
+
+\subsection{Outline}
 This paper is organised as follows.
-
-<... TODO: results and author's personal contribution >
-Section~\ref{sec:formal_theory} provides definition, basic properties and theoretical limitations of the formal systems. Section~\ref{sec:auto_reasoning} covers general methods for automated reasoning. Section~\ref{sec:applications} enumerates possible application areas for automated theorem provers. Finally, Section~\ref{sec:comparison} presents the comparison of two aforementioned theorem provers, Coq and Isabelle, with respect to criteria s.a. expressiveness, computation power and usability.
-
+Section~\ref{sec:formal_theory} provides definition, basic properties and theoretical limitations of the formal systems. Section~\ref{sec:auto_reasoning} covers general methods for automated reasoning. Section~\ref{sec:applications} enumerates possible application areas for automated theorem provers. Finally, Section~\ref{sec:comparison} presents target comparison properties and the comparison itself.
 
 %============================================================
 
