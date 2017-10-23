@@ -61,7 +61,7 @@ Section~\ref{sec:formal_theory} provides definition, basic properties and theore
 
 %============================================================
 
-\section{Axiomatisation and Formal Systems}
+\section{Axiomatisation and Formal systems}
 \label{sec:formal_theory}
 
 The formal approach appeared in the beginning of previous century when mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis. At that time, multiple paradoxes in several fields of mathematics have been discovered. Moreover, the completely new theories appeared just by modification of the set of axioms, e.g., reducing the parallel postulate of Euclidean geometry has lead to completely different non-Euclidian geometries s.a. Lobachevsky's hyperbolic geometry or Riemman's elliptic geometry, that eventually have a large number of applications in both natural sciences and engineering.
@@ -69,13 +69,18 @@ The formal approach appeared in the beginning of previous century when mathemati
 \subsection{Definitions}
 \label{sec:definitions}
 
+% TODO: add citations!
+
 %\texttt{Definition.}
 The \textit{formal proof} of the formula $\phi$ is a finite sequence of statements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a statement evidently claimed to be true. \textit{A logical inference} is a transfer from one statement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those statements, thereby, the result formal system represents the abstract model describing part of real world.
 %The set of axioms and rules of logical inference form the \textit{logical system}.
 
-The formulae consists of \textit{propositional variables}, connected with \textit{logical operators} according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed} (wff). The propositional variable is an atomic formula which can be either true or false. The logical operator is a symbol in formal language that transforms one wff to another.
+The formulae consists of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$,
 
 Let $\Gamma$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Gamma \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Gamma$, if there exists a proof that infers $\phi$ from $\Gamma$. The formula which is provable without additional premises (i.e. $\emptyset \vdash \phi$) is called \textit{tautology} and denoted as $ \vdash \phi $. The formula is called \textit{contradiction} if $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
+
+\vspace{10mm}
+<in progress below ...>
 
 % TODO: \subsection{ ? }
 
@@ -90,6 +95,24 @@ Let $U$ be a set of all possible formulae, let $\Delta = \ <A, V, \Omega, R>$ be
 		$\exists a \in A: \ A \vdash a$.
 \end{itemize}
 
+
+One possible axiomatisation of first-order logic is Hilber system [REFERENCE]
+
+\begin{enumerate}
+\item[$A_{1}:$] ${ A\rightarrow (B\rightarrow A) }$, the truth can be deduced from anything;
+\item[$A_{2}:$] ${ (A\rightarrow (B\rightarrow C))\rightarrow ((A\rightarrow B)\rightarrow (A\rightarrow C)) }$, the left distributivity of the implication regarding implication itself;
+\item[$A_{3}:$] ${ A\wedge B\rightarrow A }$;
+\item[$A_{4}:$] ${ A\wedge B\rightarrow B }$, conjunction of formulae infers both of them
+\item[$A_{5}:$] ${ A\rightarrow (B\rightarrow (A\wedge B)}$, if both of formulae are true, then their disjunction is also true;
+\item[$A_{6}:$] ${ A\rightarrow (A\vee B) }$;
+\item[$A_{7}:$] ${ B\rightarrow (A\vee B) }$, disjunction of two formulae follows from both of them;
+\item[$A_{8}:$] ${ (A\rightarrow C)\rightarrow ((B\rightarrow C)\rightarrow ((A\vee B)\rightarrow C) }$, if formula $C$ follows from both $A$ and $B$, it follows from their disjunction;
+\item[$A_{9}:$] ${ \neg A\rightarrow (A\rightarrow B) }$, false infers anything;
+\item[$A_{10}:$] ${ (A\rightarrow B)\rightarrow ((A\rightarrow \neg B)\rightarrow \neg A}$, the law of inference by contradiction, if one formula infers both true and false, then it is false;
+\item[$A_{11}:$] ${ A\vee \neg A}$, the law of excluded third.
+\end{enumerate}
+%вместе с единственным правилом:
+${ {\frac {A,\quad (A\rightarrow B)}{B}}}$ (Modus ponens)
 
 If the propositional variables have no restrictions on their form (i.e. they are 0-arity predicates), such logic is called \textit{propositional logic}. However, if these variables are quantified on some sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier '$\forall$' (means "for every"), and the existential quantifier '$\exists$' (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every term in .
 
