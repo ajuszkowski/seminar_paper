@@ -43,6 +43,13 @@ Existent realisations of SAT (+SMT?) solvers
 	built-in theories (in case of SMT)
 	...
 	
+	
+Ms Thesis, p. 19 http://tampub.uta.fi/bitstream/handle/10024/97597/GRADU-1435576377.pdf;sequence=1
+"It is possible to use formal specifications to analyze the set of all possible states in a
+software system. This analysis is usually performed to find out if a formal specification
+violates properties such as ***fairness, progress, liveness or safety***. The fairness of a certain state
+means that it is not possible to systematically omit that state every time it becomes
+available [Kurki-Suonio, 2005]"
 
 	
 	
@@ -102,13 +109,32 @@ ONCE AGAIN
 
 3. Results
 	
-	
+
+in Isabelle/HOL tutorial (https://isabelle.in.tum.de/doc/tutorial.pdf) in section 10 there is an example with crypto protocol proof.
+	- есть готовые для HOL: http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/library/HOL/HOL-Auth/index.html
 	
 NOTES:
 - Логическое программирование - то же? + prolog
 - intro: " История знает множество случаев, когда переполнение счетчика или необработанное исключение приводило к большим материальным затратам и человеческим жертвам. Так, например, 4 июня 1996 года европейская ракета-носитель «Ariane 5» буквально развалилась на части на 39-й секунде полета. Анализ инцидента показал, что авария произошла из-за ошибки в программном обеспечении. Ущерб составил около $7 млрд. В феврале 1991 года ракета «Patriot» промахнулась мимо цели из-за ошибки округления, успела пролететь лишние 500 метров. Ущерб: 28 убитых и более сотни раненых. Подобного рода ошибки встречаются и в аппаратном обеспечении. Недавний баг в процессорах Pentium, связанный с неправильным делением чисел с плавающей точкой, вынудил Intel пойти на замену бракованных чипов. Эта ошибка стоила компании $475 млн." https://habrahabr.ru/post/182442/
 - list: https://github.com/johnyf/tool_lists/blob/master/verification_synthesis.md#theorem-provers
 - page 79:  https://www.math.wisc.edu/~miller/old/m771-10/kunen770.pdf
+
+
+
+== from http://docplayer.net/46796974-Computer-aided-proofs-and-their-significance.html =======================================================================================
+-----------------------
+Trusted Core (TC) = basic proof checker with a small, transparent code. Tested extensively, much m o r e than the mind of an individual mathematician could ever b e. Tradeo ff - it is infeasible t o write all the proofs in a script acceptable b y TC (elementa r y proofs). Expansions of TC a r e needed: tactics (rules), decision procedures. 
+
+Pro o f assistants a r e considered safe, if they p r oduce a n elementary p r o o f checked b y the trusted c ore. 
+------------------------------------------------------------------------------------------------------------------------
+
+Coq, INRIA, is based o n Coquand’s Calculus o f Inductive Constructions (1985), extension of Girard’s p olymo rphic λ-calculus Fω. Its main goal was specifi- cation and verification of p rograms. Coq’s basic logic is intuitionistic, and it includes a mechanism fo r automatic generation of certified p rograms from p r o ofs of their specifications Co q is widely used fo r fo rmalization of mathematics: real analysis, constructive category theory, elements of constructive geometry, group theory, domain theory, fundamental group theory. A recent success story: formalization and verification o f a p r o o f o f the Four Colo r Theorem (1999/2004). 
+
+Isabelle (started in 1986, Larry P aulson, Cambridge Universit y, and Tobias Nipk o w, T U Munich), rather a logical framew ork (“generic p r o o f assistant”), not tightly bound to one s pecific logic. Meta-logic is intutionistic higher-order logic with equality; di fferent logical systems can b e defined: HOL, F OL, ZF, HOL with Scott’s Logic fo r Computable Functions (domain theory) added, small fragment o f Martin-L¨of’s Ty p e Theory (ITT), Barendregt’s Lambda Cub e, and others. Large theo r y library: elementary numb e r theo r y (fo r example, Gauss’s la w of quadratic reciprocity), analysis (basic properties of limits, derivatives, and integrals), algebra (up to Sylo w’s theorem), and set theory (the relative consistency o f the Axiom o f Choice), the Prime Numb e r Theorem. 
+
+------------------------------------------------------------------------------------------------------------------------
+==============================================================================================================================================================================
+
 
 
 REFERENCES (pre):
@@ -118,16 +144,19 @@ REFERENCES (pre):
 //nonfree: 'Comparison of Theorem Provers for Modal Logics — Introduction and Summary' https://link.springer.com/chapter/10.1007%2F3-540-69778-0_4?LI=true
 
 
-===== COQ =====
 
-[Source: https://habrahabr.ru/post/182442/]
 
-1. В языке Coq нет никаких встроенных батареек – ни логических значений, ни чисел (на самом деле существует стандартная библиотека со множеством полезных определений и лемм, но в академических целях будем считать, что этого ничего нет)
+ 
+// QUESTIONS 
+- I don't fully understand, why  "[| P; Q |] ==> T" equals to "P ==> Q ==> T", ведь импликация лево-ассоциотивна, т.е. "P ==> Q ==> T" равно "P ==> (Q ==> T)"
+- и вообще, почему про импликацию "A -> B" думают как "если А, то В" -- Ведь В будет правдой даже если не-А?
+- cannot understand what are co-inductive typed - used in Coq (CoInductive)
+	http://www.lorentzcenter.nl/lc/web/2014/603/presentations/Geuvers.pdf
+	wiki
+//- lambda-cube 
+- I have investigated a bit on how model checking is being implemented for different proof systems, and I understood that 1) as you told on our first meeting, we need to use temporal logic to describe semantics of imperative programs, and 2) constructing the logical model for a program manually is rather tedious and, more importantly, error-prone, so I cannot appeal to the *verified* corresponence between manually-built program and manually-constructed model, in this case, we need to have a reliable tool to automatically construct such a model
+- WHat real profit gives us the Coq's Calculus of Constructions?
 
-2. В Coq есть вывод типов, сопоставление с образцом и прочие вещи, свойственные функциональным языкам программирования.
 
-3. Третий способ заключается в экстракции определения в какой-нибудь язык программирования (OCaml, Scheme или Haskell). Это одна из основных фич системы Coq, ради которой все и разрабатывалось
-
-4. [wiki about coq]  Coq основан на изоморфизме Карри — Ховарда, поэтому доказательство есть терм лямбда-исчисления.
-
-===============
+To Mr Rybicki:
+	- do we need to use 'lemmata' instead of 'lemmas' as 'formulae' instead of 'formulas' ?
