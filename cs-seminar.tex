@@ -1,5 +1,5 @@
 \documentclass[article]{aaltoseries}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc} % or \usepackage{fontspec}
 \usepackage{enumitem}  % remove spaces before enumerations and lists
 \usepackage{url}
 %\usepackage{inconsolata}  % for mono font
@@ -20,6 +20,7 @@
 
 %==========================================================
 
+
 \begin{abstract}
 
 The need for formal definition of the very basis of mathematics raised in the last century.
@@ -32,8 +33,8 @@ This paper compares two widespread tools for automated theorem proving, Coq~\cit
 	
 \end{abstract}
 
-
 %============================================================
+
 
 \section{Introduction}
 
@@ -47,13 +48,14 @@ The second class consists of tools that automatically \textit{discover} the form
 
 In this paper only systems of the first class were considered, since they can be sufficiently applied in model checking and software verification. 
 
-
 %------------------------------------------------------------
+
 
 \subsection{Related work}
 A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen 'state-of-the-art' systems for the formalization of mathematics were compared against various properties, in particular size of library with already proved lemmas, strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). As the continuation of that work, we propose more deep comparison of two aforementioned theorem provers -- Coq and Isabelle -- with respect to criteria s.a. expressiveness, computation power and usability.
 
 %------------------------------------------------------------
+
 
 \subsection{Outline}
 This paper is organised as follows.
@@ -61,10 +63,12 @@ Section~\ref{sec:formal_theory} provides definition, basic properties and theore
 
 %============================================================
 
+
 \section{Foundations of Formal Approach}
 \label{sec:formal_theory}
 
 The formal approach appeared in the beginning of previous century when mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis. At that time, multiple paradoxes in several fields of mathematics have been discovered. Moreover, the radically new theories appeared just by modification of the set of axioms, e.g., reducing the parallel postulate of Euclidean geometry has lead to completely different non-Euclidian geometries s.a. Lobachevsky's hyperbolic geometry or Riemman's elliptic geometry, that eventually have a large number of applications in both natural sciences and engineering.
+
 
 \subsection{Definition of the Formal System}
 \label{sec:definitions}
@@ -78,7 +82,7 @@ As an example of inference rule, the widely used \textit{Modus ponens} (MP) rule
 % TODO: check whether we actually use it
 
 /* TODO: The aragraph above is formulated very badly. How can I improve it?.. */
-
+% --
 
 The formulae consists of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$,
 
@@ -104,29 +108,12 @@ In that case, modern tools, s.a. Coq, often restrict propositions to be either p
 
 If the propositional variables have no restrictions on their form (i.e. they are 0-arity predicates), such logic is called \textit{propositional logic}. However, if these variables are quantified on some sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier '$\forall$' (means "for every"), and the existential quantifier '$\exists$' (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every term in .
 
-% TODO -- finish it
+% TODO
 // TODO -- finish it
 
 Although the higher-order logics have stronger semantics than lower-order logics, they have ...
 
 Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating.
-
-%\begin{itemize}
-%\itemsep0em
-%	\item what the logical system is (formally: set of axioms, inference rules)
-%	\item (?) a brief history of axiomatic approach (Euclid, Hilbert)
-%	\item what the truth is: completeness
-%	\item intro to set theory (for notation) +Zermelo–Fraenkel set theory (ZFC)
-%	\item intro to formal languages
-%	\item intro to propositional and 1st ordered logic (introduce notation here. Maybe Higher-Order Logic, Non-classical Logics)
-%	\item type systems (+dependent type, where type checking although may be undecidable, but it verifies the correctness of ), Nominal vs. structural type system. \textbf{Curry–Howard correspondence} (the direct relationship between computer programs and mathematical proofs)
-%	\item else?
-%\end{itemize}
-
-%Let $A, B, C, ...$ be \textit{prepositions}, i.e., statements which preserve facts on real world.  
-%Let $\phi$ be a well-formed formula (i.e. a syntactically valid statement) $\Gamma$ be a set of formulas 
-
-% // two words about intuitionism, if needed (in Coq, par exemple)
 
 
 \subsection{Lambda-calculus}
@@ -148,7 +135,9 @@ The central concept in $\lambda$-calculus is an \textit{expression}, which can b
 	$(\lambda x.t[x]) a \rightarrow_{\beta} t[x:=a]$
 \end{itemize}
 
-$\lambda$-calculus described above is called the \textit{type-free} $\lambda$-calculus. By adding the types to expressions, one can construct more strong calculi and prove useful properties for them (e.g., non-termination 
+$\lambda$-calculus described above is called the \textit{type-free} $\lambda$-calculus. By adding the types to expressions, one can construct more strong calculi and prove useful properties for them (e.g., non-termination .....
+%TODO
+// TODO: finish it
 %Combining $\lambda$-expressions with types leads to the typed $\lambda$-calculus, which
 %non-termination of typed lambda?
 
@@ -161,11 +150,11 @@ In our notation, the $a =_{\tau} b$ means that $a$ equals $b$ and both of them a
 
 The function that builds new type from another is called \textit{type constructor}. Such functions have been used long before type theories had been constructed formally, even in the~XIX~century Giuseppe Peano used type constructor $S$ (\textit{successor} function) along with zero element 0 to axiomatise natural number arithmetic. Thus, number 3 can be constructed as $S(S(S(0))))$.
 
-% "the mixture of finite and infinite data types"
 
 \subsubsection{Simple Type Theory}
 %In the context of current paper, it is useful to describe 
 The type can be defined declaratively, by assigning a label to set of values. Such types are called \textit{simple types}, they can be useful to avoid some paradoxes of set theory, e.g., separating sets of individuals and sets of sets allows to avoid famous Russel's paradox~\cite{Irv95}. Simple type theory can extend $\lambda$-calculus to a Higher-order logic through connection between formulae and expressions of type Boolean~\cite{Paulson90}.
+
 
 %\subsubsection{Polymorphic Type Theory}
 % //not needed
@@ -174,8 +163,10 @@ The type can be defined declaratively, by assigning a label to set of values. Su
 % second-order lambda calculus, is a typed lambda calculus that differs from the simply typed lambda calculus by the introduction of a mechanism of universal quantification over types
 % //not needed
 
+
 \subsubsection{Martin-Löf Type Theory}
 also known as \textit{Intuitionistic type theory}, is based on the principles of mathematical constructivism which requires to find a way to "construct" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is hold by the \textit{inductive types} which were constructed recursively using a basic type (zero) and successor function which defines "next" element. The function that builds new type from another is called \textit{type constructor}.
+
 
 \subsubsection{Calculus of Constructions}
 // TODO
@@ -196,10 +187,12 @@ Inference rules for the calculus of constructions
 
 %----------------------------------------------------------
 
+
 \subsection{Curry-Howard isomorphism}
+% TODO
 // TODO
-bla-bla, correspondence, isomorphism...
-1934–1969
+bla-bla correspondence, isomorphism, very interesting thing...
+% 1934–1969
 
 %============================================================
 
@@ -227,6 +220,7 @@ techniques in common words (and in introduced previously notation), e.g.:
 
 %============================================================
 
+
 \section{Some applications of theorem provers}
 \label{sec:applications}
 
@@ -253,6 +247,7 @@ Describe possible applications of formal methods:
 
 %============================================================
 
+
 \section{Comparison of some theorem provers}
 \label{sec:comparison}
 
@@ -272,6 +267,7 @@ Although, the key difference between these two systems is that they are based on
 
 
 %------------------------------------------------------------
+
 
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
@@ -316,6 +312,7 @@ The Isabelle is an interactive theorem prover, which relies on higher-order logi
 
 %------------------------------------------------------------
 
+
 \subsection{Joint comparison}
 \label{sec:joint_comparison}
 
@@ -334,6 +331,7 @@ The Isabelle is an interactive theorem prover, which relies on higher-order logi
 
 %============================================================
 
+
 \section{Results}
 \label{sec:results}
 
@@ -343,13 +341,13 @@ conclusion of comparison
 
 %============================================================
 
+
 \section{Future work}
 \label{sec:future_work}
 
 // TODO (Paragraph is still in progress)
 
 < in future, we want to apply this survey to software verification >
-
 
 %============================================================
 
