@@ -5,7 +5,16 @@
 %\usepackage{inconsolata}  % for mono font
 \usepackage{amssymb}  % for negated \vdash
 \usepackage{amsmath}  % for multi-line equations
+\usepackage{listings}  % for code snippets
+\lstset{ 
+	basicstyle=\small,stringstyle=\ttfamily,keywordstyle=\color{blue}\bfseries\underbar,numbers=left,tabsize=2,} % setup listings package
+\renewcommand*\lstlistingname{Example}
+\usepackage{chngcntr}
+%\usepackage{color}
+
+
 \begin{document}
+\counterwithin{lstlisting}{section}
 
 %=========================================================
 
