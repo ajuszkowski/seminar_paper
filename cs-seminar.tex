@@ -165,25 +165,33 @@ The type can be defined declaratively, by assigning a label to set of values. Su
 
 
 \subsubsection{Martin-Löf Type Theory}
-also known as \textit{Intuitionistic type theory}, is based on the principles of mathematical constructivism which requires to find a way to "construct" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is hold by the \textit{inductive types} which were constructed recursively using a basic type (zero) and successor function which defines "next" element. The function that builds new type from another is called \textit{type constructor}.
+also known as \textit{Intuitionistic type theory}, is based on the principles of mathematical constructivism which requires to find a way to "construct" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is hold by the \textit{inductive types} which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
+
+Intuitionistic type theory also  uses wide class of \textit{dependent types}, whose definition depends on a value. For instance, the $n$-ary tuple is a dependent type that is defined by value of~$n$. Although, type checking for such a system appears to be undecidable problem, since determining the equality of two arbitrary dependent types becomes to be tantamount to problem of inducing the equivalence of two non-trivial programs, which is undecidable in general case according to the Rice's theorem~\cite{Rice53}.
+
+%A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate. 
 
 
 \subsubsection{Calculus of Constructions}
-// TODO
-Dependent types
-hence type checking may become undecidable.
 
-Inference rules for the calculus of constructions
+Another important constructive type theory is the Calculus of Constructions~(CoC) developed by Thierry~Coquand and Gérard~Huet~\cite{Coq85}. It represents a system of natural deduction which incorporates dependent types, polymorphism and type constructors.
+
+% TODO
+// TODO: MORE DEFINITIONS HERE
+% see also the Coq documentation: https://coq.inria.fr/refman/cic.html#conv-rules
+
+The CoC has \text{strong normalisation property}, which means that every sequence of inference eventually terminates with an irreducible normal form. This property does not allow to define infinitely recursive structures and functions. % TODO: check whether one can say that with respect to any formal system, not only to an abstract rewriting system
+
+Inference rules for the Calculus of Constructions:
 \begin{enumerate}
 	\item ${\displaystyle {{} \over {}\Gamma \vdash P:T}}$
-	\item ${\displaystyle {\Gamma \vdash A:K \over {\Gamma ,x:A\vdash x:A}}}$ %{\Gamma, x:A \vdash x : A}}$
-	\item ${\displaystyle {\Gamma ,x:A\vdash B:K\qquad \qquad \Gamma ,x:A\vdash N:B \over {\Gamma \vdash (\lambda x:A.N):(\forall x:A.B):K}}}$
-	\item ${\displaystyle {\Gamma \vdash M:(\forall x:A.B)\qquad \qquad \Gamma \vdash N:A \over {\Gamma \vdash MN:B[x:=N]}}}$
-	\item ${\displaystyle {\Gamma \vdash M:A\qquad \qquad A=_{\beta }B\qquad \qquad B:K \over {\Gamma \vdash M:B}}}$ % \over {\Gamma \vdash M : B}}
+	\item ${\displaystyle {\Gamma \vdash A:K \over {\Gamma ,x:A\vdash x:A}}}$
+	\item ${\displaystyle {\Gamma ,x:A\vdash B:K\qquad \Gamma ,x:A\vdash N:B \over {\Gamma \vdash (\lambda x:A.N):(\forall x:A.B):K}}}$
+	\item ${\displaystyle {\Gamma \vdash M:(\forall x:A.B)\qquad \Gamma \vdash N:A \over {\Gamma \vdash MN:B[x:=N]}}}$
+	\item ${\displaystyle {\Gamma \vdash M:A\qquad A=_{\beta }B\qquad B:K \over {\Gamma \vdash M:B}}}$ % \over {\Gamma \vdash M : B}}
 \end{enumerate}
 
-%${ {\frac {A,\quad (A\rightarrow B)}{B}}}$ (Modus ponens)
-
+// TODO: add explanations to the inference rules or delete them
 
 %----------------------------------------------------------
 
@@ -196,27 +204,24 @@ bla-bla correspondence, isomorphism, very interesting thing...
 
 %============================================================
 
-\section{Methods for automated reasoning}
-\label{sec:auto_reasoning}
+% Probably exclude this paragraph.
 
-// TODO (Paragraph is still in progress)
+%\section{Methods for automated reasoning}
+%\label{sec:auto_reasoning}
 
-techniques in common words (and in introduced previously notation), e.g.: 
-\begin{itemize}
-\itemsep0em
-	\item Clause rewriting
-		Simplification - The concept of (conditional) term rewriting is introduced and its realization as the proof method simp is explained. (from http://isabelle.in.tum.de/coursematerial/PSV2009-1/)
+%techniques in common words (and in introduced previously notation), e.g.: 
+%\begin{itemize}
+%\itemsep0em
+%	\item Clause rewriting
+%		Simplification - The concept of (conditional) term rewriting is introduced and its realization as the proof method simp is explained. (from http://isabelle.in.tum.de/coursematerial/PSV2009-1/)
 		
-	\item Resolution
-	\item Sequent Deduction
-	\item Natural Deduction
-	\item The Matrix Connection Method
-	\item Term Rewriting (+lambda calculus)
-	\item Mathematical Induction
-\end{itemize}
-
-
-% perhaps separate into subsections
+%	\item Resolution
+%	\item Sequent Deduction
+%	\item Natural Deduction
+%	\item The Matrix Connection Method
+%	\item Term Rewriting (+lambda calculus)
+%	\item Mathematical Induction
+%\end{itemize}
 
 %============================================================
 
@@ -224,7 +229,7 @@ techniques in common words (and in introduced previously notation), e.g.:
 \section{Some applications of theorem provers}
 \label{sec:applications}
 
-// TODO: think about merging information from this section to introduction.
+// TODO: Move this information from to the Introduction.
 
 // TODO (Paragraph is still in progress) 
 
@@ -251,20 +256,11 @@ Describe possible applications of formal methods:
 \section{Comparison of some theorem provers}
 \label{sec:comparison}
 
-We have chosen for our comparison two automated proof assistants, Coq and Isabelle. 
-In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion. They both have rather large libraries that contain considerable amount of already proven theorems. 
+We have chosen for our comparison two automated proof assistants, Coq and Isabelle/HOL~\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories s.a. Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of the proof assistant.}.
+In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be excepted. Both systems have rather large libraries with considerable amount of already proven lemmata and theorems. 
 Both systems can be used as functional programming languages since they allow to construct new data types and recursive functions.
 
-Although, the key difference between these two systems is that they are based on different logical theories. Isabelle exploits higher order logic along with first-order set theory, while Coq operates with dependent types in higher order type theory, representing an implementation of intuitionistic logic.
-
-%MOCK from "Certified Programming with Dependent Types" by Adam Chlipala.
-
-%Isabelle/HOL and Coq both support coding new proof manipulations in ML in ways that cannot lead to the acceptance of invalid proofs. Additionally, Coq includes a domain-specific language for coding decision procedures in normal Coq source code, with no need to break out into ML.
-
-%A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate. 
-%*/
-
-
+Although, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with first-order set theory, while Coq operates with dependent types in higher order type theory, representing an implementation of intuitionistic logic. Moreover, the key feature of Coq is that it allows to extract the verified  program in OCaml or Haskell from the constructive proof of its formal specification~\cite{tool_Coq}. This capability facilitates using Coq as the tool for software verification.
 
 %------------------------------------------------------------
 
