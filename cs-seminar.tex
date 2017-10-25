@@ -61,14 +61,8 @@ In this paper only systems of the first class were considered, since they can be
 
 
 \subsection{Related work}
-A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen 'state-of-the-art' systems for the formalization of mathematics were compared against various properties, in particular size of library with already proved lemmas, strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). As the continuation of that work, we propose more deep comparison of two aforementioned theorem provers -- Coq and Isabelle -- with respect to criteria s.a. expressiveness, computation power and usability.
+A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen 'state-of-the-art' systems for the formalization of mathematics were compared against various properties, in particular size of library with already proved lemmas, strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). As the continuation of that work, we propose more deep comparison of two aforementioned theorem provers -- Coq and Isabelle -- with respect to criteria s.a. expressiveness, computation power and usability. In section~\ref{sec:formal_theory} provides definition, basic properties and theoretical limitations of the formal systems, while section~\ref{sec:comparison} presents target comparison properties and the comparison itself.
 
-%------------------------------------------------------------
-
-
-\subsection{Outline}
-This paper is organised as follows.
-Section~\ref{sec:formal_theory} provides definition, basic properties and theoretical limitations of the formal systems. Section~\ref{sec:auto_reasoning} covers general methods for automated reasoning. Section~\ref{sec:applications} enumerates possible application areas for automated theorem provers. Finally, Section~\ref{sec:comparison} presents target comparison properties and the comparison itself.
 
 %============================================================
 
@@ -164,6 +158,11 @@ The function that builds new type from another is called \textit{type constructo
 %In the context of current paper, it is useful to describe 
 The type can be defined declaratively, by assigning a label to set of values. Such types are called \textit{simple types}, they can be useful to avoid some paradoxes of set theory, e.g., separating sets of individuals and sets of sets allows to avoid famous Russel's paradox~\cite{Irv95}. Simple type theory can extend $\lambda$-calculus to a Higher-order logic through connection between formulae and expressions of type Boolean~\cite{Paulson90}.
 
+// == Pure Type System ?
+% https://www.cl.cam.ac.uk/teaching/1516/Types/lectures/lecture-9.pdf
+% https://en.wikiversity.org/wiki/Foundations_of_Functional_Programming/Pure_type_systems
+% http://www4.di.uminho.pt/~mjf/pub/SFV-CIC-2up.pd
+
 
 %\subsubsection{Polymorphic Type Theory}
 % //not needed
@@ -182,12 +181,15 @@ Intuitionistic type theory also  uses wide class of \textit{dependent types}, wh
 
 
 \subsubsection{Calculus of Constructions}
+% TODO: figure out how this implies to PTS - Pure Type Systems
 
-Another important constructive type theory is the Calculus of Constructions~(CoC) developed by Thierry~Coquand and Gérard~Huet~\cite{Coq85}. It represents a system of natural deduction which incorporates dependent types, polymorphism and type constructors.
+Another important constructive type theory is the Calculus of Constructions~(CoC) developed by Thierry~Coquand and Gérard~Huet in 1985~\cite{Coq85}. It represents a natural deduction system which incorporates dependent types, polymorphism and type constructors.
 
 % TODO
 // TODO: MORE DEFINITIONS HERE
 % see also the Coq documentation: https://coq.inria.fr/refman/cic.html#conv-rules
+
+%The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism. % in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
 
 The CoC has \text{strong normalisation property}, which means that every sequence of inference eventually terminates with an irreducible normal form. This property does not allow to define infinitely recursive structures and functions. % TODO: check whether one can say that with respect to any formal system, not only to an abstract rewriting system
 
@@ -202,12 +204,18 @@ Inference rules for the Calculus of Constructions:
 
 // TODO: add explanations to the inference rules or delete them
 
+In 1990, Christine Paulin proposed the \textit{Calculus of Inductive Constructions} (CIC) as an extension of Calculus of Construction by adding the Martin-Löf's primitive inductive definitions in order to perform efficient computation of the functions over inductive data types. This formalism lies behind the Coq proof assistant.
+
 %----------------------------------------------------------
 
 
 \subsection{Curry-Howard isomorphism}
 % TODO
-// TODO
+// TODO -- this is the most delicious idea among those described in this paper...
+
+"proofs are programs"
+% http://perso.ens-lyon.fr/damien.pous/ejcp13/slides.pdf slide 9 - draw the same pic
+% +show correspondence in two-column view
 bla-bla correspondence, isomorphism, very interesting thing...
 % 1934–1969
 
@@ -232,32 +240,6 @@ bla-bla correspondence, isomorphism, very interesting thing...
 %	\item Mathematical Induction
 %\end{itemize}
 
-%============================================================
-
-
-\section{Some applications of theorem provers}
-\label{sec:applications}
-
-// TODO: Move this information from to the Introduction.
-
-// TODO (Paragraph is still in progress) 
-
-Describe possible applications of formal methods:
-\begin{enumerate}
-	\itemsep0em
-	\item Interactive theorem proving: construct a formal axiomatic proof of correctness, 
-	\item verifying that a mathematical statement is true.
-	\item verifying that a circuit description, an algorithm, or a network or security protocol meets its specification:
-	\begin{itemize}
-		\item program verification (first-order logic), 
-		\item distributed and concurrent systems (modal and temporal logics), 
-		\item program specification (intuitionistic logic),
-		\item Model checking: reduce to a finite state space, and test exhaustively.
-		\item hardware verification (higher-order logic), 
-		\item logic programming (Horn logic), 
-		\item and so on.
-	\end{itemize}
-\end{enumerate}
 
 %============================================================
 
@@ -266,12 +248,18 @@ Describe possible applications of formal methods:
 \label{sec:comparison}
 
 We have chosen for our comparison two automated proof assistants, Coq and Isabelle/HOL~\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories s.a. Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of the proof assistant.}.
-In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be excepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; also, they can be used as functional programming languages since they allow to construct new data types and recursive functions. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
+In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be excepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; also, they can be used as functional programming languages since they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
 
-// TODO: too many 'boths' above?..
+// TODO: too many 'boths'?..
+
+// TODO: may I say "... inherent for functional languages" ?
 
 
-Although, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with first-order set theory, while Coq operates with dependent types in higher order type theory, representing an implementation of intuitionistic logic. Moreover, the key feature of Coq is that it allows to extract the verified  program in OCaml or Haskell from the constructive proof of its formal specification~\cite{tool_Coq}. This capability facilitates using Coq as the tool for software verification.
+Although, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
+
+Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial  proof: the Four colour theorem (2004), Lax-Milgram theorem (2017), etc.~\cite{Wiedijk100}. Also, the theorem provers have been successfully used for testing and verifying of software programs: general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and other.
+
+// The idea of comparison below is following: since we have described theoretical foundations so thoroughly, we need to illustrate each big idea with the code snippet for both theorem provers. I wish to place them into two-column table, side-by-side, but perhaps it'll reduce readability. I'll try.
 
 %------------------------------------------------------------
 
@@ -279,39 +267,114 @@ Although, the key difference between these two systems is that they are based on
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
 
-// TODO (Paragraph is still in progress)
+%Basically, Coq allows to define and efficiently evaluate the functions and the predicates, 
+%to machine-check these proofs by a relatively small certification "kernel";
 
-Gérard Huet, Thierry Coquand, Christine Paulin
+Coq is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. The key feature of Coq is a capability of extraction the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{tool_Coq}. This facilitates using Coq as the tool for software verification.
 
-The Coq is a computer tool for verifying theorem proofs. These theorems may concern usual mathematics, proof theory, or program verification
+The proof in Coq consists of two parts: the statement for proving, and the proof itself. During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as a pattern of reasoning, it can be already proved rule of inference, removing a hypothesis or introducing of a variable, application of the reasoning principle (s.a. induction), etc. Coq can be asked to try to find appropriate tactic from its collection in the mode \textit{auto}.
 
-Coq is a formal proof assistant system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs~\cite{tool_Coq}. Coq uses the Calculus of Construction, a higher-order formalism for constructive proofs in natural deduction style, developed by Thierry Coquand~\cite{Coq86}. 
-The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism. % in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
+In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a declarative language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and the tactics (commands for Coq to apply some pattern of reasoning) are written in Ltac. These tactics 
 
-program extraction : Haskell, Scheme and OCaml
-(add some core features of Coq ...)
+// ?else?
 
-(Coq has been used to formalize ...)
+// Not actually ready examples yet ...
+
+\begin{lstlisting}[caption={Recursive function definition: factorial}]
+... example here with 'Fixpoint' and 'Inductive'
+...
+\end{lstlisting}
+// note: Coq doesn't allow to define recursive functions without decreasing argument => always terminates
+
+\begin{lstlisting}[caption={Non-recursive function definition: factorial}]
+...
+...
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Inductive data type definition: ???}]
+...
+...
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law}]
+Lemma DeMorgan_1 : (forall A B : Prop, ~(A /\ B) -> ~A \/ ~B).
+Proof.
+intros.
+...
+Qed.
+\end{lstlisting}
+
+// ... A practical example: proof of correctness of an algorithm which sums n first members of arithmetic progression using formula $S_{n} = { {\frac {2 a_{1} + d (n - 1)}{2} \cdot n}}$ through direct counting of this sum: $S_{n} = \sum\limits_{k=0}^{n-1} (a_{1} + d \cdot k)$.
+%https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
+%, label={lst:example1}]
+\begin{lstlisting}[caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
+Lemma ... ... 
+Proof.
+...
+...
+...
+Qed.
+\end{lstlisting}
 
 %------------------------------------------------------------
 
-\subsection{The Isabelle theorem prover}
+
+\subsection{The Isabelle/HOL theorem prover}
 \label{sec:prover_isabelle}
 
 // TODO (Paragraph is still in progress)
 
-// overview good at: https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf
+
+%Isabelle/HOL (from http://isabelle.in.tum.de/dist/Isabelle2017/doc/prog-prove.pdf)
+%- позволяет работать с типизированным функциональным языком прог-ия (в кавычках, встроенный)
+%	- base types, s.a. bool, nat N, int Z
+%	- type constructors, s.a. list
+%	- function types (e.g. f :: 'a => 'b)
+%	- type variables (in ML style: 'a, 'b)
+%- Terms are formed as in functional programming by applying functions to
+%arguments
+%- HOL also supports some basic constructs from functional programming:
+%	- (if b then t1 else t2)
+%	- (let x = t in u)
+%	- (case t of pat1 ⇒ t1 | . . . | pat n ⇒ t n)
+%	- Terms may also contain λ-abstractions
+%- Formulas are terms of type bool
+%	- connectives: ¬, ∧, ∨, −→
+%- Equality is available in the form of the infix function = of type 'a ⇒ 'a ⇒ bool
+%- Quantifiers are written ∀ x . P and ∃ x . P.
+
+
+%- иллюстрация доказательства в классической логике, от противного. Теор Кантора
+%https://isabelle.in.tum.de/doc/prog-prove.pdf стр 42.
+
+
+%inductive types:
+%	- Note that inductive involves internal proofs of monotonicity of
+%	the recursive predicate specification, and the resulting introduction,
+%	elimination, induction rules. (http://plmms09.cs.tamu.edu/proceedings.pdf, page 14)
+
+
+%иногда Подсказывает, как можно проще доказать
+%напр, для ассоциативности дизъюнкции, lemma disj_swap: "P ∨ Q ⟹ Q ∨ P"
+%proof (prove)
+%goal (1 subgoal):
+%1. P ∨ Q ⟹ Q ∨ P 
+%Auto solve_direct: the current goal can be solved directly with
+%Meson.disj_comm: ?P ∨ ?Q ⟹ ?Q ∨ ?P
+%// overview good at: https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf
 
 Main people behind the system: Larry Paulson, Tobias Nipkow, Markus Wenzel
 
-is a theorem prover for various logics, including several first-order logics,
-Martin-Loef’s Type Theory, and Zermelo-Fraenkel set theory  (https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf)
+%is a theorem prover for various logics, including several first-order logics,
+%Martin-Loef’s Type Theory, and Zermelo-Fraenkel set theory  %(https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf)
 
-The Isabelle is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{tool_Isabelle}. Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification.
+%The Isabelle is an interactive theorem prover, which relies on higher-order logic. It allows mathematical formulas to be expressed in a formal language and provides tools for proving those formulas in a logical calculus~\cite{tool_Isabelle}. Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification.
 
-(add some core features of Isabelle ...)
+%Termination: "The method lexicographic_order is the default method for termination proofs." https://isabelle.in.tum.de/doc/functions.pdf
 
-(Isabelle has been used to formalize ...)
+%(add some core features of Isabelle ...)
+
+%(Isabelle has been used to formalize ...)
 
 %MOCK from wiki:
 %/* it is based on a small logical core to ease logical correctness. Isabelle is generic: it provides a meta-logic (a weak type theory), which is used to encode object logics like first-order logic (FOL), higher-order logic (HOL) or Zermelo–Fraenkel set theory (ZFC). Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification. Though interactive, Isabelle also features efficient automatic reasoning tools, such as a term rewriting engine and a tableaux prover, as well as various decision procedures. Isabelle has been used to formalize numerous theorems from mathematics and computer science, like Gödel's completeness theorem, Gödel's theorem about the consistency of the axiom of choice, the prime number theorem, correctness of security protocols, and properties of programming language semantics. The Isabelle theorem prover is free software, released under the revised BSD license.
@@ -320,10 +383,10 @@ The Isabelle is an interactive theorem prover, which relies on higher-order logi
 %------------------------------------------------------------
 
 
-\subsection{Joint comparison}
+\subsection{Results of comparison}
 \label{sec:joint_comparison}
 
-//TODO: in table:
+//TODO: perhaps in table:
 \begin{itemize}
 	\itemsep0em
 	\item expressiveness of logic used
@@ -335,16 +398,6 @@ The Isabelle is an interactive theorem prover, which relies on higher-order logi
 	\item usability
 	\item etc ...
 \end{itemize}
-
-%============================================================
-
-
-\section{Results}
-\label{sec:results}
-
-// TODO (Paragraph is still in progress)
-% Pr Tripakis' note: "i think this version can be merged into section 7, perhaps as its last subsection, 7.x"
-conclusion of comparison
 
 %============================================================
 
