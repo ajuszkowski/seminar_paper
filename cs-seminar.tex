@@ -66,20 +66,27 @@ Section~\ref{sec:formal_theory} provides definition, basic properties and theore
 
 The formal approach appeared in the beginning of previous century when mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis. At that time, multiple paradoxes in several fields of mathematics have been discovered. Moreover, the radically new theories appeared just by modification of the set of axioms, e.g., reducing the parallel postulate of Euclidean geometry has lead to completely different non-Euclidian geometries s.a. Lobachevsky's hyperbolic geometry or Riemman's elliptic geometry, that eventually have a large number of applications in both natural sciences and engineering.
 
-\subsection{Logical Systems}
+\subsection{Definition of the Formal System}
 \label{sec:definitions}
 
 % TODO: add citations!
 
 %\texttt{Definition.}
-Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world.
-%The proof system described above is called \textit{Hilbert proof system}.
+Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world. 
+
+As an example of inference rule, the widely used \textit{Modus ponens} (MP) rule can be considered: ${ {\frac {A,\ (A\rightarrow B)}{B}}}$. In this standard notation the premises are enumerated above the horizontal line and consequencess -- below it. We will use this notation further. 
+% TODO: check whether we actually use it
+
+/* TODO: The aragraph above is formulated very badly. How can I improve it?.. */
+
 
 The formulae consists of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$,
 
 Let $\Phi$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Phi \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Phi$, if there exists a proof that infers $\phi$ from $\Phi$. The formula which is provable without additional premises (i.e. $\emptyset \vdash \phi$) is called \textit{tautology} and denoted as $ \vdash \phi $. The formula is called \textit{contradiction} if $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
 
-% TODO: \subsection{ ? }
+The formal system described above is called \textit{Hilbert proof system}, it uses reasoning from \textit{truth} statements, in contrast to \textit{natural deduction systems} that use reasoning from \textit{assumptions}. Although the difference between these two formal systems seems to be subtle, the latter can be used more as framework, allowing to build new systems on the logical base of pre-defined premises and formal proof rules. % AUTHOR'S THOUGHTS, UNVERIFIED
+
+\subsection{Properties of Formal System}
 
 Let $U$ be a set of all possible formulae, let $\Gamma = \ <A, V, \Omega, R>$ be a formal system with set of axioms $A$, set of propositional variables $V$, set of logical operators $\Omega$, and set of propositional variables and set of inference rules $R$. Then $\Gamma$ is called:
 \begin{itemize}
@@ -122,7 +129,7 @@ Note, that the first-order logic is \textit{undecidable}, so that there does not
 % // two words about intuitionism, if needed (in Coq, par exemple)
 
 
-\subsection{Lambda-calculi}
+\subsection{Lambda-calculus}
 
 $\lambda$-\textit{calculus} is a universal computation model invented by Alonzo Church in 1930s as a model for formalising the concept of effective computability. This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions. According to Church–Turing thesis, $\lambda$-calculus is equivalent to Turing machine in sense that any computable function can be expressed using this formalism.
 
