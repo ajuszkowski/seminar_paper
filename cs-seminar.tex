@@ -26,7 +26,7 @@
 The need for formal definition of the very basis of mathematics raised in the last century.
 The scale and complexity of mathematics, along with discovered paradoxes, revealed the danger of accumulating errors across theories. Although, according to Gödel's incompleteness theorems, it is not possible to construct a single formal system which will describe all phenomena in the world, being complete and consistent at the same time, that crisis has considerably improved philosophical views on mathematics. 
 In addition, it gave rise to rather practical areas of logic, s.a. the theory of automated theorem proving. This is a set of techniques used to verify mathematical statements mechanically using logical reasoning. Moreover, it can be used to solve complex engineering problems as well, for instance, to prove the security properties of a software system or an algorithm.
-This paper compares two widespread tools for automated theorem proving, Coq~\cite{tool_Coq} and Isabelle~\cite{tool_Isabelle}, with respect to the power of expressiveness and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges.
+This paper compares two widespread tools for automated theorem proving, Coq~\cite{tool_Coq} and Isabelle/HOL~\cite{tool_Isabelle}, with respect to the power of expressiveness and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges.
 
 \vspace{3mm}
 \noindent KEYWORDS: logic, formal method, proof theory, automated theorem prover, Coq, Isabelle.
@@ -257,8 +257,10 @@ Describe possible applications of formal methods:
 \label{sec:comparison}
 
 We have chosen for our comparison two automated proof assistants, Coq and Isabelle/HOL~\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories s.a. Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of the proof assistant.}.
-In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be excepted. Both systems have rather large libraries with considerable amount of already proven lemmata and theorems. 
-Both systems can be used as functional programming languages since they allow to construct new data types and recursive functions.
+In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be excepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; also, they can be used as functional programming languages since they allow to construct new data types and recursive functions. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
+
+// TODO: too many 'boths' above?..
+
 
 Although, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with first-order set theory, while Coq operates with dependent types in higher order type theory, representing an implementation of intuitionistic logic. Moreover, the key feature of Coq is that it allows to extract the verified  program in OCaml or Haskell from the constructive proof of its formal specification~\cite{tool_Coq}. This capability facilitates using Coq as the tool for software verification.
 
