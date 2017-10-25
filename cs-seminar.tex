@@ -61,19 +61,19 @@ Section~\ref{sec:formal_theory} provides definition, basic properties and theore
 
 %============================================================
 
-\section{Axiomatisation and Formal systems}
+\section{Foundations of Formal Approach}
 \label{sec:formal_theory}
 
-The formal approach appeared in the beginning of previous century when mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis. At that time, multiple paradoxes in several fields of mathematics have been discovered. Moreover, the completely new theories appeared just by modification of the set of axioms, e.g., reducing the parallel postulate of Euclidean geometry has lead to completely different non-Euclidian geometries s.a. Lobachevsky's hyperbolic geometry or Riemman's elliptic geometry, that eventually have a large number of applications in both natural sciences and engineering.
+The formal approach appeared in the beginning of previous century when mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis. At that time, multiple paradoxes in several fields of mathematics have been discovered. Moreover, the radically new theories appeared just by modification of the set of axioms, e.g., reducing the parallel postulate of Euclidean geometry has lead to completely different non-Euclidian geometries s.a. Lobachevsky's hyperbolic geometry or Riemman's elliptic geometry, that eventually have a large number of applications in both natural sciences and engineering.
 
-\subsection{A logical formal system}
+\subsection{Logical Systems}
 \label{sec:definitions}
 
 % TODO: add citations!
 
 %\texttt{Definition.}
-Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world. The proof system described above is called \textit{Hilbert proof system}.
-%The set of axioms and rules of logical inference form the \textit{logical system}.
+Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world.
+%The proof system described above is called \textit{Hilbert proof system}.
 
 The formulae consists of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$,
 
@@ -119,7 +119,7 @@ Note, that the first-order logic is \textit{undecidable}, so that there does not
 % // two words about intuitionism, if needed (in Coq, par exemple)
 
 
-\subsection{Lambda-calculus}
+\subsection{Lambda-calculi}
 
 $\lambda$-\textit{calculus} is a universal computation model invented by Alonzo Church in 1930s as a model for formalising the concept of effective computability. This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions. According to Church–Turing thesis, $\lambda$-calculus is equivalent to Turing machine in sense that any computable function can be expressed using this formalism.
 
@@ -143,7 +143,7 @@ $\lambda$-calculus described above is called the \textit{type-free} $\lambda$-ca
 %non-termination of typed lambda?
 
 
-\subsection{Type systems}
+\subsection{Type Systems}
 
 A \textit{type} is a collection of elements. In a type system, each element is associated with a type, which restricts set of possible operations with this element. Types can be thought as a structure of objects, that allows to reveal useful properties of the formal system. Type theory therefore serves as an alternative to classic set theory~\cite{Tho91}.
 % TODO: remove notation below if not used.
