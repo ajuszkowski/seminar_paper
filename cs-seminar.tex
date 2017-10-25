@@ -92,6 +92,9 @@ Let $U$ be a set of all possible formulae, let $\Gamma = \ <A, V, \Omega, R>$ be
 		$\exists a \in A: \ A \vdash a$.
 \end{itemize}
 
+In 1931, Kurt Gödel proved his First incompleteness theorem which states that any consistent formal system is incomplete. Later, in 1936, Alfred Tarski extended this result by proving his Undefinability theorem which states that the concept of truth cannot be defined in a formal system. % originally: in arithmetic. Does that make sense?
+In that case, modern tools, s.a. Coq, often restrict propositions to be either provable or unprovable, rather than true or false.
+
 If the propositional variables have no restrictions on their form (i.e. they are 0-arity predicates), such logic is called \textit{propositional logic}. However, if these variables are quantified on some sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier '$\forall$' (means "for every"), and the existential quantifier '$\exists$' (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every term in .
 
 % TODO -- finish it
