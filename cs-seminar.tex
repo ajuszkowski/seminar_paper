@@ -32,7 +32,7 @@
 
 \begin{abstract}
 
-The need for formal definition of the very basis of mathematics raised in the last century.
+The need for formal definition of the very basis of mathematics arose in the last century.
 The scale and complexity of mathematics, along with discovered paradoxes, revealed the danger of accumulating errors across theories. Although, according to Gödel's incompleteness theorems, it is not possible to construct a single formal system which will describe all phenomena in the world, being complete and consistent at the same time, that crisis has considerably improved philosophical views on mathematics. 
 In addition, it gave rise to rather practical areas of logic, s.a. the theory of automated theorem proving. This is a set of techniques used to verify mathematical statements mechanically using logical reasoning. Moreover, it can be used to solve complex engineering problems as well, for instance, to prove the security properties of a software system or an algorithm.
 This paper compares two widespread tools for automated theorem proving, Coq~\cite{tool_Coq} and Isabelle/HOL~\cite{tool_Isabelle}, with respect to the power of expressiveness and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges.
@@ -47,21 +47,21 @@ This paper compares two widespread tools for automated theorem proving, Coq~\cit
 
 \section{Introduction}
 
-Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually have an impact on numerous problems in modern life. Basically, this search has led to the development of \textit{formal approach}, a methodology for manipulating the abstract essences according basic rules in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
+Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually has an impact on numerous problems in modern life. Basically, this search has led to the development of \textit{formal approach}, a methodology for manipulating the abstract essences according basic rules in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
 
 At present, a large number of tools have been developed to automate this process. Generally, these tools can be divided into two broad classes. 
 
-The first class contains tools pursuing the aim of validating the input statement (\textit{theorem}) with respect to the sequence of inference transitions (user-defined \textit{proof}) according to set of inference rules. Such tools are sometimes called \textit{proof assistants} since they may require some user interaction and may help user to develop new proofs as well. The tools \textit{Isabelle}~\cite{tool_Isabelle}, \textit{Coq}~\cite{tool_Coq}, \textit{PVS}~\cite{tool_Pvs} are well-known examples of such systems, which are commonly used nowadays.
+The first class contains tools pursuing the aim of validating the input statement (\textit{theorem}) with respect to the sequence of inference transitions (user-defined \textit{proof}) according to set of inference rules. Such tools are sometimes called \textit{proof assistants}, their purpose is to help users to develop new proofs. The tools \textit{Isabelle}~\cite{tool_Isabelle}, \textit{Coq}~\cite{tool_Coq}, \textit{PVS}~\cite{tool_Pvs} are well-known examples of such systems, which are commonly used nowadays.
 
 The second class consists of tools that automatically \textit{discover} the formal proof, which can rely either on induction, on meta argument, or on higher-order logic. Such tools are often called \textit{automated theorem provers} so that they apply techniques of automated reasoning to find the proof. The systems \textit{Otter}~\cite{tool_Otter} and \textit{ACL2}~\cite{tool_Acl} are commonly known examples of such tools.
 
-In this paper only systems of the first class were considered, since they can be sufficiently applied in model checking and software verification. 
+In this paper only systems of the first class were considered in order to test the usability of such systems.
 
 %------------------------------------------------------------
 
 
 \subsection{Related work}
-A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen 'state-of-the-art' systems for the formalization of mathematics were compared against various properties, in particular size of library with already proved lemmas, strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). As the continuation of that work, we propose more deep comparison of two aforementioned theorem provers -- Coq and Isabelle -- with respect to criteria s.a. expressiveness, computation power and usability. In section~\ref{sec:formal_theory} provides definition, basic properties and theoretical limitations of the formal systems, while section~\ref{sec:comparison} presents target comparison properties and the comparison itself.
+A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen 'state-of-the-art' systems for the formalization of mathematics were compared against various properties, in particular size of library with already proved lemmas, strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). We propose more deep comparison of two aforementioned theorem provers -- Coq and Isabelle -- with respect to criteria, s.a. expressiveness, computation power and usability. Section~\ref{sec:formal_theory} provides definition, basic properties and theoretical limitations of the formal systems, while section~\ref{sec:comparison} presents target comparison properties and the comparison itself.
 
 
 %============================================================
@@ -79,15 +79,15 @@ The formal approach appeared in the beginning of previous century when mathemati
 % TODO: add citations!
 
 %\texttt{Definition.}
-Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserve truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world. 
+Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserves truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world. 
 
 As an example of inference rule, the widely used \textit{Modus ponens} (MP) rule can be considered: ${ {\frac {A,\ (A\rightarrow B)}{B}}}$. In this standard notation the premises are enumerated above the horizontal line and consequencess -- below it. We will use this notation further. 
 % TODO: check whether we actually use it
-
-/* TODO: The aragraph above is formulated very badly. How can I improve it?.. */
 % --
 
-The formulae consists of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$,
+The formulae consist of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives is $\Omega = \{ \neg, \land, \lor, \rightarrow \}$.
+
+The formal system described above does not contain any restriction on the form of propositional variables, such logic is called \textit{propositional logic}. However, if these variables are quantified on the sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier $\forall$ (means "for every"), and the existential quantifier $\exists$ (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every expression in the formal language.
 
 Let $\Phi$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Phi \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Phi$, if there exists a proof that infers $\phi$ from $\Phi$. The formula which is provable without additional premises (i.e. $\emptyset \vdash \phi$) is called \textit{tautology} and denoted as $ \vdash \phi $. The formula is called \textit{contradiction} if $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
 
@@ -95,33 +95,31 @@ The formal system described above is called \textit{Hilbert proof system}, it us
 
 \subsection{Properties of Formal System}
 
-Let $U$ be a set of all possible formulae, let $\Gamma = \ <A, V, \Omega, R>$ be a formal system with set of axioms $A$, set of propositional variables $V$, set of logical operators $\Omega$, and set of propositional variables and set of inference rules $R$. Then $\Gamma$ is called:
+Let $U$ be a set of all possible formulae, let $\Gamma = \ <A, V, \Omega, R>$ be a formal system with set of axioms $A$, set of propositional variables $V$, set of logical operators $\Omega$, and set of inference rules $R$. Then $\Gamma$ is called:
 \begin{itemize}
 	\itemsep0em
-	\item \textit{consistent}, if no formula of the system contradicts another: \\
+	\item \textit{consistent}, if both formula and its negation can not be proved in the system: \\
 		$\nexists \phi \in \Gamma: \ \Gamma \vdash \phi \land \Gamma \vdash \neg \phi  \ \Leftrightarrow \ \Gamma \nvdash \bot$;
-	\item \textit{complete}, if all truth statements can be inferred: \\
+	\item \textit{complete}, if all true statements can be inferred: \\
 		$\forall \phi \in U: \ A \vdash \phi \lor A \vdash \neg \phi$ ;
 	\item \textit{independent}, if no axiom can be inferred from another: \\
-		$\exists a \in A: \ A \vdash a$.
+		$\not \exists a \in A: \ A \vdash a$.
 \end{itemize}
 
 In 1931, Kurt Gödel proved his First incompleteness theorem which states that any consistent formal system is incomplete. Later, in 1936, Alfred Tarski extended this result by proving his Undefinability theorem which states that the concept of truth cannot be defined in a formal system. % originally: in arithmetic. Does that make sense?
 In that case, modern tools, s.a. Coq, often restrict propositions to be either provable or unprovable, rather than true or false.
 
-If the propositional variables have no restrictions on their form (i.e. they are 0-arity predicates), such logic is called \textit{propositional logic}. However, if these variables are quantified on some sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier '$\forall$' (means "for every"), and the existential quantifier '$\exists$' (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every term in .
 
 % TODO
 // TODO -- finish it
 
-Although the higher-order logics have stronger semantics than lower-order logics, they have ...
 
-Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating.
+Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating [TODO: REFERENCE]. % TODO <-- 
 
 
 \subsection{Lambda-calculus}
 
-$\lambda$-\textit{calculus} is a universal computation model invented by Alonzo Church in 1930s as a model for formalising the concept of effective computability. This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions. According to Church–Turing thesis, $\lambda$-calculus is equivalent to Turing machine in sense that any computable function can be expressed using this formalism.
+$\lambda$-\textit{calculus} is a universal computation model invented by Alonzo Church in 1930s as a model for formalising the concept of effective computability.  This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions.
 
 The central concept in $\lambda$-calculus is an \textit{expression}, which can be defined as a subject for application the rewriting rules~\cite{Bar88}. The basic rewriting rules of $\lambda$-calculus are listed below:
 
@@ -151,7 +149,7 @@ A \textit{type} is a collection of elements. In a type system, each element is a
 % TODO: remove notation below if not used.
 In our notation, the $a =_{\tau} b$ means that $a$ equals $b$ and both of them are of type $\tau$. This notation is used for convenience to encode information about type to equality.
 
-The function that builds new type from another is called \textit{type constructor}. Such functions have been used long before type theories had been constructed formally, even in the~XIX~century Giuseppe Peano used type constructor $S$ (\textit{successor} function) along with zero element 0 to axiomatise natural number arithmetic. Thus, number 3 can be constructed as $S(S(S(0))))$.
+The function that builds new type from another is called \textit{type constructor}. Such functions have been used long before type theories had been constructed formally, even in the~19th~century Giuseppe Peano used type constructor $S$ called the \textit{successor} function, along with zero element 0, to axiomatise natural number arithmetic. Thus, number 3 can be constructed as $S(S(S(0))))$.
 
 
 \subsubsection{Simple Type Theory}
@@ -175,7 +173,7 @@ The type can be defined declaratively, by assigning a label to set of values. Su
 \subsubsection{Martin-Löf Type Theory}
 also known as \textit{Intuitionistic type theory}, is based on the principles of mathematical constructivism which requires to find a way to "construct" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is hold by the \textit{inductive types} which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
 
-Intuitionistic type theory also  uses wide class of \textit{dependent types}, whose definition depends on a value. For instance, the $n$-ary tuple is a dependent type that is defined by value of~$n$. Although, type checking for such a system appears to be undecidable problem, since determining the equality of two arbitrary dependent types becomes to be tantamount to problem of inducing the equivalence of two non-trivial programs, which is undecidable in general case according to the Rice's theorem~\cite{Rice53}.
+Intuitionistic type theory also  uses wide class of \textit{dependent types}, whose definition depends on a value. For instance, the $n$-ary tuple is a dependent type that is defined by value of~$n$. Although, type checking for such a system is an undecidable problem, as determining the equality of two arbitrary dependent types becomes to be tantamount to problem of inducing the equivalence of two non-trivial programs, which is undecidable in general case according to the Rice's theorem~\cite{Rice53}.
 
 %A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate. 
 
@@ -248,7 +246,7 @@ bla-bla correspondence, isomorphism, very interesting thing...
 \label{sec:comparison}
 
 We have chosen for our comparison two automated proof assistants, Coq and Isabelle/HOL~\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories s.a. Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of the proof assistant.}.
-In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be excepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; also, they can be used as functional programming languages since they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
+In general, they both work in similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; also, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
 
 // TODO: too many 'boths'?..
 
@@ -257,11 +255,11 @@ In general, they both work in similar way: given definition of a statement, they
 
 Although, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
 
-Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial  proof: the Four colour theorem (2004), Lax-Milgram theorem (2017), etc.~\cite{Wiedijk100}. Also, the theorem provers have been successfully used for testing and verifying of software programs: general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and other.
+Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial  proof: the Four colour theorem (2004), Lax-Milgram theorem (2017), etc.~\cite{Wiedijk100}. Also, the theorem provers have been successfully used for testing and verifying of software programs: general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
 
 Both Coq and Isabelle have their own IDE to work in (gtk-based CoqIDE and jEdit Prover IDE respectively). They also have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports lots of proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
-// The idea of comparison below is following: since we have described theoretical foundations so thoroughly, we need to illustrate each big idea with the code snippet for both theorem provers. I wish to place them into two-column table, side-by-side, but perhaps it'll reduce readability. I'll try.
+// The idea of comparison below is following: as we have described theoretical foundations so thoroughly, we need to illustrate each big idea with the code snippet for both theorem provers. I wish to place them into two-column table, side-by-side, but perhaps it'll reduce readability. I'll try.
 
 %------------------------------------------------------------
 
@@ -272,11 +270,11 @@ Both Coq and Isabelle have their own IDE to work in (gtk-based CoqIDE and jEdit 
 %Basically, Coq allows to define and efficiently evaluate the functions and the predicates, 
 %to machine-check these proofs by a relatively small certification "kernel";
 
-Coq is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. The key feature of Coq is a capability of extraction the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{tool_Coq}. This facilitates using Coq as the tool for software verification.
+Coq is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{tool_Coq}. This facilitates using Coq as a tool for software verification.
 
-The proof in Coq consists of two parts: the statement for proving, and the proof itself. During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as a pattern of reasoning, it can be already proved rule of inference, removing a hypothesis or introducing of a variable, application of the reasoning principle (s.a. induction), etc. Coq can be asked to try to find appropriate tactic from its collection in the mode \textit{auto}.
+During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as a pattern of reasoning, it can be already proved rule of inference, removing a hypothesis or introducing of a variable, application of the reasoning principle (s.a. induction), etc. Coq can be asked to try to find appropriate tactic from its collection in the mode \textit{auto}.
 
-In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and the tactics (commands for Coq to apply some pattern of reasoning) are written in Ltac. These tactics 
+In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and the tactics (inference rules) are written in Ltac. These tactics 
 
 // ?else?
 
