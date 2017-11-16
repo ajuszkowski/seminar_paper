@@ -11,7 +11,7 @@
 \renewcommand*\lstlistingname{Example}
 \usepackage{chngcntr}
 %\usepackage{color}
-
+\usepackage{courier}  % fix the error `pdflatex (file t1xtt): Font t1xtt at 600 not found`
 
 \begin{document}
 \counterwithin{lstlisting}{section}
@@ -280,14 +280,24 @@ In proofs, Coq combines two languages: \textit{Gallina}, a purely functional pro
 
 // Not actually ready examples yet ...
 
+%http://www.seas.upenn.edu/~cis500/current/sf/lf-current/Basics.html#lab30
+% also see https://gist.github.com/bbc2/092e224a78f17ed9c437
+
+\begin{lstlisting}
+Inductive nat : Type :=
+	| O : nat
+	| S : nat -> nat.
+\end{lstlisting}
+
 \begin{lstlisting}[caption={Recursive function definition: factorial}]
 ... example here with 'Fixpoint' and 'Inductive'
-...
+...//fix x (v : V) : X := t Recursive function.
 \end{lstlisting}
-// note: Coq doesn't allow to define recursive functions without decreasing argument => always terminates
+// "Syntactic restriction on recursive calls on term":
+// Coq doesn't allow to define recursive functions without decreasing argument => always terminates
 
 \begin{lstlisting}[caption={Non-recursive function definition: factorial}]
-...
+//cheatsheet //fun x : X => t Non-recursive function.
 ...
 \end{lstlisting}
 
@@ -296,6 +306,7 @@ In proofs, Coq combines two languages: \textit{Gallina}, a purely functional pro
 ...
 \end{lstlisting}
 
+% see http://perso.ens-lyon.fr/jeremy.ledent/coq/coq_tutorial_solutions.v
 \begin{lstlisting}[caption={Propositional logic proof: de Morgan's law}]
 Lemma DeMorgan_1 : (forall A B : Prop, ~(A /\ B) -> ~A \/ ~B).
 Proof.
@@ -336,6 +347,18 @@ Another widely used proof assistant is Isabelle. Developed by Larry Paulson in T
 
 // Not actually ready examples yet ...
 
+% proof of simple propositional formula
+%Theorem forward_small : (forall A B : Prop, A -> (A->B) -> B).
+%Proof.
+%intros A.
+%intros B.
+%intros proof_of_A.
+%intros A_implies_B.
+%pose (proof_of_B := A_implies_B proof_of_A).
+%exact proof_of_B.
+%Qed.
+
+
 \begin{lstlisting}[caption={Recursive function definition: factorial}]
 ...
 ...
@@ -356,6 +379,22 @@ Lemma DeMorgan_1 : (forall A B : Prop, ~(A /\ B) -> ~A \/ ~B).
 Proof.
 intros.
 ...
+Qed.
+
+
+
+
+
+
+Lemma de_morgan : forall P Q : Prop, ~P \/ ~Q -> ~(P /\ Q).
+Proof.
+intros P Q H H'.
+destruct H' as [H1 H2].
+destruct H.
+- apply H.
+assumption.
+- apply H.
+assumption.
 Qed.
 \end{lstlisting}
 
@@ -404,6 +443,8 @@ Qed.
 
 %------------------------------------------------------------
 
+
+% see https://people.cs.kuleuven.be/~bart.jacobs/coq-essence.pdf, 11 Coq versus classical logic
 
 \subsection{Results of comparison}
 \label{sec:joint_comparison}

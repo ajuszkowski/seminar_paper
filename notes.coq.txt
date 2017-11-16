@@ -76,6 +76,13 @@ tactics=proof combining primitives
  xor	= \p \q . p (not q) q
 
  
+- Позволяет писать макросы
+Notation "x && y" := (andb x y).
+
+!!! see examples: https://github.com/haklabbeograd/software-foundations-coq-workshop
+
+ОБЯЗАТЕЛЬНО показать, как генерируются программы на хаскелле
+
 ===== COQ =====
 
 [Source: https://habrahabr.ru/post/182442/]
