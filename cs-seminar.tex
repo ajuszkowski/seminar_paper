@@ -5,10 +5,28 @@
 %\usepackage{inconsolata}  % for mono font
 \usepackage{amssymb}  % for negated \vdash
 \usepackage{amsmath}  % for multi-line equations
-\usepackage{listings}  % for code snippets
+
+
+\usepackage{listings,multicol}  % for code snippets
+%\definecolor{light-gray}{black}{0.5}
 \lstset{ 
-	basicstyle=\small,stringstyle=\ttfamily,keywordstyle=\color{blue}\bfseries\underbar,numbers=left,tabsize=2,} % setup listings package
-\renewcommand*\lstlistingname{Example}
+	basicstyle=\footnotesize\ttfamily,
+	%numbers=left,
+	tabsize=2,
+	frame=rltb,
+	showspaces=false,
+	showstringspaces=false,
+	breaklines=true,
+%	multicols=2,
+	xleftmargin=2em,
+	captionpos=b,
+	rulecolor=\color{gray},
+	escapeinside={[*}{*]}
+} % setup listings package
+\renewcommand*\lstlistingname{Figure}
+
+%\usepackage{parcolumns} %\usepackage{paracol} %for 2-column listings, not installed
+
 \usepackage{chngcntr}
 %\usepackage{color}
 \usepackage{courier}  % fix the error `pdflatex (file t1xtt): Font t1xtt at 600 not found`
@@ -241,39 +259,155 @@ bla-bla correspondence, isomorphism, very interesting thing...
 \section{Comparison of some theorem provers}
 \label{sec:comparison}
 
-We have chosen for our comparison two automated proof assistants, Coq and Isabelle/HOL~\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories such as Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of the proof assistant.}.
-In general, they both work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
-
-// TODO: may I say "... inherent for functional languages" ?
-
-Nonetheless, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
-
-Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
-
-Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). They also have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
+We have chosen for our comparison two automated proof assistants, \textit{Coq} and \textit{Isabelle/HOL}\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories such as Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of this proof assistant.} as they both are widely used tools for theorem proving.
 
 
 %------------------------------------------------------------
 
-
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
-
-%Basically, Coq allows to define and efficiently evaluate the functions and the predicates, 
-%to machine-check these proofs by a relatively small certification "kernel";
 
 Coq is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{tool_Coq}. This facilitates using Coq as a tool for software verification.
 
 During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as a pattern of reasoning, it can be already proved rule of inference, removing a hypothesis or introducing of a variable, application of the reasoning principle (such as induction), etc. Coq can be asked to try to find appropriate tactic from its collection in the mode \textit{auto}.
 
-In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and the tactics (inference rules) are written in Ltac. These tactics 
+In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and the tactics (inference rules) are written in Ltac. These tactics  // TODO !!! % TODO: describe tactics
+
+
+// "Coq's built-in logic is very small: the only primitives are Inductive definitions, universal quantification (forall), and implication (->), while all the other familiar logical connectives — conjunction, disjunction, negation, existential quantification, even equality — can be encoded using just these."
+%// https://softwarefoundations.cis.upenn.edu/sf-3.2/Logic.html
+
+// In Coq, "Implications are functions"
+
+// The \texttt{False} in Coq is a type without a constructor:
+	"Inductive False : Prop := ." 
+"Intuition: False is a proposition for which there is no way to give evidence."
+=> show the proof of 'ex falso quodlibet' ?
+
+"Inductive True : Prop := I : True." ("a proposition for which it is trivial to give evidence" => always true proposition)
+%(https://softwarefoundations.cis.upenn.edu/sf-3.2/Logic.html)
+
+
 
 // ?else?
 
-// Not actually ready examples yet ...
-
 %http://www.seas.upenn.edu/~cis500/current/sf/lf-current/Basics.html#lab30
+
+
+%------------------------------------------------------------
+
+\subsection{The Isabelle/HOL theorem prover}
+\label{sec:prover_isabelle}
+
+Isabelle was developed by Larry Paulson in Technical University of Munich as a successor of HOL theorem prover~\cite{tool_HOL}. Isabelle was released for the first time in 1986 (two years after the Coq's first release). It was built in a modular manner, i.e., it has relatively small core, which can be extended by numerous basic theories that describe logic behind Isabelle. In particular, the theory of higher-order logic is implemented as Isabelle/HOL, and it is commonly used because of its expressivity and relative conciseness. Similarly to Coq, it combines several languages in its proofs: HOL as a functional programming language (which must be always in quotes), and the language for describing procedures for manipulating the proof. Unlike Coq, Isabelle supports more expressive style of proofs written in a declarative fashion in language Isar.
+
+// IDE allows to randomly pick jump to any place in the syntax tree of the proof and view the state (in spite of Coq, where only the forward-backward operations are allowed).
+
+% citing: """Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification."""
+
+// some words on termination checks in Isabelle (unlike Coq)
+%Termination: "The method lexicographic_order is the default method for termination proofs.
+% https://isabelle.in.tum.de/doc/functions.pdf page 4
+
+// ?else?
+
+%------------------------------------------------------------
+
+
+\subsection{Common features}
+
+In general, both Coq and Isabelle work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
+
+Nonetheless, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
+
+Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
+
+Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
+
+
+%------------------------------------------------------------
+
+\subsection{Illustrative examples}
+
+%............................................................
+\subsubsection{First-order Logic}
+
+Following examples illustrate the usage of Coq and Isabelle/HOL in order to prove first-order statements. 
+
+Figure~\ref{Coq:DeMorgan_Prop} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
+
+\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law for propositions},label={Coq:DeMorgan_Prop}]
+Theorem DeMorgan : (forall P Q : Prop),
+    ~P /\ ~Q <-> ~(P \/ Q).
+Proof.
+    intros P Q.
+    unfold iff.
+    split.
+	- intros H_and_not H_or.
+	  destruct H_and_not as [H_not_P H_not_Q].
+	  destruct H_or as [H_P | H_Q].
+      + apply H_not_P. assumption.
+      + apply H_not_Q. assumption.
+    - intros H_not_or. unfold not. constructor.
+      + intro H_P. apply H_not_or. left. apply H_P.
+      + intro H_Q. apply H_not_or. right. apply H_Q.
+Qed.
+\end{lstlisting}
+
+<here bool is inductively defined => can use destruct, which expands the definition of inductive type>
+\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law for booleans},label={Coq:DeMorgan_bool}]
+Print bool.  (* Inductive bool : Set :=  true : bool | false : bool *)
+
+Notation "a || b" := (orb a b).
+Notation "a && b" := (andb a b).
+
+Theorem DeMorgan_bool : (forall a b: bool),
+    negb (a || b) = ((negb a) && (negb b)).
+Proof.
+    intros a b.
+    destruct a; simpl; reflexivity.
+Qed.
+\end{lstlisting}
+
+
+<the law of excluded middle P \\/ ~P is disallowed in intuitionistic logic, so 
+%todo https://stackoverflow.com/questions/32812834/how-to-prove-excluded-middle-is-irrefutable-in-coq
+
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+%............................................................
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%............................................................
+
+%............................................................
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%............................................................
+
+%............................................................
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%............................................................
+
+%............................................................
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%............................................................
+
+%............................................................
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%............................................................
+
+%............................................................
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%............................................................
+
+
+
+
+
+
+
 % also see https://gist.github.com/bbc2/092e224a78f17ed9c437
+
 
 \begin{lstlisting}
 Inductive nat : Type :=
@@ -299,7 +433,7 @@ Inductive nat : Type :=
 \end{lstlisting}
 
 % see http://perso.ens-lyon.fr/jeremy.ledent/coq/coq_tutorial_solutions.v
-\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law}]
+	\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law}]
 Lemma DeMorgan_1 : (forall A B : Prop, ~(A /\ B) -> ~A \/ ~B).
 Proof.
 intros.
@@ -318,26 +452,6 @@ Proof.
 ...
 Qed.
 \end{lstlisting}
-
-%------------------------------------------------------------
-
-
-\subsection{The Isabelle/HOL theorem prover}
-\label{sec:prover_isabelle}
-
-Another widely used proof assistant is Isabelle. Developed by Larry Paulson in Technical University of Munich, it was released for the first time in 1986 (two years after the Coq's first release). It was built in a modular fashion -- containing relatively small part of "pure" Isabelle, it has numerous basic theories that describe logic behind Isabelle. In particular, the theory of higher-order logic is implemented as Isabelle/HOL, and it is commonly used because of its expressivity and relative conciseness. As Coq, it combines several languages in its proofs: HOL as a functional programming language (which must be always in quotes), and the language for describing procedures for manipulating the proof. Unlike Coq, Isabelle supports more expressive style of proofs written in a declarative fashion in language Isar.
-
-// IDE allows to randomly pick jump to any place in the syntax tree of the proof and view the state (in spite of Coq, where only the forward-backward operations are allowed).
-
-% citing: """Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification."""
-
-// some words on termination checks in Isabelle (unlike Coq)
-%Termination: "The method lexicographic_order is the default method for termination proofs.
-% https://isabelle.in.tum.de/doc/functions.pdf page 4
-
-// ?else?
-
-// Not actually ready examples yet ...
 
 % proof of simple propositional formula
 %Theorem forward_small : (forall A B : Prop, A -> (A->B) -> B).
@@ -364,30 +478,6 @@ Another widely used proof assistant is Isabelle. Developed by Larry Paulson in T
 \begin{lstlisting}[caption={Inductive data type definition: list}]
 ...
 ...
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law}]
-Lemma DeMorgan_1 : (forall A B : Prop, ~(A /\ B) -> ~A \/ ~B).
-Proof.
-intros.
-...
-Qed.
-
-
-
-
-
-
-Lemma de_morgan : forall P Q : Prop, ~P \/ ~Q -> ~(P /\ Q).
-Proof.
-intros P Q H H'.
-destruct H' as [H1 H2].
-destruct H.
-- apply H.
-assumption.
-- apply H.
-assumption.
-Qed.
 \end{lstlisting}
 
 // Isabelle's feature: non-constructive logic!
