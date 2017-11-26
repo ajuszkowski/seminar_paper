@@ -261,6 +261,9 @@ bla-bla correspondence, isomorphism, very interesting thing...
 
 We have chosen for our comparison two automated proof assistants, \textit{Coq} and \textit{Isabelle/HOL}\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories such as Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of this proof assistant.} as they both are widely used tools for theorem proving.
 
+%TODO: intuitionistic logic VS classical logic:
+"There are theorems of CPC that are unprovable in IPC, but not vice versa, so the latter logic is strictly weaker. "
+%source: https://books.google.fi/books?id=GEilBAAAQBAJ&pg=PA116&lpg=PA116&dq=cpc+ipc+logic&source=bl&ots=PhdmaUzjhe&sig=taRlu2rx6J3NyeD-flYE0xpOK8I&hl=fi&sa=X&ved=0ahUKEwitxey59tzXAhWmDZoKHbbZA3YQ6AEINjAB#v=onepage&q=cpc%20ipc%20logic&f=false
 
 %------------------------------------------------------------
 
@@ -316,36 +319,40 @@ Isabelle was developed by Larry Paulson in Technical University of Munich as a s
 
 \subsection{Common features}
 
-In general, both Coq and Isabelle work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
+In general, both Coq and Isabelle work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
 
-Nonetheless, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
 
-Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
+Nonetheless, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
+
+
+Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
+
 
 Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
 
 %------------------------------------------------------------
 
-\subsection{Illustrative examples}
-
-%............................................................
-\subsubsection{First-order Logic}
-
-Following examples illustrate the usage of Coq and Isabelle/HOL in order to prove first-order statements. 
+\subsection{First-order Logic Proofs}
 
 Figure~\ref{Coq:DeMorgan_Prop} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
 
-\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law for propositions},label={Coq:DeMorgan_Prop}]
-Theorem DeMorgan : (forall P Q : Prop),
+\begin{lstlisting}[caption={Definition of basic propositional terms in Coq}]
+Check False. (* output: Prop : Type *)
+Print False. (* output: Inductive False : Prop :=  *)
+Print True.  (* output: Inductive True : Prop :=  I : True *)
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={Coq:DeMorgan_Prop}]
+
+Theorem DeMorgan : forall P Q : Prop,
     ~P /\ ~Q <-> ~(P \/ Q).
 Proof.
-    intros P Q.
-    unfold iff.
+    intros P Q. unfold iff.
     split.
-	- intros H_and_not H_or.
-	  destruct H_and_not as [H_not_P H_not_Q].
-	  destruct H_or as [H_P | H_Q].
+    - intros H_and_not H_or.
+      destruct H_and_not as [H_not_P H_not_Q].
+      destruct H_or as [H_P | H_Q].
       + apply H_not_P. assumption.
       + apply H_not_Q. assumption.
     - intros H_not_or. unfold not. constructor.
@@ -354,14 +361,56 @@ Proof.
 Qed.
 \end{lstlisting}
 
-<here bool is inductively defined => can use destruct, which expands the definition of inductive type>
+<tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
+\begin{lstlisting}
+Theorem DeMorgan : forall P Q : Prop, 
+    ~P /\ ~Q <-> ~(P \/ Q).
+Proof.
+    tauto.
+Qed.
+\end{lstlisting}
+
+<but Coq's logic does not include the axiom of excluded middle:>
+% from here https://coq.inria.fr/tutorial/1-basic-predicate-calculus
+\begin{lstlisting}
+Lemma ExcludedMiddle: forall P, 
+    P \/ ~P.
+Proof.
+    try tauto.  (* tauto fails in Coq's intuitionistic logic *)
+Abort.
+\end{lstlisting}
+
+<idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
+% source: http://coq-club.inria.narkive.com/jqsPmOBk/is-a-prop-a-a-provable-in-coq
+% from here https://stackoverflow.com/a/32813110 
+% TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
+%"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
+
+\begin{lstlisting}
+Lemma DoubleNegatedExcludedMiddle: forall P : Prop, 
+    ~~(P \/ ~P).
+Proof.
+    unfold not. 
+    intros P f.
+    apply f.
+    right. 
+    intro P_holds.
+    apply f.
+    left.
+    exact P_holds.
+Qed.
+\end{lstlisting}
+
+<here bool is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
 \begin{lstlisting}[caption={Propositional logic proof: de Morgan's law for booleans},label={Coq:DeMorgan_bool}]
-Print bool.  (* Inductive bool : Set :=  true : bool | false : bool *)
+Check bool.  (* output: bool : Set *)
+Check false. (* output: false : bool *)
+Print bool.  (* output: Inductive bool : Set :=  true : bool | false : bool *)
 
 Notation "a || b" := (orb a b).
 Notation "a && b" := (andb a b).
 
-Theorem DeMorgan_bool : (forall a b: bool),
+Theorem DeMorgan_bool : forall a b: bool,
     negb (a || b) = ((negb a) && (negb b)).
 Proof.
     intros a b.
@@ -370,9 +419,12 @@ Qed.
 \end{lstlisting}
 
 
-<the law of excluded middle P \\/ ~P is disallowed in intuitionistic logic, so 
-%todo https://stackoverflow.com/questions/32812834/how-to-prove-excluded-middle-is-irrefutable-in-coq
 
+
+<non-provable stmt 2**sqrt(2) irrational....>
+
+<non-provable formule de Peirce is insoluble
+P,Q: Prop |-? ((P->Q)->P)->P
 % . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 
