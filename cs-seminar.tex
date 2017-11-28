@@ -296,25 +296,41 @@ Since their first release, both Coq and Isabelle have already been used to forma
 Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
 
+%------------------------------------------------------------
+
+\subsection{Differences}
+
+
 The key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
 
-// tactics = inference rules
+Intuitionistic Logic: excl middle is forbidden => not not P no longer implies P and (p or not p) is no longer provable.
+
+% Think: on slide 111 of http://www.seas.upenn.edu/~jean/what-isa-proof.pdf there's said "No de Morgan laws", But we have proved (further) it in Coq without excl middle axiom.
+
+// DIFFERENCES BTW CLASSIC AND INTUITIONISTIC LOGIC
+see slide page 101 %http://www.seas.upenn.edu/~jean/what-isa-proof.pdf
+(and book by prof.)
+
+// Existence proofs are often non-constructive
+
+
+// tactics = inference rules (?)
 
 
 %------------------------------------------------------------
 
-\subsection{Propositional Logic Proofs}
+\subsection{Example Proofs}
 
 //Let's prove some propositional tautologies here
 
 \subsubsection{Propositional Intuitionistic Logic in Coq}
 
 // in '(*' brackets - comment
-\begin{lstlisting}[language=Coq,caption={Definition of basic propositional terms in Coq}]
+\begin{coq}[caption={Definition of basic propositional terms in Coq}]
 Check False. (* output: Prop : Type *)
 Print False. (* output: Inductive False : Prop :=  *)
 Print True.  (* output: Inductive True : Prop :=  I : True *)
-\end{lstlisting}
+\end{coq}
 
 
 <tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
@@ -338,13 +354,15 @@ Proof.
 Abort.
 \end{lstlisting}
 
-<idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
+// Note, that Coq's logic can be extended by assuming the excluded middle fact as an axiom (we use that in the proof ??? of nth number of arith progr)
+
+Nonetheless, <idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
 % source: http://coq-club.inria.narkive.com/jqsPmOBk/is-a-prop-a-a-provable-in-coq
 % from here https://stackoverflow.com/a/32813110 
 % TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
 %"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
 
-\begin{lstlisting}[language=coq]
+\begin{coq}
 Lemma DoubleNegatedExcludedMiddle_Coq:
     forall P : Prop, ~~(P \/ ~P).
 Proof.
@@ -357,8 +375,15 @@ Proof.
     left.          (* apply disjunction elimination inference rule *)
     exact P_holds. (* match the goal with one of the hypotheses *)
 Qed.
-\end{lstlisting}
+\end{coq}
 
+// so, in this way intuitionistic logic can model classic logic (?)
+
+In Isabelle, vice versa: it can model intuitionistic logic by not using the excluded middle law (see theory IFOL [REFERENCE]):  % FOL: http://isabelle.in.tum.de/library/FOL/FOL/document.pdf
+
+Still, double negation is easily proved in classic logic:
+\begin{isabelle}
+\end{isabelle}
 
 
 //Figure~\ref{Coq:DeMorgan_Prop} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
@@ -366,7 +391,7 @@ Qed.
 //Let's prove that $\neg (P \lor Q) \leftrightarrow (\neg P \land \neg Q)$
     (* this simple propositional formula can be easily solved by the tactic tauto *)
     
-\begin{lstlisting}[language=coq,caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={DeMorganPropositional_Coq}]
+\begin{coq}[caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={DeMorganPropositional_Coq}]
 
 Theorem DeMorganPropositional_Coq:
     forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.
@@ -382,26 +407,10 @@ Proof.
       + apply H_not_P. assumption.
       + apply H_not_Q. assumption.
 Qed.
-\end{lstlisting}
+\end{coq}
 
 
-<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
-\begin{lstlisting}[language=coq,caption={Propositional logic proof: de Morgan's law for booleans},label={Coq:DeMorgan_bool}]
-Check bool.  (* output: bool : Set *)
-Check false. (* output: false : bool *)
-Print bool.  (* output: Inductive bool : Set :=  true : bool | false : bool *)
 
-(* define macroses *)
-Notation "a || b" := (orb a b).
-Notation "a && b" := (andb a b).
-
-Theorem DeMorganBoolean_Coq:
-    forall a b: bool, negb (a || b) = ((negb a) && (negb b)).
-Proof.
-    intros a b.
-    destruct a; simpl; reflexivity.
-Qed.
-\end{lstlisting}
 
 
 //For Isabelle, the proof looks very mathematical:
@@ -446,8 +455,6 @@ Proof.
 Qed.
 \end{lstlisting}
 
-%............................................................
- 
 For Isabelle, see here %https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
 \begin{lstlisting}[language=isabelle]
 lemma DeMorganQuantified_Isabelle:
@@ -469,9 +476,31 @@ qed
 \end{lstlisting}
 
 
+%------------------------------------------------------------
+%\subsubsection{Higher-Order Logic Proofs}
 
-\subsubsection{Higher-Order Logic Proofs}
 
+%------------------------------------------------------------
+
+\subsubsection{Intuitionistic Type Theory}
+
+<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
+\begin{lstlisting}[language=coq,caption={Propositional logic proof: de Morgan's law for booleans},label={Coq:DeMorgan_bool}]
+Check bool.  (* output: bool : Set *)
+Check false. (* output: false : bool *)
+Print bool.  (* output: Inductive bool : Set :=  true : bool | false : bool *)
+
+(* define macroses: *)
+Notation "a || b" := (orb a b).
+Notation "a && b" := (andb a b).
+
+Theorem DeMorganBoolean_Coq:
+    forall a b: bool, negb (a || b) = ((negb a) && (negb b)).
+Proof.
+    intros a b.
+    destruct a; simpl; reflexivity.
+Qed.
+\end{lstlisting}
 //for Isabelle, see p.10 'Polymorph. types', e.g. prove "Suc = Suc" %http://isabelle.in.tum.de/doc/intro.pdf
 
 
@@ -592,6 +621,8 @@ Qed.
 \end{lstlisting}
 
 
+
+
 %------------------------------------------------------------
 
 
@@ -616,7 +647,12 @@ Qed.
 
 Coq requires more mathematical background to even understand manuals (not just tactics, but rather deep knowledge of lambda-calculus to understand different types of reduction, functional programming and inductively created types ... ... ...)
 
+Isabelle has more powerful meta-language syntax to operate tactics: it allows to use the functional combinators of tactics called tacticals for building up complex tactics from simpler ones. Common tacticals perform sequential composition, disjunc-
+tive choice, iteration, or goal addressing, which make Isar the Turing-complete language in the domain of logic <TODO: say better (?)>. [REFERENCE: implementaion.pdf in Isabelle Jedit]. In comparison, Coq allows to use only the composition of tactics. Moreover, Isar has more relaxed syntax than Gallina in sense that its proof look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume "\<not> P x" then have "\<exists>x. \<not> P x"}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
+
 Isabelle is very well documented, all its manuals and documentation is compiled as a set of pdf files and is supplied with Isabelle setup bundle. Coq's manuals were in web, so numerous of files were inaccessible or even lost.
+
+
 %============================================================
 
 
