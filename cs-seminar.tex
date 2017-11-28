@@ -1,38 +1,8 @@
 \documentclass[article]{aaltoseries}
-\usepackage[utf8]{inputenc} % or \usepackage{fontspec}
-\usepackage{enumitem}  % remove spaces before enumerations and lists
-\usepackage{url}
-%\usepackage{inconsolata}  % for mono font
-\usepackage{amssymb}  % for negated \vdash
-\usepackage{amsmath}  % for multi-line equations
-
-
-\usepackage{listings,multicol}  % for code snippets
-%\definecolor{light-gray}{black}{0.5}
-\lstset{ 
-	basicstyle=\footnotesize\ttfamily,
-	%numbers=left,
-	tabsize=2,
-	frame=rltb,
-	showspaces=false,
-	showstringspaces=false,
-	breaklines=true,
-%	multicols=2,
-	xleftmargin=2em,
-	captionpos=b,
-	rulecolor=\color{gray},
-	escapeinside={[*}{*]}
-} % setup listings package
-\renewcommand*\lstlistingname{Figure}
-
-%\usepackage{parcolumns} %\usepackage{paracol} %for 2-column listings, not installed
-
-\usepackage{chngcntr}
-%\usepackage{color}
-\usepackage{courier}  % fix the error `pdflatex (file t1xtt): Font t1xtt at 600 not found`
+\input{include/cs-seminar.sty}
 
 \begin{document}
-\counterwithin{lstlisting}{section}
+%\counterwithin{lstlisting}{section}
 
 %=========================================================
 
