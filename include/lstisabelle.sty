@@ -9,28 +9,21 @@
 % keyword level 4 - isabelle proof methods
 
 \lstdefinelanguage{isabelle}{
-    morekeywords={theorem,theorems,corollary,lemma,lemmas,locale,begin,end,fixes,assumes,shows,
+    morekeywords={theorem,theorems,corollary,lemma,lemmas,locale,begin,end,fixes,assume,assumes, shows,
         constrains , definition, where, apply, done,unfolding, primrec, using, by, for, uses,
         schematic_lemma, concrete_definition, prepare_code_thms, export_code, datatype,
         proof, next, qed, show, have, hence, thus, interpretation, fix, context
     },
-    morekeywords=[2]{rec, return, bind, foreach, if, then, else, and, do, let, in, res, spec, fail, assert, while, case, of},
+    morekeywords=[2]{rec, return, bind, foreach, if, then, else, and, do, let, in, res, spec, fail, assert, while, case, of, with, thesis},
     %  morekeywords=[3]{length,mod,insert},
     %   morekeywords=[4]{simp,auto,intro,elim,rprems,refine_mono,refine_rcg},
     sensitive=true,
     morecomment=[s]{(*}{*)},
+    morestring=[b]",
     mathescape=true,
-    %escapeinside={--"}{"},
-    %basicstyle={\itshape},
-    %keywordstyle=\rm\bfseries,
-    %keywordstyle=[2]\rm\tt,
-    %keywordstyle=[3]\rm,
-    %keywordstyle=[4]\rm,
-    %showstringspaces=false,
     keepspaces=true,
     %columns=[c]fullflexible,
     literate=
-        %{"}{}0
         {'}{{${}^\prime$}}1
         {\%}{{$\lambda$}}1
         {\\\%}{{$\lambda$}}1

@@ -311,8 +311,6 @@ The key difference between these two systems is that they are based on different
 
 // in '(*' brackets - comment
 \begin{lstlisting}[language=Coq,caption={Definition of basic propositional terms in Coq}]
-Section PropositionalLogic.
-
 Check False. (* output: Prop : Type *)
 Print False. (* output: Inductive False : Prop :=  *)
 Print True.  (* output: Inductive True : Prop :=  I : True *)
@@ -321,8 +319,8 @@ Print True.  (* output: Inductive True : Prop :=  I : True *)
 
 <tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
 //Let's prove that ~$\vdash (P \lor \neg P) $
-\begin{lstlisting}
-Theorem DeMorgan : forall P Q : Prop, 
+\begin{lstlisting}[language=coq]
+Theorem DeMorgan_Auto_Coq : forall P Q : Prop, 
     ~P /\ ~Q <-> ~(P \/ Q).
 Proof.
     tauto.
@@ -332,9 +330,9 @@ Qed.
 
 <but Coq's logic does not include the axiom of excluded middle:>
 % from here https://coq.inria.fr/tutorial/1-basic-predicate-calculus
-\begin{lstlisting}
-Lemma ExcludedMiddle: forall P, 
-    P \/ ~P.
+\begin{lstlisting}[language=coq]
+Lemma ExcludedMiddle_AutoFails_Coq:
+    forall P, P \/ ~P.
 Proof.
     try tauto.  (* tauto fails in Coq's intuitionistic logic *)
 Abort.
@@ -347,8 +345,8 @@ Abort.
 %"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
 
 \begin{lstlisting}[language=coq]
-Lemma DoubleNegatedExcludedMiddle: forall P : Prop, 
-~~(P \/ ~P).
+Lemma DoubleNegatedExcludedMiddle_Coq:
+    forall P : Prop, ~~(P \/ ~P).
 Proof.
     unfold not.    (* apply ~P ==> P -> False *)
     intros P f.    (* move premises to the set of hypotheses *)
@@ -368,10 +366,10 @@ Qed.
 //Let's prove that $\neg (P \lor Q) \leftrightarrow (\neg P \land \neg Q)$
     (* this simple propositional formula can be easily solved by the tactic tauto *)
     
-\begin{lstlisting}[language=coq,caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={Coq:DeMorgan_Prop}]
+\begin{lstlisting}[language=coq,caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={DeMorganPropositional_Coq}]
 
-Theorem DeMorgan : forall P Q : Prop,
-    ~(P \/ Q) <-> ~P /\ ~Q.
+Theorem DeMorganPropositional_Coq:
+    forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.
 Proof.
     intros P Q. unfold iff.
     split.
@@ -397,8 +395,8 @@ Print bool.  (* output: Inductive bool : Set :=  true : bool | false : bool *)
 Notation "a || b" := (orb a b).
 Notation "a && b" := (andb a b).
 
-Theorem DeMorgan_bool : forall a b: bool,
-    negb (a || b) = ((negb a) && (negb b)).
+Theorem DeMorganBoolean_Coq:
+    forall a b: bool, negb (a || b) = ((negb a) && (negb b)).
 Proof.
     intros a b.
     destruct a; simpl; reflexivity.
@@ -443,7 +441,7 @@ Proof.
     unfold not.
     intros H_not_P_x.
     apply H_not_notexist.
-    exists x.
+    [*\color{dkblue}{exists}*] x.
     exact H_not_P_x.
 Qed.
 \end{lstlisting}
@@ -457,7 +455,7 @@ lemma DeMorganQuantified_Isabelle:
     shows "\<exists>x. \<not> P x"
     proof (rule classical)
         assume "\<nexists>x. \<not> P x"
-        have "\<forall>x. P x"  (* comment *)
+        have "\<forall>x. P x"
         proof
             fix x show "P x"
             proof (rule classical)
@@ -466,7 +464,7 @@ lemma DeMorganQuantified_Isabelle:
                 with \<open>\<nexists>x. \<not> P x\<close> show ?thesis by contradiction
         qed
     qed
-    with \<open>\<not> (\<forall>x. P x)\<close> show ?thesis by contradiction
+    with \<open>\<not>(\<forall>x. P x)\<close> show ?thesis by contradiction
 qed
 \end{lstlisting}
 
@@ -476,36 +474,11 @@ qed
 
 //for Isabelle, see p.10 'Polymorph. types', e.g. prove "Suc = Suc" %http://isabelle.in.tum.de/doc/intro.pdf
 
-%............................................................
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-%............................................................
-
-%............................................................
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-%............................................................
-
-%............................................................
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-%............................................................
-
-%............................................................
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-%............................................................
-
-%............................................................
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-%............................................................
-
-
-
-
-
-
 
 % also see https://gist.github.com/bbc2/092e224a78f17ed9c437
 
 
-\begin{lstlisting}
+\begin{lstlisting}[language=coq]
 Inductive nat : Type :=
 	| O : nat
 	| S : nat -> nat.

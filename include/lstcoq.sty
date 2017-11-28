@@ -21,7 +21,7 @@
         Inductive, CoInductive, Record, Structure, Canonical, Coercion,
         Context, Class, Global, Instance, Program, Infix,
         Theorem, Lemma, Corollary, Proposition, Fact, Remark, Example,
-        Proof, Goal, Save, Qed, Defined, Hint, Resolve, Rewrite, View,
+        Proof, Goal, Save, Qed, Abort, Defined, Hint, Resolve, Rewrite, View,
         Search, Show, Check, Print, Printing, All, Graph, Projections, inside, outside},
     %
     % Gallina
@@ -30,7 +30,7 @@
         for, of, nosimpl, when},
     %
     % Sorts
-    morekeywords=[3]{Type, Prop, Set},
+    morekeywords=[3]{Type, Prop, Set, O, S},
     %
     % Various tactics, some are std Coq subsumed by ssr, for the manual purpose
     morekeywords=[4]{
@@ -41,12 +41,11 @@
         replace, fold, unfold, change, cutrewrite, simpl,
         have, suff, wlog, suffices, without, loss, nat_norm,
         assert, cut, trivial, revert, bool_congr, nat_congr,
-        symmetry, transitivity, auto, split, autorewrite},
-    % symmetry, transitivity, auto, split, left, right, autorewrite},
+        symmetry, transitivity, auto, split, left, right, autorewrite},
     %
     % Terminators
     morekeywords=[5]{
-        by, done, exact, reflexivity, tauto, romega, omega,
+        by, done, exact, reflexivity, auto, tauto, romega, omega,
         assumption, solve, contradiction, discriminate},
     %
     % Control
@@ -87,7 +86,6 @@
     % {=}{{\tt=}\,\,}2
     % {+}{{\tt+}\,\,}2,
     %
-    % Comments delimiters, we do turn this off for the manual
     morecomment=[s]{(*}{*)},
     %
     % Spaces are not displayed as a special character
@@ -139,30 +137,31 @@
     %moredelim=**[is][\ttfamily\color{red}]{/&}{&/},
     %litterate
     literate=
-    {\\equiv}{{$\leftrightarrow\,$}}3
-    {==>}{{$\Rightarrow$}}1 
-    {=>}{{$\Rightarrow$}}1
-    {>->}{{$\rightarrowtail$}}2
-    {->}{{$\rightarrow\,$}}2
-    {<-}{{$\leftarrow\,$}}2
-    {++}{{$\cup$}}1
-    {<==}{{$\subseteq$}}1
-    {|-}{{\quad$\vdash$\quad}}1
-    {forall}{{$\forall$}}1
-    {exists}{{$\exists$}}1
-    {=o=}{{$\circeq$}}1
-    {\\fun}{{$\lambda$}}1
-    {|>}{{$\rhd$}}1
-    {\\oplus}{{$\oplus$}}1
-    {\\tab}{{\quad}}1
-    {\\_}{{ }}1
-    {||}{{$\vee$}}1
-    {\&\&}{{$\wedge$}}1
-    {\\bool}{{$\mathbb{B}$}}1
-    {\\data}{{$\mathbb{T}$}}1
-    {\\times}{{$\times$}}1
-    {\\xorb}{{$\oplus$}}1
-    {\\andb}{{$\wedge$}}1
+        {\\equiv}{{$\leftrightarrow\,$}}3
+        {==>}{{$\Rightarrow$}}1 
+        {=>}{{$\Rightarrow$}}1
+        {>->}{{$\rightarrowtail$}}2
+        {->}{{$\longrightarrow\,$}}2
+        {<-}{{$\longleftarrow\,$}}2
+        {<->}{{$\longleftrightarrow\,$}}2
+        {++}{{$\cup$}}1
+        {<==}{{$\subseteq$}}1
+        {|-}{{\quad$\vdash$\quad}}1
+        {forall}{{$\forall$}}1
+        {exists}{{$\exists$}}1
+        {=o=}{{$\circeq$}}1
+        {\\fun}{{$\lambda$}}1
+        {|>}{{$\rhd$}}1
+        {\\oplus}{{$\oplus$}}1
+        {\\tab}{{\quad}}1
+        {\\_}{{ }}1
+        {||}{{$\vee$}}1
+        {\&\&}{{$\wedge$}}1
+        {\\bool}{{$\mathbb{B}$}}1
+        {\\data}{{$\mathbb{T}$}}1
+        {\\times}{{$\times$}}1
+        {\\xorb}{{$\oplus$}}1
+        {\\andb}{{$\wedge$}}1
     %
 }[keywords,strings]
 
