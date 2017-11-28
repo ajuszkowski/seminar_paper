@@ -1,0 +1,99 @@
+
+Query commands should not be inserted in scripts
+Nat.le_sub_l: forall n m : nat, n - m <= n
+Nat.sub_diag: forall n : nat, n - n = 0
+Nat.sub_0_l: forall n : nat, 0 - n = 0
+minus_diag_reverse: forall n : nat, 0 = n - n
+Nat.sub_0_r: forall n : nat, n - 0 = n
+minus_n_O: forall n : nat, n = n - 0
+Nat.sub_add_le: forall n m : nat, n <= n - m + m
+minus_plus: forall n m : nat, n + m - n = m
+Nat.add_sub: forall n m : nat, n + m - m = n
+lt_O_minus_lt: forall n m : nat, 0 < n - m -> m < n
+Nat.sub_le_mono_l: forall n m p : nat, n <= m -> p - m <= p - n
+Nat.sub_le_mono_r: forall n m p : nat, n <= m -> n - p <= m - p
+Nat.sub_succ: forall n m : nat, S n - S m = n - m
+Nat.sub_1_r: forall n : nat, n - 1 = Nat.pred n
+pred_of_minus: forall n : nat, Init.Nat.pred n = n - 1
+Nat.divide_sub_r: forall n m p : nat, Nat.divide n m -> Nat.divide n p -> Nat.divide n (m - p)
+Nat.lt_sub_lt_add_r: forall n m p : nat, n - p < m -> n < m + p
+Nat.le_add_le_sub_l: forall n m p : nat, n + p <= m -> p <= m - n
+Nat.le_add_le_sub_r: forall n m p : nat, n + p <= m -> n <= m - p
+Nat.lt_sub_lt_add_l: forall n m p : nat, n - m < p -> n < m + p
+PeanoNat.Nat.sub_wd_obligation_1: Morphisms.respectful eq (Morphisms.respectful eq eq) Init.Nat.sub Init.Nat.sub
+Nat.log2_shiftr: forall a n : nat, Nat.log2 (Nat.shiftr a n) = Nat.log2 a - n
+Nat.sub_succ_r: forall n m : nat, n - S m = Nat.pred (n - m)
+Nat.sub_add: forall n m : nat, n <= m -> m - n + n = m
+plus_minus: forall n m p : nat, n = m + p -> p = n - m
+le_plus_minus: forall n m : nat, n <= m -> m = n + (m - n)
+Nat.add_sub_eq_l: forall n m p : nat, m + p = n -> n - m = p
+Nat.mul_pred_r: forall n m : nat, n * Nat.pred m = n * m - n
+le_plus_minus_r: forall n m : nat, n <= m -> n + (m - n) = m
+minus_plus_simpl_l_reverse: forall n m p : nat, n - m = p + n - (p + m)
+Nat.sub_add_distr: forall n m p : nat, n - (m + p) = n - m - p
+Nat.add_sub_eq_r: forall n m p : nat, m + p = n -> n - p = m
+Nat.sub_lt: forall n m : nat, m <= n -> 0 < m -> n - m < n
+Nat.sub_0_le: forall n m : nat, n - m = 0 <-> n <= m
+Nat.lt_add_lt_sub_r: forall n m p : nat, n + p < m <-> n < m - p
+Nat.le_sub_le_add_l: forall n m p : nat, n - m <= p <-> n <= m + p
+Nat.le_sub_le_add_r: forall n m p : nat, n - p <= m <-> n <= m + p
+Nat.lt_add_lt_sub_l: forall n m p : nat, n + p < m <-> p < m - n
+not_le_minus_0: forall n m : nat, ~ m <= n -> n - m = 0
+Nat.sub_gt: forall n m : nat, m < n -> n - m <> 0
+Nat.mul_sub_distr_r: forall n m p : nat, (n - m) * p = n * p - m * p
+Nat.mul_sub_distr_l: forall n m p : nat, p * (n - m) = p * n - p * m
+Nat.gcd_sub_diag_r: forall n m : nat, n <= m -> Nat.gcd n (m - n) = Nat.gcd n m
+Nat.sub_max_distr_r: forall n m p : nat, Nat.max (n - p) (m - p) = Nat.max n m - p
+Nat.sub_min_distr_r: forall n m p : nat, Nat.min (n - p) (m - p) = Nat.min n m - p
+Nat.sub_succ_l: forall n m : nat, n <= m -> S m - n = S (m - n)
+Nat.sub_nocarry_ldiff: forall a b : nat, Nat.ldiff b a = 0 -> a - b = Nat.ldiff a b
+Nnat.N2Nat.inj_sub: forall a a' : N, N.to_nat (a - a') = N.to_nat a - N.to_nat a'
+Nnat.Nat2N.inj_sub: forall n n' : nat, N.of_nat (n - n') = (N.of_nat n - N.of_nat n')%N
+minus_Sn_m: forall n m : nat, m <= n -> S (n - m) = S n - m
+inj_minus2: forall n m : nat, m > n -> Z.of_nat (n - m) = 0%Z
+Nat.sub_max_distr_l: forall n m p : nat, Nat.max (p - n) (p - m) = p - Nat.min n m
+Nat.sub_min_distr_l: forall n m p : nat, Nat.min (p - n) (p - m) = p - Nat.max n m
+Nat.sub_wd: Morphisms.Proper (Morphisms.respectful eq (Morphisms.respectful eq eq)) Init.Nat.sub
+Nat.add_sub_assoc: forall n m p : nat, p <= m -> n + (m - p) = n + m - p
+Nat.add_sub_swap: forall n m p : nat, p <= n -> n + m - p = n - p + m
+Nat.lnot_sub_low: forall a n : nat, Nat.log2 a < n -> Nat.lnot a n = Nat.ones n - a
+Nat.shiftr_shiftl_l: forall a n m : nat, m <= n -> Nat.shiftr (Nat.shiftl a n) m = Nat.shiftl a (n - m)
+Nat.shiftr_shiftl_r: forall a n m : nat, n <= m -> Nat.shiftr (Nat.shiftl a n) m = Nat.shiftr a (m - n)
+Nat.odd_sub: forall n m : nat, m <= n -> Nat.odd (n - m) = xorb (Nat.odd n) (Nat.odd m)
+Nat2Z.inj_sub: forall n m : nat, m <= n -> Z.of_nat (n - m) = (Z.of_nat n - Z.of_nat m)%Z
+Nat.even_sub: forall n m : nat, m <= n -> Nat.even (n - m) = Bool.eqb (Nat.even n) (Nat.even m)
+Pos2Nat.inj_sub: forall p q : positive, (q < p)%positive -> Pos.to_nat (p - q) = Pos.to_nat p - Pos.to_nat q
+Nat2Z.inj_sub_max: forall n m : nat, Z.of_nat (n - m) = Z.max 0 (Z.of_nat n - Z.of_nat m)
+Nat.add_sub_eq_nz: forall n m p : nat, p <> 0 -> n - m = p -> m + p = n
+Nat.shiftl_spec_high': forall a n m : nat, n <= m -> Nat.testbit (Nat.shiftl a n) m = Nat.testbit a (m - n)
+Nat.shiftl_specif_high: forall a n m : nat, n <= m -> Nat.testbit (Nat.shiftl a n) m = Nat.testbit a (m - n)
+Z2Nat.inj_sub: forall n m : Z, (0 <= m)%Z -> Z.to_nat (n - m) = Z.to_nat n - Z.to_nat m
+Nat.mod_eq: forall a b : nat, b <> 0 -> a mod b = a - b * (a / b)
+Nat2Pos.inj_sub: forall n m : nat, m <> 0 -> Pos.of_nat (n - m) = (Pos.of_nat n - Pos.of_nat m)%positive
+Pos2Nat.inj_sub_max: forall p q : positive, Pos.to_nat (p - q) = Nat.max 1 (Pos.to_nat p - Pos.to_nat q)
+Nat.shiftl_spec_high:
+  forall a n m : nat, 0 <= m -> n <= m -> Nat.testbit (Nat.shiftl a n) m = Nat.testbit a (m - n)
+Nat.ones_div_pow2: forall n m : nat, m <= n -> Nat.ones n / 2 ^ m = Nat.ones (n - m)
+Zabs2Nat.inj_sub: forall n m : Z, (0 <= m <= n)%Z -> Z.abs_nat (n - m) = Z.abs_nat n - Z.abs_nat m
+nat_of_P_minus_morphism:
+  forall p q : positive, Pos.compare_cont Eq p q = Gt -> Pos.to_nat (p - q) = Pos.to_nat p - Pos.to_nat q
+Nat.pow_sub_r: forall a b c : nat, a <> 0 -> c <= b -> a ^ (b - c) = a ^ b / a ^ c
+Nat.mul_pow2_bits_high: forall a n m : nat, n <= m -> Nat.testbit (a * 2 ^ n) m = Nat.testbit a (m - n)
+List.firstn_app:
+  forall (A : Type) (n : nat) (l1 l2 : list A),
+  List.firstn n (l1 ++ l2) = (List.firstn n l1 ++ List.firstn (n - length l1) l2)%list
+List.rev_nth:
+  forall (A : Type) (l : list A) (d : A) (n : nat),
+  n < length l -> List.nth n (List.rev l) d = List.nth (length l - S n) l d
+List.app_nth2:
+  forall (A : Type) (l l' : list A) (d : A) (n : nat),
+  n >= length l -> List.nth n (l ++ l') d = List.nth (n - length l) l' d
+List.nth_error_app2:
+  forall (A : Type) (l l' : list A) (n : nat),
+  length l <= n -> List.nth_error (l ++ l') n = List.nth_error l' (n - length l)
+Nat.divmod_spec:
+  forall x y q u : nat,
+  u <= y -> let (q', u') := Nat.divmod x y q u in x + S y * q + (y - u) = S y * q' + (y - u') /\ u' <= y
+Nat.sqrt_iter_spec:
+  forall k p q r : nat,
+  q = p + p -> r <= q -> let s := Nat.sqrt_iter k p q r in s * s <= k + p * p + (q - r) < S s * S s

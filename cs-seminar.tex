@@ -175,16 +175,16 @@ Another important constructive type theory is the Calculus of Constructions~(CoC
 
 The CoC has \text{strong normalisation property}, which means that every sequence of inference eventually terminates with an irreducible normal form. This property does not allow to define infinitely recursive structures and functions. % TODO: check whether one can say that with respect to any formal system, not only to an abstract rewriting system
 
-Inference rules for the Calculus of Constructions:
-\begin{enumerate}
-	\item ${\displaystyle {{} \over {}\Gamma \vdash P:T}}$
-	\item ${\displaystyle {\Gamma \vdash A:K \over {\Gamma ,x:A\vdash x:A}}}$
-	\item ${\displaystyle {\Gamma ,x:A\vdash B:K\qquad \Gamma ,x:A\vdash N:B \over {\Gamma \vdash (\lambda x:A.N):(\forall x:A.B):K}}}$
-	\item ${\displaystyle {\Gamma \vdash M:(\forall x:A.B)\qquad \Gamma \vdash N:A \over {\Gamma \vdash MN:B[x:=N]}}}$
-	\item ${\displaystyle {\Gamma \vdash M:A\qquad A=_{\beta }B\qquad B:K \over {\Gamma \vdash M:B}}}$ % \over {\Gamma \vdash M : B}}
-\end{enumerate}
-
-// TODO: add explanations to the inference rules or delete them
+%Inference rules for the Calculus of Constructions:
+%\begin{enumerate}
+%    \item ${\displaystyle {{} \over {}\Gamma \vdash P:T}}$
+%    \item ${\displaystyle {\Gamma \vdash A:K \over {\Gamma ,x:A\vdash x:A}}}$
+%    \item ${\displaystyle {\Gamma ,x:A\vdash B:K\qquad \Gamma ,x:A\vdash N:B \over {\Gamma \vdash (\lambda x:A.N):(\forall x:A.B):K}}}$
+%    \item ${\displaystyle {\Gamma \vdash M:(\forall x:A.B)\qquad \Gamma \vdash N:A \over {\Gamma \vdash MN:B[x:=N]}}}$
+%    \item ${\displaystyle {\Gamma \vdash M:A\qquad A=_{\beta }B\qquad B:K \over {\Gamma \vdash M:B}}}$ % \over {\Gamma \vdash M : B}}
+%\end{enumerate}
+%
+%// TODO: add explanations to the inference rules or delete them
 
 In 1990, Christine Paulin proposed the \textit{Calculus of Inductive Constructions}~(CIC) as an extension of Calculus of Construction by adding the Martin-Löf's primitive inductive definitions in order to perform efficient computation of the functions over inductive data types~\cite{Pau2015}. This formalism lies behind the Coq proof assistant.
 
@@ -282,6 +282,10 @@ Isabelle was developed by Larry Paulson in Technical University of Munich as a s
 %Termination: "The method lexicographic_order is the default method for termination proofs.
 % https://isabelle.in.tum.de/doc/functions.pdf page 4
 
+//~\isabelleinline{A ==> B ==> C} means ~\isabelleinline{A ==> (B ==> C)} and ~\isabelleinline{[| A; B |] ==> C}, where ~\texttt{A}~ and ~\texttt{B}~ are premises, \texttt{C} is conclusion.
+
+// HOL: Higher-order = functions are values, too
+
 // ?else?
 
 %------------------------------------------------------------
@@ -314,7 +318,7 @@ see slide page 101 %http://www.seas.upenn.edu/~jean/what-isa-proof.pdf
 // Existence proofs are often non-constructive
 
 
-// tactics = inference rules (?)
+// tactics = inference rules
 
 
 %------------------------------------------------------------
@@ -537,63 +541,74 @@ Inductive nat : Type :=
 // "Syntactic restriction on recursive calls on term":
 // Coq doesn't allow to define recursive functions without decreasing argument => always terminates
 
-\begin{lstlisting}[caption={Non-recursive function definition: factorial}]
-//cheatsheet //fun x : X => t Non-recursive function.
-...
-\end{lstlisting}
-
 \begin{lstlisting}[caption={Inductive data type definition: ???}]
 ...
 ...
 \end{lstlisting}
 
-% see http://perso.ens-lyon.fr/jeremy.ledent/coq/coq_tutorial_solutions.v
-	\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law}]
-Lemma DeMorgan_1 : (forall A B : Prop, ~(A /\ B) -> ~A \/ ~B).
-Proof.
-intros.
-...
-Qed.
-\end{lstlisting}
 
 // ... A practical example: proof of correctness of an algorithm which sums n first members of arithmetic progression using formula $S_{n} = { {\frac {2 a_{1} + d (n - 1)}{2} \cdot n}}$ through direct counting of this sum: $S_{n} = \sum\limits_{k=0}^{n-1} (a_{1} + d \cdot k)$.
 %https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
 %, label={lst:example1}]
-\begin{lstlisting}[caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
-Lemma ... ... 
+\begin{lstlisting}[language=coq,caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
+Require Import Coq.[*\color{black}omega*].Omega.
+Require Coq.Logic.Classical.
+
+Fixpoint nth_member (a_0 d n: nat) : nat :=
+match n with
+    | 0 => a_0
+    | S p => d + (nth_member a_0 d p)
+end.
+Compute nth_member 3 2 4.
+
+Theorem nth_member_formula : forall a_0 d n: nat,
+    (nth_member a_0 d n) = a_0 + d * n.
 Proof.
-...
-...
-...
+    intros.
+    induction n; simpl.
+    - rewrite -> Nat.mul_0_r.
+      rewrite -> Nat.add_0_r.
+      reflexivity.
+    - induction n; rewrite -> IHn.
+        + rewrite -> Nat.mul_0_r.
+          rewrite -> Nat.add_0_r.
+          rewrite -> Nat.mul_1_r.
+          rewrite -> Nat.add_comm.
+          reflexivity.
+        + rewrite <- Nat.add_1_l.
+          rewrite -> (Nat.mul_succ_r d (1 + n)).
+          omega.
 Qed.
+
 \end{lstlisting}
 
-% proof of simple propositional formula
-%Theorem forward_small : (forall A B : Prop, A -> (A->B) -> B).
-%Proof.
-%intros A.
-%intros B.
-%intros proof_of_A.
-%intros A_implies_B.
-%pose (proof_of_B := A_implies_B proof_of_A).
-%exact proof_of_B.
-%Qed.
 
 
-\begin{lstlisting}[caption={Recursive function definition: factorial}]
-...
-...
-\end{lstlisting}
 
-\begin{lstlisting}[caption={Non-recursive function definition: factorial}]
-...
-...
-\end{lstlisting}
 
-\begin{lstlisting}[caption={Inductive data type definition: list}]
-...
-...
-\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Isabelle's feature: non-constructive logic!
 %- иллюстрация доказательства в классической логике, от противного. Теор Кантора
@@ -665,10 +680,14 @@ Qed.
 Coq requires more mathematical background to even understand manuals (not just tactics, but rather deep knowledge of lambda-calculus to understand different types of reduction, functional programming and inductively created types ... ... ...)
 
 Isabelle has more powerful meta-language syntax to operate tactics: it allows to use the functional combinators of tactics called tacticals for building up complex tactics from simpler ones. Common tacticals perform sequential composition, disjunctive choice, iteration, or goal addressing, which make Isar the Turing-complete language in the domain of logic <TODO: say better (?)>. [REFERENCE: implementaion.pdf in Isabelle Jedit]. In comparison, Coq allows to use only the composition of tactics. 
+NOTE!!! Coq allows combinations of tactics as well, see: %https://stackoverflow.com/questions/43823343/how-to-repeat-proof-tactics-in-case-in-coq
+
 Moreover, Isar allow more relaxed syntax in sense that its proof may look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume "\<not> P x" then have "\<exists>x. \<not> P x"}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
 
 Isabelle is very well documented, all its manuals and documentation is compiled as a set of pdf files and is supplied with Isabelle setup bundle. Coq's manuals were in web, so numerous of files were inaccessible or even lost.
 
+
+% у isabelle вначале предполагаем, потом проверяем, у coq просто приходим к этому
 
 %============================================================
 
