@@ -9,22 +9,17 @@
 % keyword level 4 - isabelle proof methods
 
 \lstdefinelanguage{isabelle}{
-    morekeywords={theorem,theorems,corollary,lemma,lemmas,locale,begin,end,fixes,assume,assumes, shows,
-        constrains , definition, where, apply, done,unfolding, primrec, using, by, for, uses,
-        schematic_lemma, concrete_definition, prepare_code_thms, export_code, datatype,
-        proof, next, qed, show, have, hence, thus, interpretation, fix, context
-    },
+    morekeywords={theorem,theorems,corollary,lemma,lemmas,locale,begin,end,fixes,assume,assumes, shows, constrains , definition, where, apply, done,unfolding, primrec, using, by, for, uses, schematic_lemma, concrete_definition, prepare_code_thms, export_code, datatype, proof, next, qed, show, have, hence, thus, interpretation, fix, context },
     morekeywords=[2]{rec, return, bind, foreach, if, then, else, and, do, let, in, res, spec, fail, assert, while, case, of, with, thesis},
-    %  morekeywords=[3]{length,mod,insert},
-    %   morekeywords=[4]{simp,auto,intro,elim,rprems,refine_mono,refine_rcg},
     sensitive=true,
     morecomment=[s]{(*}{*)},
+    morestring=[s]{<}{>},
     morestring=[b]",
     mathescape=true,
     keepspaces=true,
     %columns=[c]fullflexible,
     literate=
-        {'}{{${}^\prime$}}1
+    	{'}{{${}^\prime$}}1
         {\%}{{$\lambda$}}1
         {\\\%}{{$\lambda$}}1
         {\\\$}{{$\mathbin{\,\$\,}$}}1
@@ -134,8 +129,8 @@
         {>>=}{{${\gg}{=}$}}1
         {<*lex*>}{{$\times_{\sf lex}$}}1
         {\\<nexists>}{$\nexists$}1%
-        {\\<open>}{\scalebox{0.8}{<}}1%
-        {\\<close>}{\scalebox{0.8}{>}}1%{$\rangle$}1%
+        {\\<open>}{ {\scalebox{0.8}{<}} }1%
+        {\\<close>}{ {\scalebox{0.8}{>}} }1%{$\rangle$}1%
 }[keywords,strings]
 
 \lstnewenvironment{isabelle}{\lstset{language=isabelle}}{}

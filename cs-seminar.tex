@@ -468,10 +468,10 @@ lemma DeMorganQuantified_Isabelle:
             proof (rule classical)
                 assume "\<not> P x"
                 then have "\<exists>x. \<not> P x" ..
-                with \<open>\<nexists>x. \<not> P x\<close> show ?thesis by contradiction
+                with <\<nexists>x. \<not> P x> show ?thesis by contradiction
         qed
     qed
-    with \<open>\<not>(\<forall>x. P x)\<close> show ?thesis by contradiction
+    with < \<not>(\<forall>x. P x) > show ?thesis by contradiction
 qed
 \end{lstlisting}
 
@@ -647,8 +647,7 @@ Qed.
 
 Coq requires more mathematical background to even understand manuals (not just tactics, but rather deep knowledge of lambda-calculus to understand different types of reduction, functional programming and inductively created types ... ... ...)
 
-Isabelle has more powerful meta-language syntax to operate tactics: it allows to use the functional combinators of tactics called tacticals for building up complex tactics from simpler ones. Common tacticals perform sequential composition, disjunc-
-tive choice, iteration, or goal addressing, which make Isar the Turing-complete language in the domain of logic <TODO: say better (?)>. [REFERENCE: implementaion.pdf in Isabelle Jedit]. In comparison, Coq allows to use only the composition of tactics. Moreover, Isar has more relaxed syntax than Gallina in sense that its proof look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume "\<not> P x" then have "\<exists>x. \<not> P x"}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
+Isabelle has more powerful meta-language syntax to operate tactics: it allows to use the functional combinators of tactics called tacticals for building up complex tactics from simpler ones. Common tacticals perform sequential composition, disjunctive choice, iteration, or goal addressing, which make Isar the Turing-complete language in the domain of logic <TODO: say better (?)>. [REFERENCE: implementaion.pdf in Isabelle Jedit]. In comparison, Coq allows to use only the composition of tactics. Moreover, Isar has more relaxed syntax than Gallina in sense that its proof look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume "\<not> P x" then have "\<exists>x. \<not> P x"}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
 
 Isabelle is very well documented, all its manuals and documentation is compiled as a set of pdf files and is supplied with Isabelle setup bundle. Coq's manuals were in web, so numerous of files were inaccessible or even lost.
 
