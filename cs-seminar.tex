@@ -326,11 +326,11 @@ see slide page 101 %http://www.seas.upenn.edu/~jean/what-isa-proof.pdf
 \subsubsection{Propositional Intuitionistic Logic in Coq}
 
 // in '(*' brackets - comment
-\begin{coq}[caption={Definition of basic propositional terms in Coq}]
+\begin{lstlisting}[language=coq,caption={Definition of basic propositional terms in Coq}]
 Check False. (* output: Prop : Type *)
 Print False. (* output: Inductive False : Prop :=  *)
 Print True.  (* output: Inductive True : Prop :=  I : True *)
-\end{coq}
+\end{lstlisting}
 
 
 <tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
@@ -362,7 +362,7 @@ Nonetheless, <idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a co
 % TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
 %"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
 
-\begin{coq}
+\begin{lstlisting}[language=coq]
 Lemma DoubleNegatedExcludedMiddle_Coq:
     forall P : Prop, ~~(P \/ ~P).
 Proof.
@@ -375,15 +375,15 @@ Proof.
     left.          (* apply disjunction elimination inference rule *)
     exact P_holds. (* match the goal with one of the hypotheses *)
 Qed.
-\end{coq}
+\end{lstlisting}
 
 // so, in this way intuitionistic logic can model classic logic (?)
 
 In Isabelle, vice versa: it can model intuitionistic logic by not using the excluded middle law (see theory IFOL [REFERENCE]):  % FOL: http://isabelle.in.tum.de/library/FOL/FOL/document.pdf
 
 Still, double negation is easily proved in classic logic:
-\begin{isabelle}
-\end{isabelle}
+\begin{lstlisting}[language=isabelle]
+\end{lstlisting}
 
 
 //Figure~\ref{Coq:DeMorgan_Prop} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
@@ -391,7 +391,7 @@ Still, double negation is easily proved in classic logic:
 //Let's prove that $\neg (P \lor Q) \leftrightarrow (\neg P \land \neg Q)$
     (* this simple propositional formula can be easily solved by the tactic tauto *)
     
-\begin{coq}[caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={DeMorganPropositional_Coq}]
+\begin{lstlisting}[language=coq,caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={DeMorganPropositional_Coq}]
 
 Theorem DeMorganPropositional_Coq:
     forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.
@@ -407,18 +407,35 @@ Proof.
       + apply H_not_P. assumption.
       + apply H_not_Q. assumption.
 Qed.
-\end{coq}
-
-
-
-
-
-//For Isabelle, the proof looks very mathematical:
-% outline: https://math.stackexchange.com/a/1635653
-\begin{lstlisting}
-
 \end{lstlisting}
 
+
+//For Isabelle, same proof:
+% source: https://www.inf.ed.ac.uk/teaching/courses/ar/isabelle/exercises/propositional/sol.pdf
+\begin{lstlisting}[language=isabelle]
+lemma DeMorganPropositional_Isabelle: "(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
+
+apply (rule iffI)      (* split equality into two subgoals *)
+(* "Forward" subgoal: 1. \<not>(P \<and> Q) ==> \<not> P \<or> \<not> Q *)
+apply (rule classical) (* 1. \<not> (P \<and> Q) ==> \<not> (\<not> P \<or> \<not> Q) ==> \<not> P \<or> \<not> Q *)
+apply (erule notE)     (* 1. \<not> (\<not> P \<or> \<not> Q) ==> P \<and> Q *)
+apply (rule conjI)     (* 1. \<not> (\<not> P \<or> \<not> Q) ==> P; 2. \<not> (\<not> P \<or> \<not> Q) ==> Q *)
+apply (rule classical) (* 1. \<not> (\<not> P \<or> \<not> Q) ==> \<not> P ==> P *)
+apply (erule notE)     (* 1. \<not> P ==> \<not> P \<or> \<not> Q *)
+apply (rule disjI1)    (* 1. \<not> P ==> \<not> P *)
+apply assumption       (* 1. (solved). 2. \<not> (\<not> P \<or> \<not> Q) ==> Q *)
+apply (rule classical) (* 2. \<not> (\<not> P \<or> \<not> Q) ==> \<not> Q ==> Q *)
+apply (erule notE)     (* 2. \<not> Q ==> \<not> P \<or> \<not> Q *)
+apply (rule disjI2)    (* 2. \<not> Q ==> \<not> Q *)
+apply assumption       (* 2. (solved) *)
+(* "Backward" subgoal: 3. \<not> P \<or> \<not> Q ==> \<not> (P \<and> Q) *)
+apply (rule notI)   (* 3. \<not> P \<or> \<not> Q ==> P \<and> Q ==> False *)   
+apply (erule conjE) (* 3. \<not> P \<or> \<not> Q ==> P ==> Q ==> False *)
+apply (erule disjE) (* 3. P==> Q==> \<not>P==> False; 4. P==> Q==> \<not>Q==> False *)
+apply (erule notE, assumption)+  (* 3. (solved); 4. (solved) *)
+
+done
+\end{lstlisting}
 
 
 <very hardly provable stmt 2**sqrt(2) irrational....>
@@ -471,7 +488,7 @@ lemma DeMorganQuantified_Isabelle:
                 with <\<nexists>x. \<not> P x> show ?thesis by contradiction
         qed
     qed
-    with < \<not>(\<forall>x. P x) > show ?thesis by contradiction
+    with <\<not>(\<forall>x. P x)> show ?thesis by contradiction
 qed
 \end{lstlisting}
 
@@ -647,7 +664,8 @@ Qed.
 
 Coq requires more mathematical background to even understand manuals (not just tactics, but rather deep knowledge of lambda-calculus to understand different types of reduction, functional programming and inductively created types ... ... ...)
 
-Isabelle has more powerful meta-language syntax to operate tactics: it allows to use the functional combinators of tactics called tacticals for building up complex tactics from simpler ones. Common tacticals perform sequential composition, disjunctive choice, iteration, or goal addressing, which make Isar the Turing-complete language in the domain of logic <TODO: say better (?)>. [REFERENCE: implementaion.pdf in Isabelle Jedit]. In comparison, Coq allows to use only the composition of tactics. Moreover, Isar has more relaxed syntax than Gallina in sense that its proof look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume "\<not> P x" then have "\<exists>x. \<not> P x"}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
+Isabelle has more powerful meta-language syntax to operate tactics: it allows to use the functional combinators of tactics called tacticals for building up complex tactics from simpler ones. Common tacticals perform sequential composition, disjunctive choice, iteration, or goal addressing, which make Isar the Turing-complete language in the domain of logic <TODO: say better (?)>. [REFERENCE: implementaion.pdf in Isabelle Jedit]. In comparison, Coq allows to use only the composition of tactics. 
+Moreover, Isar allow more relaxed syntax in sense that its proof may look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume "\<not> P x" then have "\<exists>x. \<not> P x"}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
 
 Isabelle is very well documented, all its manuals and documentation is compiled as a set of pdf files and is supplied with Isabelle setup bundle. Coq's manuals were in web, so numerous of files were inaccessible or even lost.
 
