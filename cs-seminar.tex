@@ -291,47 +291,36 @@ Isabelle was developed by Larry Paulson in Technical University of Munich as a s
 
 In general, both Coq and Isabelle work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages. Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017.
 
-
-Nonetheless, the key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
-
-
 Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
-
 
 Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
 
+The key difference between these two systems is that they are based on different logical theories. Isabelle/HOL exploits higher order logic along with decidable non-dependent types, while Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic.
+
+// tactics = inference rules
+
+
 %------------------------------------------------------------
 
-\subsection{First-order Logic Proofs}
+\subsection{Propositional Logic Proofs}
 
-Figure~\ref{Coq:DeMorgan_Prop} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
+//Let's prove some propositional tautologies here
 
-\begin{lstlisting}[caption={Definition of basic propositional terms in Coq}]
+\subsubsection{Propositional Intuitionistic Logic in Coq}
+
+// in '(*' brackets - comment
+\begin{lstlisting}[language=Coq,caption={Definition of basic propositional terms in Coq}]
+Section PropositionalLogic.
+
 Check False. (* output: Prop : Type *)
 Print False. (* output: Inductive False : Prop :=  *)
 Print True.  (* output: Inductive True : Prop :=  I : True *)
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={Coq:DeMorgan_Prop}]
-
-Theorem DeMorgan : forall P Q : Prop,
-    ~P /\ ~Q <-> ~(P \/ Q).
-Proof.
-    intros P Q. unfold iff.
-    split.
-    - intros H_and_not H_or.
-      destruct H_and_not as [H_not_P H_not_Q].
-      destruct H_or as [H_P | H_Q].
-      + apply H_not_P. assumption.
-      + apply H_not_Q. assumption.
-    - intros H_not_or. unfold not. constructor.
-      + intro H_P. apply H_not_or. left. apply H_P.
-      + intro H_Q. apply H_not_or. right. apply H_Q.
-Qed.
-\end{lstlisting}
 
 <tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
+//Let's prove that ~$\vdash (P \lor \neg P) $
 \begin{lstlisting}
 Theorem DeMorgan : forall P Q : Prop, 
     ~P /\ ~Q <-> ~(P \/ Q).
@@ -339,6 +328,7 @@ Proof.
     tauto.
 Qed.
 \end{lstlisting}
+
 
 <but Coq's logic does not include the axiom of excluded middle:>
 % from here https://coq.inria.fr/tutorial/1-basic-predicate-calculus
@@ -356,27 +346,54 @@ Abort.
 % TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
 %"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
 
-\begin{lstlisting}
+\begin{lstlisting}[language=coq]
 Lemma DoubleNegatedExcludedMiddle: forall P : Prop, 
-    ~~(P \/ ~P).
+~~(P \/ ~P).
 Proof.
-    unfold not. 
-    intros P f.
-    apply f.
-    right. 
-    intro P_holds.
-    apply f.
-    left.
-    exact P_holds.
+    unfold not.    (* apply ~P ==> P -> False *)
+    intros P f.    (* move premises to the set of hypotheses *)
+    apply f.       (* replace the goal with premise of implication in f *)
+    right.         (* apply disjunction elimination inference rule *)
+    intro P_holds. (* move P to the set of hypotheses *)
+    apply f.       (* replace the goal with premise of implication in f *)
+    left.          (* apply disjunction elimination inference rule *)
+    exact P_holds. (* match the goal with one of the hypotheses *)
 Qed.
 \end{lstlisting}
 
-<here bool is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
-\begin{lstlisting}[caption={Propositional logic proof: de Morgan's law for booleans},label={Coq:DeMorgan_bool}]
+
+
+//Figure~\ref{Coq:DeMorgan_Prop} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
+
+//Let's prove that $\neg (P \lor Q) \leftrightarrow (\neg P \land \neg Q)$
+    (* this simple propositional formula can be easily solved by the tactic tauto *)
+    
+\begin{lstlisting}[language=coq,caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={Coq:DeMorgan_Prop}]
+
+Theorem DeMorgan : forall P Q : Prop,
+    ~(P \/ Q) <-> ~P /\ ~Q.
+Proof.
+    intros P Q. unfold iff.
+    split.
+    - intros H_not_or. unfold not. constructor.
+      + intro H_P. apply H_not_or. left. apply H_P.
+      + intro H_Q. apply H_not_or. right. apply H_Q.
+    - intros H_and_not H_or.
+      destruct H_and_not as [H_not_P H_not_Q].
+      destruct H_or as [H_P | H_Q].
+      + apply H_not_P. assumption.
+      + apply H_not_Q. assumption.
+Qed.
+\end{lstlisting}
+
+
+<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
+\begin{lstlisting}[language=coq,caption={Propositional logic proof: de Morgan's law for booleans},label={Coq:DeMorgan_bool}]
 Check bool.  (* output: bool : Set *)
 Check false. (* output: false : bool *)
 Print bool.  (* output: Inductive bool : Set :=  true : bool | false : bool *)
 
+(* define macroses *)
 Notation "a || b" := (orb a b).
 Notation "a && b" := (andb a b).
 
@@ -389,18 +406,75 @@ Qed.
 \end{lstlisting}
 
 
+//For Isabelle, the proof looks very mathematical:
+% outline: https://math.stackexchange.com/a/1635653
+\begin{lstlisting}
+
+\end{lstlisting}
 
 
-<non-provable stmt 2**sqrt(2) irrational....>
 
-<non-provable formule de Peirce is insoluble
-P,Q: Prop |-? ((P->Q)->P)->P
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+<very hardly provable stmt 2**sqrt(2) irrational....>
+% for Coq: https://github.com/coq/coq/wiki/SquareRootTwo
+% for Isabelle: trivial
 
+
+%------------------------------------------------------------
+
+\subsubsection{First-order Logic Proofs}
+
+// see slide 53 from %https://www.labri.fr/perso/casteran/CoqArt/Tsinghua/C3.pdf
+%// "Predicates : a Predicate is just any function of type A1→A2 . . .An→Prop where Ai : Set for each i. Predicates are declared as any other function symbol"
+
+% HONESTLY I TOOK THE PROOF FROM http://flint.cs.yale.edu/cs428/coq/library/Coq.Logic.Classical_Pred_Type.html
+\begin{lstlisting}[language=coq]
+Lemma DeMorganQuantified_Coq:
+    forall P:A -> Prop, ~(forall x:A, P x) -> exists x: A, ~P x.
+Proof.
+    unfold not.             (* unfold negation *)
+    intros P H_notall.      (* move premises to the set of hypotheses *)
+    apply NNPP.             (* apply ~~P ==> P *)
+    unfold not.
+    intro H_not_notexist.
+    cut (forall x:A, P x).       (* add new goal from the goal's premise *)
+    exact H_notall.
+    intro x.
+    apply NNPP.
+    unfold not.
+    intros H_not_P_x.
+    apply H_not_notexist.
+    exists x.
+    exact H_not_P_x.
+Qed.
+\end{lstlisting}
 
 %............................................................
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-%............................................................
+ 
+For Isabelle, see here %https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
+\begin{lstlisting}[language=isabelle]
+lemma DeMorganQuantified_Isabelle:
+    assumes "\<not> (\<forall>x. P x)"
+    shows "\<exists>x. \<not> P x"
+    proof (rule classical)
+        assume "\<nexists>x. \<not> P x"
+        have "\<forall>x. P x"  (* comment *)
+        proof
+            fix x show "P x"
+            proof (rule classical)
+                assume "\<not> P x"
+                then have "\<exists>x. \<not> P x" ..
+                with \<open>\<nexists>x. \<not> P x\<close> show ?thesis by contradiction
+        qed
+    qed
+    with \<open>\<not> (\<forall>x. P x)\<close> show ?thesis by contradiction
+qed
+\end{lstlisting}
+
+
+
+\subsubsection{Higher-Order Logic Proofs}
+
+//for Isabelle, see p.10 'Polymorph. types', e.g. prove "Suc = Suc" %http://isabelle.in.tum.de/doc/intro.pdf
 
 %............................................................
 % . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -566,6 +640,10 @@ Qed.
 	\item etc ...
 \end{itemize}
 
+
+Coq requires more mathematical background to even understand manuals (not just tactics, but rather deep knowledge of lambda-calculus to understand different types of reduction, functional programming and inductively created types ... ... ...)
+
+Isabelle is very well documented, all its manuals and documentation is compiled as a set of pdf files and is supplied with Isabelle setup bundle. Coq's manuals were in web, so numerous of files were inaccessible or even lost.
 %============================================================
 
 
