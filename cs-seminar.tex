@@ -150,6 +150,14 @@ In that case, modern tools, such as Coq, often restrict propositions to be eithe
 
 Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating [TODO: REFERENCE]. % TODO <-- 
 
+for Isabelle: see slide 28 % https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
+- Primitive-recursive with primrec
+Terminating by construction
+- Well-founded recursion with fun
+Automatic termination proof
+- Well-founded recursion with function
+User-supplied termination proof
+
 
 \subsection{Lambda-calculus}
 
@@ -281,7 +289,7 @@ We have chosen for our comparison two automated proof assistants, \textit{Coq} a
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
 
-Coq is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{tool_Coq}. This facilitates using Coq as a tool for software verification.
+Coq is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Let08}. This facilitates using Coq as a tool for software verification.
 
 During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as an inference rule, it can use already proved statements, remove hypotheses or introduce variables. Coq may sometimes find an appropriate tactic from its collection in automatic mode.
 
@@ -331,65 +339,6 @@ Both systems admit proofs written in imperative fashion, i.e., such proof is a s
 
 //Basic types are described in similar way in both Coq and Isabelle. 
 
-%decrease space between
-\bgroup
-\def\arraystretch{0}%  1 is the default, change whatever you need
-\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
-
-\begin{center}Basic propositions definition in Isabelle\end{center}  &  \begin{center}Basic propositions definition in Coq\end{center} \\
-\begin{isabelle}
-(* In Isabelle, boolean type is defined simply as two-element enumeration, tertium non datur *)
-datatype bool = True | False
-\end{isabelle}
-&
-\begin{coq}
-(* In Coq, False is an unobservable proposition, which is defined as a type without constructor *)
-Inductive False : Prop := .
-
-(* On other hand, True is defined as always true proposition *)
-Inductive True : Prop := I : True.
-\end{coq}
-\\ \arrayrulecolor{gray}\hline
-\begin{center}Peano's natural numbers in Isabelle\end{center}  &  \begin{center}Peano's natural numbers in Coq\end{center} \\
-\begin{isabelle}
-datatype nat = 
-    zero ("0")
-  | Suc nat
-\end{isabelle}
-&
-\begin{coq}
-Inductive nat : Type :=
-    | O : nat
-    | S : nat -> nat.
-\end{coq}
-\\ \arrayrulecolor{gray}\hline
-\begin{center}Addition in Isabelle\end{center}  &  \begin{center}Addition in Coq\end{center} \\
-\begin{isabelle}
-fun add :: "nat => nat => nat" where
-    "add 0 n = n"
-  | "add (Suc m) n = Suc(add m n)"
-\end{isabelle}
-&
-\begin{coq}
-Fixpoint add (n m:nat) : nat :=
-  match n with
-  | O => m
-  | S p => S (p + m)
-  end
-where "n + m" := (add n m) : nat_scope.
-\end{coq}
-\\ \arrayrulecolor{gray}\hline
-
-\end{tabular}
-    
-
-// for example, addition in Isabelle is defined as :
-\begin{lstlisting}[language=isabelle]
-fun add :: "nat => nat => nat" where
-	"add 0 n = n" |
-	"add (Suc m) n = Suc(add m n)"
-\end{lstlisting}
-
 %------------------------------------------------------------
 
 \subsection{Differences}
@@ -412,7 +361,9 @@ Current section provides several proof examples that may ...//Let's prove some p
 \subsubsection{Propositional Intuitionistic Logic in Coq}
 
 <tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
+
 //Let's prove that ~$\vdash (P \lor \neg P) $
+
 \begin{lstlisting}[language=coq]
 Theorem DeMorgan_Auto_Coq : forall P Q : Prop, 
     ~P /\ ~Q <-> ~(P \/ Q).
@@ -652,7 +603,7 @@ qed
 
 
 proofs by simplification (\texttt{omega} in Coq)
- 
+% source: https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
 \begin{lstlisting}[language=coq]
 Require Import Coq.[*omega*].Omega.
 Require Coq.Logic.Classical.
@@ -662,7 +613,7 @@ match n with
     | O => 0
     | S p => range_sum p + (S p)
 end.
-Compute range_sum 3.  (* output: = 6 : nat *)
+Compute range_sum 3.  (* output: '= 6 : nat' *)
 
 Lemma range_sum_lemma: forall n: nat,
     range_sum (n + 1) = range_sum n + (n + 1).
@@ -842,45 +793,86 @@ Isabelle is very well documented, all its manuals and documentation is compiled 
 
 %============================================================
 
+\bibliographystyle{ieeetr}
+\bibliography{cs-seminar}
+
+%============================================================
+
+\newpage
+\appendix
+
 \section{Appendix}
 % TODO: sverstat appendix correctly
 
-%https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
-%, label={lst:example1}]
-\begin{lstlisting}[language=coq,caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
-Require Import Coq.[*\color{black}omega*].Omega.
-Require Coq.Logic.Classical.
+%decrease space between
+\bgroup
+\def\arraystretch{0}%  1 is the default, change whatever you need
+\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
+\begin{center}Basic propositions definition in Isabelle\end{center}  &  \begin{center}Basic propositions definition in Coq\end{center} \\
+\begin{isabelle}
+    (* In Isabelle, boolean type is defined simply as two-element enumeration, tertium non datur *)
+    datatype bool = True | False
+\end{isabelle}
+&
+\begin{coq}
+    (* In Coq, False is an unobservable proposition, which is defined as a type without constructor *)
+    Inductive False : Prop := .
+    
+    (* On other hand, True is defined as always true proposition *)
+    Inductive True : Prop := I : True.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
 
-Fixpoint nth_member (a_0 d n: nat) : nat :=
-match n with
-| 0 => a_0
-| S p => d + (nth_member a_0 d p)
-end.
-Compute nth_member 3 2 4.
+\begin{center}Peano's natural numbers in Isabelle\end{center}  &  \begin{center}Peano's natural numbers in Coq\end{center} \\
+\begin{isabelle}
+    datatype nat = 
+    zero ("0")
+    | Suc nat
+\end{isabelle}
+&
+\begin{coq}
+    Inductive nat : Type :=
+    | O : nat
+    | S : nat -> nat.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
 
-Theorem nth_member_formula : forall a_0 d n: nat,
-(nth_member a_0 d n) = a_0 + d * n.
-Proof.
-intros.
-induction n; simpl.
-- rewrite -> Nat.mul_0_r.
-rewrite -> Nat.add_0_r.
-reflexivity.
-- induction n; rewrite -> IHn.
-+ rewrite -> Nat.mul_0_r.
-rewrite -> Nat.add_0_r.
-rewrite -> Nat.mul_1_r.
-rewrite -> Nat.add_comm.
-reflexivity.
-+ rewrite <- Nat.add_1_l.
-rewrite -> (Nat.mul_succ_r d (1 + n)).
-omega.
-Qed.
+\begin{center}Addition in Isabelle\end{center}  &  \begin{center}Addition in Coq\end{center} \\
+\begin{isabelle}
+    fun add :: "nat => nat => nat" where
+    "add 0 n = n"
+    | "add (Suc m) n = Suc(add m n)"
+\end{isabelle}
+&
+\begin{coq}
+    Fixpoint add (n m:nat) : nat :=
+    match n with
+    | O => m
+    | S p => S (p + m)
+    end
+    where "n + m" := (add n m) : nat_scope.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
 
-\end{lstlisting}
+\begin{center}Higher-order statement in Isabelle\end{center}  &  \begin{center}Higher-order statement in Coq\end{center} \\
+\begin{isabelle}
+lemma lem:
+"\<forall> (f::bool=>bool) (b::bool) .
+    f (f (f b)) = f b"
+\end{isabelle}
+&
+\begin{coq}
+Lemma lem: 
+forall (f : bool -> bool) (b : bool),
+    f (f (f b)) = f b.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
+\end{tabular}
+
+Inductive datatype
+
+Isabelle:"datatype ’a list = Nil | Cons ’a (’a list)" %https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
 
 
-\bibliographystyle{ieeetr}
-\bibliography{cs-seminar}
 
 \end{document}
