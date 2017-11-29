@@ -6,6 +6,7 @@
 \usepackage{amssymb}  % for negated \vdash
 \usepackage{amsmath}  % for multi-line equations
 %\usepackage{minted}  % syntax highlighting
+\usepackage{colortbl} % for color borders in tables
 
 \usepackage{listings,multicol}  % for code snippets
 %\definecolor{light-gray}{black}{0.5}
@@ -17,14 +18,14 @@
     basicstyle=\footnotesize\ttfamily,
     %numbers=left,
     tabsize=2,
-    frame=rltb,
+    frame=l,
     showspaces=false,
     showstringspaces=false,
     breaklines=true,
     %	multicols=2,
-    %xleftmargin=2em,
+    framesep=8pt,
     captionpos=b,
-    rulecolor=\color{gray},
+    rulecolor=\color{ltgray},
     escapeinside={[*}{*]},
     identifierstyle={\ttfamily\color{black}},
     keywordstyle=[1]{\ttfamily\color{dkviolet}},
@@ -43,7 +44,7 @@
     %
     extendedchars=true,    % Enables ASCII chars 128 to 255
 } % setup listings package
-\renewcommand*\lstlistingname{Figure}
+\renewcommand*\lstlistingname{Example}
 
 %\usepackage{parcolumns} %\usepackage{paracol} %for 2-column listings, not installed
 
@@ -58,6 +59,13 @@
 \definecolor{dkgreen}{rgb}{0.1,0.6,0.1}
 \definecolor{dkviolet}{rgb}{0.3,0,0.5}
 \definecolor{dkred}{rgb}{0.5,0,0}
+\definecolor{dkgray}{rgb}{0.3,0.3,0.3}
+\definecolor{ltgray}{rgb}{0.7,0.7,0.7}
 
 \usepackage{include/lstcoq}
 \usepackage{include/lstisabelle}
+
+
+
+\newbox\longbox
+\newbox\shortbox

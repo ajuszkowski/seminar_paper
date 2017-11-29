@@ -72,37 +72,30 @@ Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} 
 
 The formulae consist of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in a formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives contains negation $\neg$, conjunction $\land$, disjunction $\lor$, and implication $\rightarrow$ operators, although the combination of negation operator with any other of aforementioned operators will be already functionally complete (i.e., any formula can be represented with the usage of these two logical connectives).
 
-The formal system described above does not contain any restriction on the form of propositional variables, such logic is called \textit{propositional logic}. However, if these variables are quantified on the sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier $\forall$ (means "for every"), and the existential quantifier $\exists$ (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every expression in the formal language.
+The formal system described above does not contain any restriction on the form of propositional variables, such logic is called \textit{propositional logic}. However, if these variables are quantified on the sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier $\forall$ (means "for every"), and the existential quantifier $\exists$ (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every expression in the formal language (for instance, the expression $\forall f: bool \rightarrow bool, f\ (f\ (f\ b)) = f\ b$ could be considered in higher-order logic).
 
-Let $\Phi$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Phi \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Phi$, if there exists a proof that infers $\phi$ from $\Phi$. The formula which is provable without additional premises (i.e. $\emptyset \vdash \phi$) is called \textit{tautology} and denoted as $ \vdash \phi $. The formula is called \textit{contradiction} if $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
-
-// notation, used in Isabelle theorem prover documentation~\cite{tool_Isabelle}, the premises are enumerated within the doubled brackets, and the consequence follows
-
-\begin{equation}\label{notation_infrule}
-[\![ A_{1}; A_{2}; \dots A_{n} ]\!] \implies B
-\end{equation}
+Let $\Phi$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Phi \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Phi$, if there exists a proof that infers $\phi$ from $\Phi$. The formula which is provable without additional premises is called \textit{tautology} and denoted as $ \vdash \phi $ (equivalently, $\emptyset \vdash \phi$). The formula is called \textit{contradiction} if \ $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
+\begin{gather}\label{notation_infrule}
+[\![ A_{1}; A_{2}; \dots A_{n} ]\!] \implies B \\
+\equiv \{ A_{1}, A_{2}, \dots A_{n} \} \vdash B
+\end{gather}
 
 //where $\implies$ denotes implication
 
-//which means $ \{ A_{1}, A_{2}, \dots A_{n} \} \vdash B$
+//which means $ $
 
-//equals to , left-associative
-
-\begin{equation}
-\begin{aligned}
-A_{1} \implies A_{2} \implies \dots \implies A_{n} \implies B\\
-  \equiv A_{1} \implies ( A_{2} \implies ( \dots \implies ( A_{n} \implies B)))
-\end{aligned}
-\end{equation}
+//equals to , left-associative where implication is left-associative:
+\begin{gather}
+A_{1} \implies A_{2} \implies \dots \implies A_{n} \implies B \\
+\equiv A_{1} \implies ( A_{2} \implies ( \dots \implies ( A_{n} \implies B)))
+\end{gather}
 
 // As an example of inference rule, the principal rule \textit{Modus ponens} (MP) can be considered: 
 \begin{equation}\label{rule_modus_ponens}\tag{MP}
 [\![ A, A \implies B ]\!] \implies B
 \end{equation}
 
-Together with axioms \ref{axiom_hilbert_1} and \ref{axiom_hilbert_2} Modus ponens rule forms the Hilbert proof system which can describe classical propositional logic.
-
-is not complete under classical semantics.
+Together with axioms \eqref{axiom_hilbert_1} and \eqref{axiom_hilbert_2}, Modus ponens rule forms the Hilbert proof system which can process statements of classical propositional logic. %is not complete under classical semantics.
 \begin{gather}
 A \implies (B \implies A)
 	\label{axiom_hilbert_1}\tag{A1} \\
@@ -111,13 +104,25 @@ A \implies (B \implies A)
 	\label{axiom_hilbert_2}\tag{A2}
 \end{gather}
 
-Other classic logic systems often include the axiom of excluded middle~\ref{axiom_excluded_middle} and the double negation rule~\ref{rule_double_negation}:
+Other classic logic systems often include the axiom of excluded middle~\eqref{axiom_excluded_middle} and double negation rule~\eqref{rule_double_negation}:
 \begin{gather}
-\neg \neg A \implies A
+A \lor \neg A
 	\label{axiom_excluded_middle}\tag{EM} \\
 %
-A \lor \neg A
-	\label{rule_double_negation}\tag{DN}
+\neg \neg A \Leftrightarrow A
+\label{rule_double_negation}\tag{DN}
+\end{gather}
+
+Many classical logics may derive de Morgan's laws~\eqref{tauto_demorgan1},~\eqref{tauto_demorgan2}, the law of contraposition~\eqref{tauto_contrapos}, the Peirce's law~\eqref{tauto_peirce} and many other tautologies:
+\begin{gather}
+\neg (A \land B) \Leftrightarrow \neg A \lor \neg B 
+    \label{tauto_demorgan1}\tag{DM1} \\
+\neg (A \lor B) \Leftrightarrow \neg A \land \neg B 
+    \label{tauto_demorgan2}\tag{DM2} \\
+(A \rightarrow B) \implies (\neg B \rightarrow \neg A) 
+    \label{tauto_contrapos}\tag{C} \\
+((A \rightarrow B) \rightarrow A) \implies B
+    \label{tauto_peirce}\tag{P}
 \end{gather}
 
 The axiom of excluded middle means that every statement is decidable, which may not be true in some applications. Adding this axiom to the formal system leads to the reasoning from \textit{truth} statements, in contrast to \textit{natural deduction systems} that use reasoning from \textit{assumptions}. Although the difference between these two kinds of formal systems seems to be subtle, the latter can be used more as framework, allowing to build new systems on the logical base of pre-defined premises and formal proof rules. % AUTHOR'S THOUGHTS, UNVERIFIED
@@ -154,18 +159,17 @@ The central concept in $\lambda$-calculus is an \textit{expression}, which can b
 
 \begin{itemize}
 \itemsep0em
-	\item Application:
+	\item \textit{application}:
 	$f a$ is the call of function $f$ with argument $a$
 	
-	\item Abstraction:
+	\item \textit{abstraction}:
 	$\lambda x.t[x]$ is the function with formal parameter x and body $t[x]$
 	
-	\item Computation:
-	Replace formal parameter by actual argument ($\beta$-\textit{reduction}): \\
+	\item \textit{computation} ($\beta$-\textit{reduction}): replace formal parameter $x$ with actual argument $a$: \\
 	$(\lambda x.t[x]) a \rightarrow_{\beta} t[x:=a]$
 \end{itemize}
 
-$\lambda$-calculus described above is called the \textit{type-free} $\lambda$-calculus. The more strong calculi can be constructed by using the types of expressions to the system, for which some useful properties can be proven (e.g., termination or memory safety)~\cite{Bar13}.
+$\lambda$-calculus described above is called the \textit{type-free} $\lambda$-calculus. The more strong calculi can be constructed by using the types of expressions to the system, for which some useful properties can be proven (e.g., termination and memory safety)~\cite{Bar13}.
 
 \subsection{Type Systems}
 
@@ -178,7 +182,7 @@ The function that builds a new type from another is called \textit{type construc
 
 \subsubsection{Simple Type Theory}
 %In the context of current paper, it is useful to describe 
-The type can be defined declaratively, by assigning a label to set of values. Such types are called \textit{simple types}, they can be useful to avoid some paradoxes of set theory, e.g., separating sets of individuals and sets of sets allows to avoid famous Russel's paradox~\cite{Irv95}. Simple type theory can extend $\lambda$-calculus to a Higher-order logic through connection between formulae and expressions of type Boolean~\cite{Paulson90}.
+The type can be defined declaratively, by assigning a label to set of values. Such types are called \textit{simple types}, they can be useful to avoid some paradoxes of set theory, e.g., separating sets of individuals and sets of sets allows to avoid famous Russel's paradox~\cite{Irv95}. Simple type theory can extend $\lambda$-calculus to a higher-order logic through connection between formulae and expressions of type Boolean~\cite{Paulson90}.
 
 % TODO: // == Pure Type System ?
 % https://www.cl.cam.ac.uk/teaching/1516/Types/lectures/lecture-9.pdf
@@ -267,14 +271,10 @@ bla-bla correspondence, isomorphism, very interesting thing...
 %============================================================
 
 
-\section{Comparison of some theorem provers}
+\section{Comparison of two theorem provers}
 \label{sec:comparison}
 
 We have chosen for our comparison two automated proof assistants, \textit{Coq} and \textit{Isabelle/HOL}\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories such as Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of this proof assistant.} as they both are widely used tools for theorem proving.
-
-%TODO: intuitionistic logic VS classical logic:
-"There are theorems of CPC that are unprovable in IPC, but not vice versa, so the latter logic is strictly weaker. "
-%source: https://books.google.fi/books?id=GEilBAAAQBAJ&pg=PA116&lpg=PA116&dq=cpc+ipc+logic&source=bl&ots=PhdmaUzjhe&sig=taRlu2rx6J3NyeD-flYE0xpOK8I&hl=fi&sa=X&ved=0ahUKEwitxey59tzXAhWmDZoKHbbZA3YQ6AEINjAB#v=onepage&q=cpc%20ipc%20logic&f=false
 
 %------------------------------------------------------------
 
@@ -283,25 +283,14 @@ We have chosen for our comparison two automated proof assistants, \textit{Coq} a
 
 Coq is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{tool_Coq}. This facilitates using Coq as a tool for software verification.
 
-During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as a pattern of reasoning, it can be already proved rule of inference, removing a hypothesis or introducing of a variable, application of the reasoning principle (such as induction), etc. Coq can be asked to try to find appropriate tactic from its collection in the mode \textit{auto}.
+During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as an inference rule, it can use already proved statements, remove hypotheses or introduce variables. Coq may sometimes find an appropriate tactic from its collection in automatic mode.
 
-In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and the tactics (inference rules) are written in Ltac. These tactics  // TODO !!! % TODO: describe tactics
+In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and calls of the tactics (inference rules) are written in Ltac.
 
-
-// "Coq's built-in logic is very small: the only primitives are Inductive definitions, universal quantification (forall), and implication (->), while all the other familiar logical connectives — conjunction, disjunction, negation, existential quantification, even equality — can be encoded using just these."
+%// "Coq's built-in logic is very small: the only primitives are Inductive definitions, universal quantification (forall), and implication (->), while all the other familiar logical connectives — conjunction, disjunction, negation, existential quantification, even equality — can be encoded using just these."
 %// https://softwarefoundations.cis.upenn.edu/sf-3.2/Logic.html
 
-// In Coq, "Implications are functions"
-
-// The \texttt{False} in Coq is a type without a constructor:
-	"Inductive False : Prop := ." 
-"Intuition: False is a proposition for which there is no way to give evidence."
-=> show the proof of 'ex falso quodlibet' ?
-
-"Inductive True : Prop := I : True." ("a proposition for which it is trivial to give evidence" => always true proposition)
-%(https://softwarefoundations.cis.upenn.edu/sf-3.2/Logic.html)
-
-
+// In Coq, "Implications are functions" => theorems statements may be seen as functions
 
 // ?else?
 
@@ -313,7 +302,7 @@ In proofs, Coq combines two languages: \textit{Gallina}, a purely functional pro
 \subsection{The Isabelle/HOL theorem prover}
 \label{sec:prover_isabelle}
 
-Isabelle was developed by Larry Paulson in Technical University of Munich as a successor of HOL theorem prover~\cite{tool_HOL}. Isabelle was released for the first time in 1986 (two years after the Coq's first release). It was built in a modular manner, i.e., it has relatively small core, which can be extended by numerous basic theories that describe logic behind Isabelle. In particular, the theory of higher-order logic is implemented as Isabelle/HOL, and it is commonly used because of its expressivity and relative conciseness. Similarly to Coq, it combines several languages in its proofs: HOL as a functional programming language (which must be always in quotes), and the language for describing procedures for manipulating the proof. Unlike Coq, Isabelle supports more expressive style of proofs written in a declarative fashion in language Isar.
+Isabelle was developed by Larry Paulson in Technical University of Munich as a successor of HOL theorem prover~\cite{tool_HOL}. Isabelle was released for the first time in 1986 (two years after the Coq's first release). It was built in a modular manner, i.e., it has relatively small core, which can be extended by numerous basic theories that describe logic behind Isabelle. In particular, the theory of higher-order logic is implemented as Isabelle/HOL, and it is commonly used because of its expressivity and relative conciseness. Similarly to Coq, it combines several languages in its proofs: HOL as a functional programming language (which must be always in quotes), and the language for describing procedures for manipulating the proof. Unlike Coq, Isabelle supports more expressive style of proofs written in a declarative fashion in language \textit{Isar}.
 
 // IDE allows to randomly pick jump to any place in the syntax tree of the proof and view the state (in spite of Coq, where only the forward-backward operations are allowed).
 
@@ -322,10 +311,6 @@ Isabelle was developed by Larry Paulson in Technical University of Munich as a s
 // some words on termination checks in Isabelle (unlike Coq)
 %Termination: "The method lexicographic_order is the default method for termination proofs.
 % https://isabelle.in.tum.de/doc/functions.pdf page 4 - !!! (relation method, lexicographic order, ...)
-
-//~\isabelleinline{A ==> B ==> C} means ~\isabelleinline{A ==> (B ==> C)} and ~\isabelleinline{[| A; B |] ==> C}, where ~\texttt{A}~ and ~\texttt{B}~ are premises, \texttt{C} is conclusion.
-
-// HOL: Higher-order = functions are values, too
 
 // termination of computation. see: % https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 
@@ -342,7 +327,62 @@ Both tools are being actively developed: on the moment of writing this paper (au
 
 Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
-// Both systems allow to develop proofs in imperative fashion, i.e., 
+Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators -- tacticals -- which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Example~\ref{ex_isb_arith_sum}).
+
+//Basic types are described in similar way in both Coq and Isabelle. 
+
+%decrease space between
+\bgroup
+\def\arraystretch{0}%  1 is the default, change whatever you need
+\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
+
+\begin{center}Basic propositions definition in Isabelle\end{center}  &  \begin{center}Basic propositions definition in Coq\end{center} \\
+\begin{isabelle}
+(* In Isabelle, boolean type is defined simply as two-element enumeration, tertium non datur *)
+datatype bool = True | False
+\end{isabelle}
+&
+\begin{coq}
+(* In Coq, False is an unobservable proposition, which is defined as a type without constructor *)
+Inductive False : Prop := .
+
+(* On other hand, True is defined as always true proposition *)
+Inductive True : Prop := I : True.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
+\begin{center}Peano's natural numbers in Isabelle\end{center}  &  \begin{center}Peano's natural numbers in Coq\end{center} \\
+\begin{isabelle}
+datatype nat = 
+    zero ("0")
+  | Suc nat
+\end{isabelle}
+&
+\begin{coq}
+Inductive nat : Type :=
+    | O : nat
+    | S : nat -> nat.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
+\begin{center}Addition in Isabelle\end{center}  &  \begin{center}Addition in Coq\end{center} \\
+\begin{isabelle}
+fun add :: "nat => nat => nat" where
+    "add 0 n = n"
+  | "add (Suc m) n = Suc(add m n)"
+\end{isabelle}
+&
+\begin{coq}
+Fixpoint add (n m:nat) : nat :=
+  match n with
+  | O => m
+  | S p => S (p + m)
+  end
+where "n + m" := (add n m) : nat_scope.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
+
+\end{tabular}
+    
+
 // for example, addition in Isabelle is defined as :
 \begin{lstlisting}[language=isabelle]
 fun add :: "nat => nat => nat" where
@@ -354,21 +394,14 @@ fun add :: "nat => nat => nat" where
 
 \subsection{Differences}
 
-The key difference between Coq and Isabelle lies in the difference between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic. Essentially, intuitionistic logic does not include the axiom of excluded middle~\ref{axiom_excluded_middle} and the double negation elimination rule~\ref{rule_double_negation}. Therefore, numerous of theorems are not provable in intuitionistic logic, while being valid in classic logic.
+The key difference between Coq and Isabelle lies in the difference between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic. Essentially, intuitionistic logic does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} and the double negation elimination rule~\eqref{rule_double_negation}.
+Therefore, numerous of theorems are not provable in intuitionistic logic, while being valid in classic logic, which makes the latter strictly weaker~\cite{Rush14} (for example, the classical logic tautology Peirce's law~\eqref{tauto_peirce} cannot be proven in intuitionistic logic).
 
-The following proof is a classical example that illustrates the inapplicability of some classic logic proofs which are valid, but in fact are unexploitable in applied problems. The theorem states that there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational. The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$. If it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational. If $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, quod erat demonstrandum. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
-Commonly, the proofs of existence of an element are non-constructive as in order to prove such a statement it is enough to find a valid example.
+The following proof of the is a classical example that illustrates the inapplicability of some classic logic proofs which are valid, but in fact are unexploitable in applied problems. The theorem states that there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational. The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$. If it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational. If $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, qed. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
+Commonly, the proofs of existence of an element are non-constructive as in order to prove such a statement it is enough to find a valid example. %TODO: perhaps, remove last sentence.
 
-// intuit. : completeness, ...
-// class.:  complet... 
-
-% Think: on slide 111 of http://www.seas.upenn.edu/~jean/what-isa-proof.pdf there's said "No de Morgan laws", But we have proved (further) it in Coq without excl middle axiom.
-
-// Existence proofs are often non-constructive
-
-
-// tactics = inference rules
-
+%TODO: // intuit. : completeness, ...
+%TODO: // class.:  complet... 
 
 %------------------------------------------------------------
 
@@ -377,14 +410,6 @@ Commonly, the proofs of existence of an element are non-constructive as in order
 Current section provides several proof examples that may ...//Let's prove some propositional tautologies here
 
 \subsubsection{Propositional Intuitionistic Logic in Coq}
-
-// in '(*' brackets - comment
-\begin{lstlisting}[language=coq,caption={Definition of basic propositional terms in Coq}]
-Check False. (* output: Prop : Type *)
-Print False. (* output: Inductive False : Prop :=  *)
-Print True.  (* output: Inductive True : Prop :=  I : True *)
-\end{lstlisting}
-
 
 <tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
 //Let's prove that ~$\vdash (P \lor \neg P) $
@@ -445,7 +470,6 @@ Still, double negation is easily proved in classic logic:
     (* this simple propositional formula can be easily solved by the tactic tauto *)
     
 \begin{lstlisting}[language=coq,caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={DeMorganPropositional_Coq}]
-
 Theorem DeMorganPropositional_Coq:
     forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.
 Proof.
@@ -467,6 +491,7 @@ Qed.
 % source: https://www.inf.ed.ac.uk/teaching/courses/ar/isabelle/exercises/propositional/sol.pdf
 \begin{lstlisting}[language=isabelle]
 lemma DeMorganPropositional_Isabelle: "(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
+(* 'apply blast' automatically solves the equasion *)
 
 apply (rule iffI)      (* split equality into two subgoals *)
 (* "Forward" subgoal: 1. \<not>(P \<and> Q) ==> \<not> P \<or> \<not> Q *)
@@ -490,12 +515,6 @@ apply (erule notE, assumption)+  (* 3. (solved); 4. (solved) *)
 done
 \end{lstlisting}
 
-
-<very hardly provable stmt 2**sqrt(2) irrational....>
-% for Coq: https://github.com/coq/coq/wiki/SquareRootTwo
-% for Isabelle: trivial
-
-
 %------------------------------------------------------------
 
 \subsubsection{First-order Logic Proofs}
@@ -505,8 +524,10 @@ done
 
 % HONESTLY I TOOK THE PROOF FROM http://flint.cs.yale.edu/cs428/coq/library/Coq.Logic.Classical_Pred_Type.html
 \begin{lstlisting}[language=coq]
+Require Import Coq.Logic.Classical_Prop.  (* to use classical logic axioms *)
+
 Lemma DeMorganQuantified_Coq:
-    forall P:A -> Prop, ~(forall x:A, P x) -> exists x: A, ~P x.
+    forall (P:Type -> Prop), ~(forall x:Type, P x) -> exists x:A, ~P x.
 Proof.
     unfold not.             (* unfold negation *)
     intros P H_notall.      (* move premises to the set of hypotheses *)
@@ -548,21 +569,21 @@ qed
 
 %------------------------------------------------------------
 %\subsubsection{Higher-Order Logic Proofs}
-
-%Coq: from https://github.com/blindFS/Software-Foundations-Solutions/blob/master/MoreCoq.v
-%Theorem bool_fn_applied_thrice :
-%  forall (f : bool -> bool) (b : bool),
-%  f (f (f b)) = f b.
+%Coq: from %https://github.com/blindFS/Software-Foundations-Solutions/blob/master/MoreCoq.v
+%\begin{lstlisting}[language=Coq]
+%Theorem bool_fn_applied_thrice : 
+%    forall (f : bool -> bool) (b : bool),
+%    f (f (f b)) = f b.
 %Proof.
-%  intros f b.
-%  destruct b.
-%  destruct (f true) eqn:eq. rewrite eq. rewrite eq. reflexivity.
-%  destruct (f false) eqn:eq1. apply eq. apply eq1.
-%  destruct (f false) eqn:eq.
-%  destruct (f true) eqn:eq1. apply eq1. apply eq.
-%  rewrite eq. rewrite eq. reflexivity.
+%    intros f b.
+%    destruct b.
+%    destruct (f true) eqn:eq. rewrite eq. rewrite eq. reflexivity.
+%    destruct (f false) eqn:eq1. apply eq. apply eq1.
+%    destruct (f false) eqn:eq.
+%    destruct (f true) eqn:eq1. apply eq1. apply eq.
+%    rewrite eq. rewrite eq. reflexivity.
 %Qed.
-
+%\end{lstlisting}
 
 %------------------------------------------------------------
 
@@ -570,10 +591,6 @@ qed
 
 <here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
 \begin{lstlisting}[language=coq,caption={Propositional logic proof: de Morgan's law for booleans},label={Coq:DeMorgan_bool}]
-Check bool.  (* output: bool : Set *)
-Check false. (* output: false : bool *)
-Print bool.  (* output: Inductive bool : Set :=  true : bool | false : bool *)
-
 (* define macroses: *)
 Notation "a || b" := (orb a b).
 Notation "a && b" := (andb a b).
@@ -615,7 +632,8 @@ Inductive nat : Type :=
 
 Isabelle:
 
-\begin{lstlisting}[language=isabelle]
+
+\begin{lstlisting}[language=isabelle,caption={???},label={ex_isb_arith_sum}]
 fun range_sum :: "nat => nat"
 	where "range_sum n = (\<Sum>k::nat=0..n . k)"
 value "range_sum 10"
