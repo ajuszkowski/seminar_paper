@@ -1,0 +1,10 @@
+1. arith in isabelle
+2. inductive (recursive - diff?) datatypes in both. structural induction?
+3. extract program in coq!
+
+- nonsence + SAT
+- termination
+- текст
+- проверить notes
+- антиплагиат
+- показать
