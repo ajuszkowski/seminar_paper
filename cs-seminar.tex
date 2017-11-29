@@ -591,6 +591,7 @@ Qed.
 % also see https://gist.github.com/bbc2/092e224a78f17ed9c437
 
 
+// Peano
 \begin{lstlisting}[language=coq]
 Inductive nat : Type :=
 	| O : nat
@@ -644,11 +645,35 @@ Proof.
       rewrite -> Nat.mul_1_r.
       rewrite -> (Nat.mul_succ_l n).
       rewrite <- (Nat.add_1_r n).
-      rewrite -> range_sum_succ.
+      rewrite -> range_sum_successor_lemma.
       omega.
 Qed.
 \end{lstlisting}
 
+
+
+Extracted verified function \texttt{range\_sum}:
+
+
+\begin{minipage}{.45\columnwidth}
+\begin{lstlisting}[caption={Extracted function in Haskell},frame=none]
+range_sum :: Nat -> Nat
+range_sum n =
+  case n of {
+    O -> O;
+    S p -> add (range_sum p) (S p)}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.45\columnwidth}
+\begin{lstlisting}[caption={Extracted function in OCaml},frame=none]
+(** val range_sum : nat -> nat **)
+
+let rec range_sum = function
+| O -> O
+| S p -> add (range_sum p) (S p)
+\end{lstlisting}
+\end{minipage}
+\vspace{3pt}
 
 Isabelle:
 
