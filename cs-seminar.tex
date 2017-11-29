@@ -1,6 +1,8 @@
 \documentclass[article]{aaltoseries}
 \input{include/cs-seminar.sty}
 
+\usepackage{listings}  % already imported in cs-seminar.sty, here is needed for correct syntax highlighting in TeXstudio.
+
 \begin{document}
 %\counterwithin{lstlisting}{section}
 
@@ -280,11 +282,13 @@ Isabelle was developed by Larry Paulson in Technical University of Munich as a s
 
 // some words on termination checks in Isabelle (unlike Coq)
 %Termination: "The method lexicographic_order is the default method for termination proofs.
-% https://isabelle.in.tum.de/doc/functions.pdf page 4
+% https://isabelle.in.tum.de/doc/functions.pdf page 4 - !!! (relation method, lexicographic order, ...)
 
 //~\isabelleinline{A ==> B ==> C} means ~\isabelleinline{A ==> (B ==> C)} and ~\isabelleinline{[| A; B |] ==> C}, where ~\texttt{A}~ and ~\texttt{B}~ are premises, \texttt{C} is conclusion.
 
 // HOL: Higher-order = functions are values, too
+
+// termination of computation. see: % https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 
 // ?else?
 
@@ -299,6 +303,12 @@ Since their first release, both Coq and Isabelle have already been used to forma
 
 Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
+// for example, addition in Isabelle is defined as :
+\begin{lstlisting}[language=isabelle]
+fun add :: "nat => nat => nat" where
+	"add 0 n = n" |
+	"add (Suc m) n = Suc(add m n)"
+\end{lstlisting}
 
 %------------------------------------------------------------
 
@@ -435,7 +445,7 @@ apply assumption       (* 2. (solved) *)
 (* "Backward" subgoal: 3. \<not> P \<or> \<not> Q ==> \<not> (P \<and> Q) *)
 apply (rule notI)   (* 3. \<not> P \<or> \<not> Q ==> P \<and> Q ==> False *)   
 apply (erule conjE) (* 3. \<not> P \<or> \<not> Q ==> P ==> Q ==> False *)
-apply (erule disjE) (* 3. P==> Q==> \<not>P==> False; 4. P==> Q==> \<not>Q==> False *)
+apply (erule disjE) (* 3. P ==> Q ==> \<not>P ==>False; 4. P ==> Q==> \<not>Q==> False *)
 apply (erule notE, assumption)+  (* 3. (solved); 4. (solved) *)
 
 done
@@ -500,6 +510,20 @@ qed
 %------------------------------------------------------------
 %\subsubsection{Higher-Order Logic Proofs}
 
+%Coq: from https://github.com/blindFS/Software-Foundations-Solutions/blob/master/MoreCoq.v
+%Theorem bool_fn_applied_thrice :
+%  forall (f : bool -> bool) (b : bool),
+%  f (f (f b)) = f b.
+%Proof.
+%  intros f b.
+%  destruct b.
+%  destruct (f true) eqn:eq. rewrite eq. rewrite eq. reflexivity.
+%  destruct (f false) eqn:eq1. apply eq. apply eq1.
+%  destruct (f false) eqn:eq.
+%  destruct (f true) eqn:eq1. apply eq1. apply eq.
+%  rewrite eq. rewrite eq. reflexivity.
+%Qed.
+
 
 %------------------------------------------------------------
 
@@ -548,44 +572,75 @@ Inductive nat : Type :=
 
 
 // ... A practical example: proof of correctness of an algorithm which sums n first members of arithmetic progression using formula $S_{n} = { {\frac {2 a_{1} + d (n - 1)}{2} \cdot n}}$ through direct counting of this sum: $S_{n} = \sum\limits_{k=0}^{n-1} (a_{1} + d \cdot k)$.
-%https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
-%, label={lst:example1}]
-\begin{lstlisting}[language=coq,caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
-Require Import Coq.[*\color{black}omega*].Omega.
+
+proofs by simplification (\texttt{omega} in Coq)
+ 
+\begin{lstlisting}[language=coq]
+Require Import Coq.omega.Omega.
 Require Coq.Logic.Classical.
 
-Fixpoint nth_member (a_0 d n: nat) : nat :=
+Fixpoint range_sum (n: nat) : nat :=
 match n with
-    | 0 => a_0
-    | S p => d + (nth_member a_0 d p)
+    | O => 0
+    | S p => range_sum p + (S p)
 end.
-Compute nth_member 3 2 4.
+Compute range_sum 3.
 
-Theorem nth_member_formula : forall a_0 d n: nat,
-    (nth_member a_0 d n) = a_0 + d * n.
+Lemma range_sum_successor_lemma: forall n: nat,
+    range_sum (n + 1) = range_sum n + (n + 1).
 Proof.
     intros.
-    induction n; simpl.
-    - rewrite -> Nat.mul_0_r.
-      rewrite -> Nat.add_0_r.
-      reflexivity.
-    - induction n; rewrite -> IHn.
-        + rewrite -> Nat.mul_0_r.
-          rewrite -> Nat.add_0_r.
-          rewrite -> Nat.mul_1_r.
-          rewrite -> Nat.add_comm.
-          reflexivity.
-        + rewrite <- Nat.add_1_l.
-          rewrite -> (Nat.mul_succ_r d (1 + n)).
-          omega.
+    induction n.
+    - simpl; reflexivity.
+    - simpl; omega.
 Qed.
 
+Theorem SimpleArithProgressionSumFormula_Coq: forall n,
+    2 * range_sum n = n * (n + 1).
+Proof.
+    intros.
+    induction n.
+    - simpl; reflexivity.
+    - rewrite -> Nat.mul_add_distr_l.
+      rewrite -> Nat.mul_1_r.
+      rewrite -> (Nat.mul_succ_l n).
+      rewrite <- (Nat.add_1_r n).
+      rewrite -> range_sum_succ.
+      omega.
+Qed.
+\end{lstlisting}
+
+
+Isabelle:
+
+\begin{lstlisting}[language=isabelle]
+fun range_sum :: "nat => nat"
+  where "range_sum n = (\<Sum>k::nat=0..n . k)"
+value "range_sum 10"
+
+theorem SimpleArithProgressionSumFormula_Isabelle: "2 * (range_sum n) = n * (n + 1)"
+proof (induct n)
+    show "2 * range_sum 0 = 0 * (0 + 1)" by simp
+  next
+    fix n have "2 * range_sum (n + 1) = 2 * (range_sum n) + 2 * (n + 1)" by simp
+    also assume "2 * (range_sum n) = n * (n + 1)"
+    also have "\<dots> + 2 * (n + 1) = (n + 1) * (n + 2)" by simp
+    finally show "2 * (range_sum (Suc n)) = (Suc n) * (Suc n + 1)" by simp
+qed
 \end{lstlisting}
 
 
 
-
-
+%\begin{lstlisting}[language=isabelle,caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
+%primrec nth_member :: "nat => nat => nat => nat"
+%	where "nth_member a_0 d 0 = a_0"
+%	| "nth_member a_0 d (Suc p) = d + (nth_member a_0 d p)"
+%
+%theorem "(nth_member a_0 d n) = a_0 + d * n"
+%	apply (induct n)
+%	apply (auto)
+%	done
+%\end{lstlisting}
 
 
 
@@ -640,6 +695,7 @@ Qed.
 
 
 
+% FOR ISABELLE SUMMATION: https://github.com/seL4/isabelle/blob/master/src/HOL/Isar_Examples/Summation.thy 
 // ... [Also] A practical example: proof of correctness of an algorithm which sums n first members of arithmetic progression using formula $S_{n} = { {\frac {2 a_{1} + d (n - 1)}{2} \cdot n}}$ through direct counting of this sum: $S_{n} = \sum\limits_{k=0}^{n-1} (a_{1} + d \cdot k)$.
 %https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
 %, label={lst:example1}]
@@ -700,6 +756,43 @@ Isabelle is very well documented, all its manuals and documentation is compiled 
 < in future, we want to apply this survey to software verification >
 
 %============================================================
+
+\section{Appendix}
+% TODO: sverstat appendix correctly
+
+%https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
+%, label={lst:example1}]
+\begin{lstlisting}[language=coq,caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
+Require Import Coq.[*\color{black}omega*].Omega.
+Require Coq.Logic.Classical.
+
+Fixpoint nth_member (a_0 d n: nat) : nat :=
+match n with
+| 0 => a_0
+| S p => d + (nth_member a_0 d p)
+end.
+Compute nth_member 3 2 4.
+
+Theorem nth_member_formula : forall a_0 d n: nat,
+(nth_member a_0 d n) = a_0 + d * n.
+Proof.
+intros.
+induction n; simpl.
+- rewrite -> Nat.mul_0_r.
+rewrite -> Nat.add_0_r.
+reflexivity.
+- induction n; rewrite -> IHn.
++ rewrite -> Nat.mul_0_r.
+rewrite -> Nat.add_0_r.
+rewrite -> Nat.mul_1_r.
+rewrite -> Nat.add_comm.
+reflexivity.
++ rewrite <- Nat.add_1_l.
+rewrite -> (Nat.mul_succ_r d (1 + n)).
+omega.
+Qed.
+
+\end{lstlisting}
 
 
 \bibliographystyle{ieeetr}

@@ -53,6 +53,48 @@ Proof.
       omega.
 Qed.
 
+Theorem bool_fn_applied_thrice :
+  forall (f : bool -> bool) (b : bool),
+  f (f (f b)) = f b.
+Proof.
+  intros f b.
+  destruct b.
+  destruct (f true) eqn:eq. rewrite eq. rewrite eq. reflexivity.
+  destruct (f false) eqn:eq1. apply eq. apply eq1.
+  destruct (f false) eqn:eq.
+  destruct (f true) eqn:eq1. apply eq1. apply eq.
+  rewrite eq. rewrite eq. reflexivity.
+Qed.
+
+
+Fixpoint range_sum (n: nat) : nat :=
+  match n with
+    | 0 => 0
+    | S p => range_sum p + (S p)
+end.
+Compute range_sum 3.
+
+Lemma range_sum_successor_lemma: forall n: nat, range_sum (n + 1) = range_sum n + (n + 1).
+Proof.
+  intros.
+  induction n.
+  - simpl; reflexivity.
+  - simpl. omega.
+Qed.
+
+Theorem SimpleArithProgressionSumFormula_Coq: forall n,
+  2 * range_sum n = n * (n + 1).
+Proof.
+  intros.
+  induction n.
+  - simpl; reflexivity.
+  - rewrite -> Nat.mul_add_distr_l.
+    rewrite -> Nat.mul_1_r.
+    rewrite -> (Nat.mul_succ_l n).
+    rewrite <- (Nat.add_1_r n).
+    rewrite -> range_sum_succ.
+    omega.
+Qed.
 
 
 
