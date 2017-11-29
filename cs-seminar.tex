@@ -613,10 +613,30 @@ Inductive nat : Type :=
 
 // ... A practical example: proof of correctness of an algorithm which sums n first members of arithmetic progression using formula $S_{n} = { {\frac {2 a_{1} + d (n - 1)}{2} \cdot n}}$ through direct counting of this sum: $S_{n} = \sum\limits_{k=0}^{n-1} (a_{1} + d \cdot k)$.
 
+Isabelle:
+
+\begin{lstlisting}[language=isabelle]
+fun range_sum :: "nat => nat"
+	where "range_sum n = (\<Sum>k::nat=0..n . k)"
+value "range_sum 10"
+
+theorem SimpleArithProgressionSumFormula_Isabelle: "2 * (range_sum n) = n * (n + 1)"
+  proof (induct n)
+    show "2 * range_sum 0 = 0 * (0 + 1)" by simp
+  next
+  fix n have "2 * range_sum (n + 1) = 2 * (range_sum n) + 2 * (n + 1)" by simp
+  also assume "2 * (range_sum n) = n * (n + 1)"
+  also have "\<dots> + 2 * (n + 1) = (n + 1) * (n + 2)" by simp
+  finally show "2 * (range_sum (Suc n)) = (Suc n) * (Suc n + 1)" by simp
+qed
+\end{lstlisting}
+
+
+
 proofs by simplification (\texttt{omega} in Coq)
  
 \begin{lstlisting}[language=coq]
-Require Import Coq.omega.Omega.
+Require Import Coq.[*omega*].Omega.
 Require Coq.Logic.Classical.
 
 Fixpoint range_sum (n: nat) : nat :=
@@ -624,9 +644,9 @@ match n with
     | O => 0
     | S p => range_sum p + (S p)
 end.
-Compute range_sum 3.
+Compute range_sum 3.  (* output: = 6 : nat *)
 
-Lemma range_sum_successor_lemma: forall n: nat,
+Lemma range_sum_lemma: forall n: nat,
     range_sum (n + 1) = range_sum n + (n + 1).
 Proof.
     intros.
@@ -638,22 +658,22 @@ Qed.
 Theorem SimpleArithProgressionSumFormula_Coq: forall n,
     2 * range_sum n = n * (n + 1).
 Proof.
-    intros.
-    induction n.
-    - simpl; reflexivity.
-    - rewrite -> Nat.mul_add_distr_l.
-      rewrite -> Nat.mul_1_r.
-      rewrite -> (Nat.mul_succ_l n).
-      rewrite <- (Nat.add_1_r n).
-      rewrite -> range_sum_successor_lemma.
-      omega.
+intros.
+induction n.
+(* goal: '2 * range_sum 0 = 0 * (0 + 1)' *)
+ - simpl; reflexivity.
+(* goal: '2 * range_sum (S n) = S n * (S n + 1)' *)
+ - rewrite -> Nat.mul_add_distr_l. (* '2*range_sum(S n) = S n * S n + S n * 1' *)
+   rewrite -> Nat.mul_1_r.         (* '2*range_sum(S n) = S n * S n + S n' *)
+   rewrite -> (Nat.mul_succ_l n).  (* '2*range_sum(S n) = n * S n + S n + S n' *)
+   rewrite <- (Nat.add_1_r n).     (* '2*range_sum(n+1) = n*(n+1)+(n+1)+(n+1)' *)
+   rewrite -> range_sum_lemma.  (* '2*(range_sum(n)+(n+1)) = n*(n+1)+(n+1)+(n+1)' *)
+   omega.                          (* automatically solve arithmetic equation *)
 Qed.
 \end{lstlisting}
 
 
-
 Extracted verified function \texttt{range\_sum}:
-
 
 \begin{minipage}{.45\columnwidth}
 \begin{lstlisting}[caption={Extracted function in Haskell},frame=none]
@@ -673,25 +693,8 @@ let rec range_sum = function
 | S p -> add (range_sum p) (S p)
 \end{lstlisting}
 \end{minipage}
-\vspace{3pt}
+%\vspace{3pt}
 
-Isabelle:
-
-\begin{lstlisting}[language=isabelle]
-fun range_sum :: "nat => nat"
-  where "range_sum n = (\<Sum>k::nat=0..n . k)"
-value "range_sum 10"
-
-theorem SimpleArithProgressionSumFormula_Isabelle: "2 * (range_sum n) = n * (n + 1)"
-proof (induct n)
-    show "2 * range_sum 0 = 0 * (0 + 1)" by simp
-  next
-    fix n have "2 * range_sum (n + 1) = 2 * (range_sum n) + 2 * (n + 1)" by simp
-    also assume "2 * (range_sum n) = n * (n + 1)"
-    also have "\<dots> + 2 * (n + 1) = (n + 1) * (n + 2)" by simp
-    finally show "2 * (range_sum (Suc n)) = (Suc n) * (Suc n + 1)" by simp
-qed
-\end{lstlisting}
 
 
 
