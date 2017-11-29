@@ -1,8 +1,11 @@
 1. arith in isabelle
 2. inductive (recursive - diff?) datatypes in both. structural induction?
 //3. extract program in coq!
-4. double negation in Isabelle + sth else in Isab.
+4. double negation in Isabelle + double negation in Isab.
 
+- Appendix
+- |please keep section 2 at a minimum. section 3 should really start at page 7.|
+- изменить Section review + abstract
 - nonsence + SAT
 - termination
 - CoC, curry-howard
