@@ -354,27 +354,15 @@ fun add :: "nat => nat => nat" where
 
 \subsection{Differences}
 
-The key difference between Coq and Isabelle lies in the difference between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic. Roughly, intuitionistic logic does not include the axiom of excluded middle~\ref{axiom_excl_middle} and the double negation elimination rule~\ref{rule_double_negation}. Therefore, numerous of theorems are not provable in intuitionistic logic, while being valid in classic logic.
+The key difference between Coq and Isabelle lies in the difference between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic. Essentially, intuitionistic logic does not include the axiom of excluded middle~\ref{axiom_excluded_middle} and the double negation elimination rule~\ref{rule_double_negation}. Therefore, numerous of theorems are not provable in intuitionistic logic, while being valid in classic logic.
 
-The following proof is a classical example that illustrates the inapplicability of some classic logic proofs which are valid, but in fact are unexploitable in applied problems. The theorem states that there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational. The proof relies on the axiom of excluded middle
-
- \cite{Harrison09}
-//Example from the book
-
-//but proofs  are more constructive (prob. more verbose and less concise, but "constructive" - raschifrovat. +complexity of proof search is higher)
-
-Nonethelesss, 
+The following proof is a classical example that illustrates the inapplicability of some classic logic proofs which are valid, but in fact are unexploitable in applied problems. The theorem states that there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational. The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$. If it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational. If $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, quod erat demonstrandum. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
+Commonly, the proofs of existence of an element are non-constructive as in order to prove such a statement it is enough to find a valid example.
 
 // intuit. : completeness, ...
 // class.:  complet... 
 
-Intuitionistic Logic: excl middle is forbidden => not not P no longer implies P and (p or not p) is no longer provable.
-
 % Think: on slide 111 of http://www.seas.upenn.edu/~jean/what-isa-proof.pdf there's said "No de Morgan laws", But we have proved (further) it in Coq without excl middle axiom.
-
-// DIFFERENCES BTW CLASSIC AND INTUITIONISTIC LOGIC
-see slide page 101 %http://www.seas.upenn.edu/~jean/what-isa-proof.pdf
-(and book by prof.)
 
 // Existence proofs are often non-constructive
 
@@ -386,7 +374,7 @@ see slide page 101 %http://www.seas.upenn.edu/~jean/what-isa-proof.pdf
 
 \subsection{Example Proofs}
 
-//Let's prove some propositional tautologies here
+Current section provides several proof examples that may ...//Let's prove some propositional tautologies here
 
 \subsubsection{Propositional Intuitionistic Logic in Coq}
 
