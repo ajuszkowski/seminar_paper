@@ -146,27 +146,17 @@ Let $U$ be a set of all possible formulae, let $\Gamma = \ <A, V, \Omega, R>$ be
 
 In 1931, Kurt Gödel proved his first incompleteness theorem which states that any consistent formal system is incomplete. Later, in 1936, Alfred Tarski extended this result by proving his Undefinability theorem, which states that the concept of truth cannot be defined in a formal system. % originally: in arithmetic. Does that make sense?
 In that case, modern tools, such as Coq, often restrict propositions to be either provable or unprovable, rather than true or false.
+%Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating.
 
-
-% TODO
-// TODO -- finish it
-
-
-Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating [TODO: REFERENCE]. % TODO <-- 
-
-for Isabelle: see slide 28 % https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
-- Primitive-recursive with primrec
-Terminating by construction
-- Well-founded recursion with fun
-Automatic termination proof
-- Well-founded recursion with function
-User-supplied termination proof
-
+// TODO: Hilbert system: consistent, incomplete, independent | FOL | HOL | Coq ...
 
 \subsection{Lambda-calculus}
 \label{sec:lambda}
 
-$\lambda$-\textit{calculus} is a universal computation model invented by Alonzo Church in 1930s as a model for formalising the concept of effective computability.  This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions.
+// TODO: exclude this section at all, if there'll be no space...
+// Or describe more that lambda is used in both Coq and Isabelle
+
+The necessity of building the automatic reasoning systems has lead to development of models that abstract the computation process. That time, the concept of effective computability was being evolving rapidly, causing development of multiple formalisations of computation, such as Turing Machine, Normal Markov algorithms, Recursive functions, and other. One of the fist and most effective models was $\lambda$-\textit{calculus} invented by Alonzo Church in 1930s. This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions.
 
 The central concept in $\lambda$-calculus is an \textit{expression}, which can be defined as a subject for application the rewriting rules~\cite{Bar88}. The basic rewriting rules of $\lambda$-calculus are listed below:
 
@@ -188,8 +178,8 @@ $\lambda$-calculus described above is called the \textit{type-free} $\lambda$-ca
 \label{sec:type_systems}
 
 A \textit{type} is a collection of elements. In a type system, each element is associated with a type, which defines a basic structure of it and restricts set of possible operations with the element. This allows to reveal useful properties of the formal system. Therefore, type theory serves as an alternative to the classical set theory~\cite{Tho91}.
-% TODO: remove notation below if not used.
-In our notation, the $a =_{\tau} b$ means that $a$ equals $b$ and both of them are of type $\tau$. This notation is used for convenience to encode information about type to equality.
+% remove notation below if not used:
+%In our notation, the $a =_{\tau} b$ means that $a$ equals $b$ and both of them are of type $\tau$. This notation is used for convenience to encode information about type to equality.
 
 The function that builds a new type from another is called \textit{type constructor}. Such functions have been used long before type theories had been constructed formally, even in the~19th~century Giuseppe Peano used type constructor $S$ called the \textit{successor} function, along with zero element 0, to axiomatise natural number arithmetic. Thus, number 3 can be constructed as $S(S(S(0))))$.
 
@@ -324,6 +314,14 @@ In proofs, Coq combines two languages: \textit{Gallina}, a purely functional pro
 % https://isabelle.in.tum.de/doc/functions.pdf page 4 - !!! (relation method, lexicographic order, ...)
 
 // termination of computation. see: % https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
+
+for Isabelle: see slide 28 % https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
+- Primitive-recursive with primrec
+Terminating by construction
+- Well-founded recursion with fun
+Automatic termination proof
+- Well-founded recursion with function
+User-supplied termination proof
 
 // ?else?
 
