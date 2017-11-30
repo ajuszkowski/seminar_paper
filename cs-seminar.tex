@@ -36,7 +36,7 @@ This paper compares two widespread tools for automated theorem proving, Coq~\cit
 
 \section{Introduction}
 
-Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually has an impact on numerous problems in modern life. Basically, this search has led to the development of \textit{formal approach}, a methodology for manipulating the abstract essences according basic rules in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
+Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually has an impact on numerous problems in modern life. As a result, \textit{formal approach} was developed as a new methodology for manipulating the abstract essences according basic rules in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
 
 At present, a large number of tools have been developed to automate this process. Generally, these tools can be divided into two broad classes. 
 
@@ -52,7 +52,7 @@ Section~\ref{sec:comparison} presents target comparison properties and the compa
 
 
 \subsection{Related work}
-A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen 'state-of-the-art' systems for the formalization of mathematics were compared against various properties, in particular, the size of supporting libraries, the strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). We propose more deep comparison of two aforementioned theorem provers, Coq and Isabelle, with respect to expressiveness and usability.
+A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen most common systems for the formalization of mathematics were compared against various properties, in particular, the size of supporting libraries, the strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). We propose more deep comparison of two aforementioned theorem provers, Coq and Isabelle, with respect to expressiveness and usability.
 
 
 %============================================================
@@ -71,9 +71,9 @@ The formal approach appeared in the beginning of previous century when mathemati
 
 Let the \textit{judgement} be an arbitrary statement. The \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements $ ( \psi_i )_{i=1}^{n} $, where each $\psi_i$ is either an axiom $A_i$, or a formula inferred from the subset $\{ \psi_k \}_{k=1}^{i-1}$ of previously derived formulae according the \textit{rules of inference}. \textit{An axiom} $A_i \in A$ is a judgement evidently claimed to be true. \textit{A logical inference} is a transfer from one judgement (\textit{premise}) to another (\textit{consequence}), which preserves truth. In formal logic, inference is based entirely on the structure of those judgements, thereby, the result formal system represents the abstract model describing part of real world.
 
-The formulae consist of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in a formal system. The propositional variable is an atomic formula which can be either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives contains negation $\neg$, conjunction $\land$, disjunction $\lor$, and implication $\rightarrow$ operators, although the combination of negation operator with any other of aforementioned operators will be already functionally complete (i.e., any formula can be represented with the usage of these two logical connectives).
+The formulae consist of \textit{propositional variables}, connected with \textit{logical connectives} (or logical operators) according to rules, defined by a formal language. The formulae, which satisfy such rules, are called \textit{well-formed formulae} (wff). Only wff can form judgements in a formal system. The propositional variable is an atomic formula that can be claimed as either true or false. The logical connective is a symbol in formal language that transforms one wff to another. Typically, the set of logical connectives contains negation $\neg$, conjunction $\land$, disjunction $\lor$, and implication $\rightarrow$ operators, although the combination of negation operator with any other of aforementioned operators will be already functionally complete (i.e., any formula can be represented with the usage of these two logical connectives).
 
-The formal system described above does not contain any restriction on the form of propositional variables, such logic is called \textit{propositional logic}. However, if these variables are quantified on the sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier $\forall$ (means "for every"), and the existential quantifier $\exists$ (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every expression in the formal language (for instance, the expression $\forall f: bool \rightarrow bool, f\ (f\ (f\ b)) = f\ b$ could be considered in higher-order logic).
+The formal system described above does not contain any restriction on the form of propositional variables, such logic is called \textit{propositional logic}. However, if these variables are quantified on the sets, such logic is called \textit{first-order} or \textit{predicate logic}. Commonly, first-order logic has two quantifiers, the universal quantifier $\forall$ (means "for every"), and the existential quantifier $\exists$ (means "there exists"). Thereafter, the \textit{second-order logic} extends first-order logic by adding quantifiers over second-order objects -- relations defining the sets of sets. In turn, it can be extended by the \textit{higher-order logic}, which contain quantifiers over the arbitrary nested sets, or \textit{type theory}, which assigns a type for every expression in the formal language (for instance, the expression $\forall f: bool \rightarrow bool, f\ (f\ (f\ x)) = f\ x$ could be considered in higher-order logic).
 
 Let $\Phi$ be a set of formulae. Initially, it consists of only \textit{hypotheses}, a priori true formulae, which are claimed to be already proved. The notation $\Phi \vdash \phi$ means that the formula $\phi$ is \textit{provable} from $\Phi$, if there exists a proof that infers $\phi$ from $\Phi$. The formula which is provable without additional premises is called \textit{tautology} and denoted as $ \vdash \phi $ (meaning $\emptyset \vdash \phi$). The formula is called \textit{contradiction} if \ $\vdash \neg \phi$. Obviously, all contradictions are equivalent in one formal system, hence they are denoted as $\bot$.
 %TODO: model, |= ...
@@ -207,25 +207,24 @@ The type can be defined declaratively, by assigning a label to set of values. Su
 
 
 \subsubsection{Martin-Löf Type Theory}
-The Martin-Löf type theory, also known as the \textit{Intuitionistic type theory}\footnote{In terms \textit{intuitionistic type theory}, \textit{intuitionistic logic}, we use the word \textit{intuitionistic} as a synonym for \textit{constructive}.}, is based on the principles of mathematical constructivism, that require explicit definition of the way of "constructing" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is held by the \textit{inductive types}, which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
+The Martin-Löf type theory, also known as the \textit{Intuitionistic type theory}\footnote{In terms \textit{intuitionistic type theory}, \textit{intuitionistic logic}, we use the word \textit{intuitionistic} as a synonym for \textit{constructive}.}, is based on the principles of constructive mathematics, that require explicit definition of the way of "constructing" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is held by the \textit{inductive types}, which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
 
 The Intuitionistic type theory also uses a wide class of \textit{dependent types}, whose definition depends on a value. For instance, the $n$-ary tuple is a dependent type that is defined by the value of~$n$. However, the type checking for such a system is an undecidable problem since determining of the equality of two arbitrary dependent types turns to be tantamount to a problem of inducing the equivalence of two non-trivial programs (which is undecidable in general case according to the Rice's theorem~\cite{Rice53}).
 
-%A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate. 
+%"""A language with dependent types may include references to programs inside of types. For instance, the type of an array might include a program expression giving the size of the array, making it possible to verify absence of out-of-bounds accesses statically. Dependent types can go even further than this, effectively capturing any correctness property in a type. PVS’s dependent types are much more general, but they are squeezed inside the single mechanism of subset types, where a normal type is refined by attaching a predicate over its elements. Each member of the subset type is an element of the base type that satisfies the predicate."""
 
 
 \subsubsection{Calculus of Constructions}
 % TODO: figure out how this implies to PTS - Pure Type Systems
 
-Another important constructive type theory is the Calculus of Constructions~(CoC) developed by Thierry~Coquand and Gérard~Huet in 1985~\cite{Coq85}. It represents a natural deduction system which incorporates dependent types, polymorphism and type constructors.
+Another important constructive type theory is the Calculus of Constructions~(CoC) developed by Thierry~Coquand and Gérard~Huet in 1985~\cite{Coq85}. It represents a natural deduction system which incorporates dependent types, polymorphism and type constructors. The typed polymorphic functional language of CoC allow to define inductive definitions, although rather inefficiently~\cite{Paulin15}.
 
-% TODO
-// TODO: MORE DEFINITIONS HERE
 % see also the Coq documentation: https://coq.inria.fr/refman/cic.html#conv-rules
 
-%The Calculus of Construction can be considered as an extension of the Curry–Howard isomorphism. % in a way that the latter associates a term in the simply typed lambda calculus with each natural-deduction proof in intuitionistic propositional logic, when the Calculus of Construction extends this isomorphism to proofs in the full intuitionistic predicate calculus, which includes proofs of quantified statements (which are also called "propositions").
+Whenever an inductive type is defined, the task of \textit{type-checking} becomes equivalent to the task of executing corresponding function in a programming language. Although in many programming languages this procedure is linear from the size of program, type-checking in CoC is \textit{undecidable} in general case. This problem is closely related to the \textit{Curry-Howard isomorphism}, a direct relationship between a program and an intuitionistic proof, where a base type in the program is equivalent to a propositional variable in the proof, an empty type represents \textit{false} and a singletone type represents \textit{truth}, a functional type $T_{1} \rightarrow T_{2}$ corresponds to an implication, a product type $T_{1} * T_{2}$ and a sum type $T_{1} + T_{2}$ correspond to conjunction and disjunction, respectively~\cite{Pierce2002}. Thus the Calculus of Constructions can be considered as an extension of the Curry-Howard isomorphism.
 
-The CoC has \text{strong normalisation property}, which means that every sequence of inference eventually terminates with an irreducible normal form. This property does not allow to define infinitely recursive structures and functions. % TODO: check whether one can say that with respect to any formal system, not only to an abstract rewriting system
+An important feature of CoC type system is that it holds the \text{strong normalisation property}, which means that every sequence of inference eventually terminates with an irreducible normal form. This property does not admit the definitions of infinitely recursive structures and functions.
+% TODO: check whether one can say that with respect to any formal system, not only to an abstract rewriting system
 
 %Inference rules for the Calculus of Constructions:
 %\begin{enumerate}
@@ -236,27 +235,13 @@ The CoC has \text{strong normalisation property}, which means that every sequenc
 %    \item ${\displaystyle {\Gamma \vdash M:A\qquad A=_{\beta }B\qquad B:K \over {\Gamma \vdash M:B}}}$ % \over {\Gamma \vdash M : B}}
 %\end{enumerate}
 %
-%// TODO: add explanations to the inference rules or delete them
+% perhaps: add explanations to the inference rules or delete them
 
-In 1990, Christine Paulin proposed the \textit{Calculus of Inductive Constructions}~(CIC) as an extension of Calculus of Construction by adding the Martin-Löf's primitive inductive definitions in order to perform efficient computation of the functions over inductive data types~\cite{Pau2015}. This formalism lies behind the Coq proof assistant.
-
-%----------------------------------------------------------
-
-
-\subsection{Curry-Howard isomorphism}
-\label{sec:curry_howard}
-% TODO
-// TODO -- this is the most delicious idea among those described in this paper...
-
-"proofs are programs"
-% http://perso.ens-lyon.fr/damien.pous/ejcp13/slides.pdf slide 9 - draw the same pic
-% +show correspondence in two-column view
-bla-bla correspondence, isomorphism, very interesting thing...
-% 1934–1969
+Although the language of CoC is rather expressive, its expressiveness is not enough to prove some natural properties of types. In order to overcome this drawback, the \textit{Calculus of Inductive Constructions}~(CIC) was developed by Christine Paulin in 1990. CIC is implemented by adding the Martin-Löf's primitive inductive definitions to the CoC in order to perform the efficient computation of functions over inductive data types in higher-order logic~\cite{Paulin15}. This formalism lies behind the Coq proof assistant.
 
 %============================================================
 
-% Probably exclude this paragraph.
+% perhaps: exclude this paragraph.
 
 %\section{Methods for automated reasoning}
 %\label{sec:auto_reasoning}
@@ -321,7 +306,7 @@ User-supplied termination proof
 
 \textit{Coq} is another widespread proof assistant system, that has been developed at INRIA (Paris, France) since 1984. Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types, and represents an implementation of intuitionistic logic. Nonetheless, Coq's logic may be easily extended into classical logic by assuming the excluded middle axiom~\ref{axiom_excluded_middle}.
 
-As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Let08}. This facilitates using Coq as a tool for software verification.
+As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Letouzey}. This facilitates using Coq as a tool for software verification.
 
 Being based on the constructive foundation, Coq has two basic meta-types, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types.
 Unlikely Isabelle's type system, the \texttt{True} and \texttt{False} propositions are defined as of type of \texttt{Prop}, so that in order to be valid they need to be either assumed or proven. Nonetheless, Coq's library has the \texttt{bool} definition, which is of type of \texttt{Set} in the manner of Isabelle's proposition (as simple enumeration of two elements, tertium non datur).
@@ -362,14 +347,15 @@ Both tools are being actively developed: on the moment of writing this paper (au
 
 Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
-Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators \textit{tacticals}, which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Example~\ref{ex_isb_arith_sum}). 
+Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators \textit{tacticals}, which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Examples~\ref{ex_nat_sum_isabelle} and~\ref{ex_morgan_quant_isabelle}).
 
 
 %------------------------------------------------------------
 
 \subsection{Major differences}
 
-The key differences between Coq and Isabelle lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on intuitionistic logic, which does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} essential for classical logics. Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Example~\ref{ex_double_neg_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truth is to be proven from its double negation, then there is nothing known about the proposition itself so far.
+The key differences between Coq and Isabelle lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on intuitionistic logic, which does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} essential for classical logics.
+Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Example~\ref{ex_double_neg_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truth is to be proven from its double negation, then there is nothing known about the proposition itself so far.
 
 \begin{lstlisting}[language=coq, caption={Proof failure of \eqref{rule_double_negation_elim} rule, and proof of \eqref{rule_double_negation_elim} rule in Coq}, label={ex_double_neg_coq}]
 Lemma DoubleNegElim_Coq : forall P: Prop,
@@ -515,7 +501,9 @@ Qed.
 
 
 % TODO: see below, plagiat
-%For Isabelle, see here %https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
+%For Isabelle, see here 
+MAKE A REFERENCE!
+%https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
 
 %proof to the contrary
 
@@ -741,12 +729,11 @@ Isabelle is very well documented, all its manuals and documentation is compiled 
 \end{isabelle}
 &
 \begin{coq}
-    Theorem DeMorganAutoFail_Coq:
-    forall (P Q : Prop),
-    ~P /\ ~Q <-> ~(P \/ Q).
-    Proof.
+Theorem DeMorganAutoFail_Coq:
+    forall (P Q : Prop), ~P /\ ~Q <-> ~(P \/ Q).
+Proof.
     tauto.
-    Qed.
+Qed.
 \end{coq}
 \\ \arrayrulecolor{gray}\hline
 
