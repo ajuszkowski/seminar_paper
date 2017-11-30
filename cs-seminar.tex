@@ -147,17 +147,17 @@ Let $U$ be a set of all possible formulae, let $\Gamma = \ <A, V, \Omega, R>$ be
 		$\not \exists a \in A: \ A \vdash a$.
 \end{itemize}
 
-In 1931, Kurt Gödel proved his first incompleteness theorem which states that any consistent formal system is incomplete. Later, in 1936, Alfred Tarski extended this result by proving his Undefinability theorem, which states that the concept of truth cannot be defined in a formal system. % originally: in arithmetic. Does that make sense?
+For instance, the Hilbert system described above is consistent and independent, yet incomplete under the classical semantics. In 1931, Kurt Gödel proved his first incompleteness theorem which states that any consistent formal system is incomplete. Later, in 1936, Alfred Tarski extended this result by proving his Undefinability theorem, which states that the concept of truth cannot be defined in a formal system. 
+% originally: in arithmetic. Does that make sense?
 In that case, modern tools, such as Coq, often restrict propositions to be either provable or unprovable, rather than true or false.
 %Note, that the first-order logic is \textit{undecidable}, so that there does not exist a decision algorithm which is sound, complete and terminating.
 
-// TODO: Hilbert system: consistent, incomplete, independent | FOL | HOL | Coq ...
 
 \subsection{Lambda-calculus}
 \label{sec:lambda}
 
-// TODO: exclude this section at all, if there'll be no space...
-// Or describe more that lambda is used in both Coq and Isabelle
+% TODO: exclude this section at all, if there'll be no space...
+%// Or describe more that lambda is used in both Coq and Isabelle
 
 The necessity of building the automatic reasoning systems has lead to development of models that abstract the computation process. That time, the concept of effective computability was being evolving rapidly, causing development of multiple formalisations of computation, such as Turing Machine, Normal Markov algorithms, Recursive functions, and other. One of the fist and most effective models was $\lambda$-\textit{calculus} invented by Alonzo Church in 1930s. This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions.
 
@@ -207,7 +207,7 @@ The type can be defined declaratively, by assigning a label to set of values. Su
 
 
 \subsubsection{Martin-Löf Type Theory}
-The Martin-Löf type theory, also known as the \textit{Intuitionistic type theory}\footnote{In terms \textit{intuitionistic type theory}, \textit{intuitionistic logic}, we use the word \textit{intuitionistic} as a synonym for \textit{constructive}.}, is based on the principles of constructive mathematics, that require explicit definition of the way of "constructing" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is held by the \textit{inductive types}, which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
+The Martin-Löf type theory, also known as the \textit{Intuitionistic type theory}\footnote{In \textit{intuitionistic type theory} and \textit{intuitionistic logic}, we use the term \textit{intuitionistic} as a synonym for \textit{constructive}.}, is based on the principles of constructive mathematics, that require explicit definition of the way of "constructing" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is held by the \textit{inductive types}, which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
 
 The Intuitionistic type theory also uses a wide class of \textit{dependent types}, whose definition depends on a value. For instance, the $n$-ary tuple is a dependent type that is defined by the value of~$n$. However, the type checking for such a system is an undecidable problem since determining of the equality of two arbitrary dependent types turns to be tantamount to a problem of inducing the equivalence of two non-trivial programs (which is undecidable in general case according to the Rice's theorem~\cite{Rice53}).
 
@@ -279,25 +279,20 @@ We have chosen for our comparison two automated proof assistants, \textit{Isabel
 
 Isabelle exploits classical logic, so even propositional type is declared as a set of two elements \texttt{true} and \texttt{false} (thus any $n$-ary logic can be formalised). In proofs, Isabelle combines several languages: \textit{HOL} as a functional programming language (which must be always in quotes), and \textit{Isar} as the language for describing procedures in order to manipulate the proof.
 
+% TERMINATION - not include in the paper yet
 % wiki: """Isabelle's main proof method is a higher-order version of resolution, based on higher-order unification."""
-
 %\subsubsection{Algorithm termination}
-%TODO
-// some words on termination checks in Isabelle (unlike Coq)
+%// some words on termination checks in Isabelle (unlike Coq)
 %Termination: "The method lexicographic_order is the default method for termination proofs.
 % https://isabelle.in.tum.de/doc/functions.pdf page 4 - !!! (relation method, lexicographic order, ...)
-
-// termination of computation. see: % https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
-
-for Isabelle: see slide 28 % https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
-- Primitive-recursive with primrec
-Terminating by construction
-- Well-founded recursion with fun
-Automatic termination proof
-- Well-founded recursion with function
-User-supplied termination proof
-
-// ?else?
+%// termination of computation. see: % https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
+%for Isabelle: see slide 28 % https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
+%- Primitive-recursive with primrec
+%Terminating by construction
+%- Well-founded recursion with fun
+%Automatic termination proof
+%- Well-founded recursion with function
+%User-supplied termination proof
 
 %------------------------------------------------------------
 
@@ -329,12 +324,10 @@ During the proof process, Coq remembers its state, a set of \textit{premises}, w
 
 In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and calls of the tactics (inference rules) are written in Ltac.
 
+% TERMINATION - not include in the paper yet
 %\subsubsection{Algorithm termination}
-%TODO
-// "Syntactic restriction on recursive calls on term":
-// Coq doesn't allow to define recursive functions without decreasing argument => always terminates
-
-// ?else?
+%// "Syntactic restriction on recursive calls on term":
+%// Coq doesn't allow to define recursive functions without decreasing argument => always terminates
 
 %------------------------------------------------------------
 
@@ -397,7 +390,7 @@ Proof.
 Qed.
 \end{lstlisting}
 
-Therefore, numerous of theorems, such as the classical logic tautology Peirce's law~\eqref{tauto_peirce}, can not be proved in intuitionistic logic, while being valid in classical logic, which makes the latter strictly weaker~\cite{Rush14} (Coq's tactic for automatic reasoning of propositional statements \texttt{tauto} fails to prove this automatically).
+Therefore, numerous of theorems, such as the classical logic tautology Peirce's law~\eqref{tauto_peirce}, can not be proved in intuitionistic logic, while being valid in classical logic, which makes the latter strictly weaker~\cite{Rush14} and incomplete (Coq's tactic for automatic reasoning of propositional statements \texttt{tauto} fails to prove this automatically).
 
 In classical logic, some proofs remain valid, yet completely inapplicable. For instance, the following non-constructive proof of the statement "\textit{there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational}" may serve as a classic example of it.
 The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$; if it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational; if $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, QED. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is rational or irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
@@ -710,9 +703,9 @@ Isabelle is very well documented, all its manuals and documentation is compiled 
 %============================================================
 
 \newpage
-\appendix
+\appendix 
 
-\section{Appendix}
+
 \label{appx_diff_table}
 % TODO: sverstat appendix correctly
 
