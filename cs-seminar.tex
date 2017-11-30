@@ -517,11 +517,11 @@ qed
 
 %// to prove de morgan form of predicats with first-order quantifiers, we need to include the classical axiom of excluded middle
 
+In Coq, the library \texttt{Coq.Logic.Classical\_Prop} contains definitions of classical logic, which are useful to extend intuitionistic logic to classical logic:
 
-% TODO: see below, plagiat
 % HONESTLY I TOOK THE PROOF FROM http://flint.cs.yale.edu/cs428/coq/library/Coq.Logic.Classical_Pred_Type.html
 \begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for first-order propositions in Coq}, label={ex_morgan_quant_coq}]
-Require Import Coq.Logic.Classical_Prop.  (* to use classical logic axioms *)
+Require Import Coq.Logic.Classical_Prop.
 
 Lemma DeMorganQuantified_Coq: forall (P : Type -> Prop), 
     ~ (forall x : Type, P x) -> exists x : Type, ~ P x.
@@ -546,11 +546,10 @@ Qed.
 
 \subsubsection{Inductive Types}
 
-\texttt{nat} -- inductive type in both systems
+In both Isabelle and Coq, natural numbers type \texttt{nat} is defined inductively as in Peano arithmetic (see Appendix~\ref{TODO!!!!!!!!!!!!!}). Next two examples provide proofs for correctness of the simple formula 
+$2 \cdot S_{n} = {n \cdot (n + 1)}$ for sum $S_{n}$ of first $n$ integer numbers (note that the definition of type \texttt{nat} bases on induction on zero):
 
-// ... A practical example: given the sum n natural numbers $S_{n}$ defined recursively, proof the correctness of formula $2 \cdot S_{n} = {n \cdot (n + 1)}$ 
-
-\begin{lstlisting}[language=isabelle, caption={Proof of the formula for sum of n first number in Isabelle},label={ex_nat_sum_isabelle}]
+\begin{lstlisting}[language=isabelle, caption={Proof of the formula for sum of n first number in Isabelle}, label={ex_nat_sum_isabelle}]
 fun range_sum :: "nat => nat"
 	where "range_sum n = (\<Sum>k::nat=0..n . k)"
 value "range_sum 10"
@@ -569,7 +568,9 @@ qed
 
 %proofs by simplification (\texttt{omega} in Coq)
 % source: https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
-\texttt{nat} is unary datatype
+In Coq, the library \texttt{Coq.omega.Omega} contains powerful tactics to simplifying and proving natural numbers formulae:
+%Example~\ref{ex_nat_sum_coq} shows how the theorem could use the result of previously proven lemma.
+
 \begin{lstlisting}[language=coq, caption={Proof of the formula for sum of n first number in Coq}, label={ex_nat_sum_coq}]
 Require Import Coq.[*omega*].Omega.
 Require Coq.Logic.Classical.
@@ -607,9 +608,7 @@ induction n.
 Qed.
 \end{lstlisting}
 
-//Extracted verified function \texttt{range\_sum}:
-
-%extraction is mainly performing a straightforward syntactic translation
+Furthermore, after the correctness of defined function \texttt{range\_sum} has been proven, it is possible to extract from Coq the verified function code in Haskell or Ocaml:
 
 \begin{minipage}{.45\columnwidth}
 \begin{lstlisting}[caption={Extracted function in Haskell},frame=none]
