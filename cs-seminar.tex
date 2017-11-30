@@ -551,23 +551,21 @@ qed
 \begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for first-order propositions in Coq}, label={ex_morgan_quant_coq}]
 Require Import Coq.Logic.Classical_Prop.  (* to use classical logic axioms *)
 
-Lemma DeMorganQuantified_Coq:
-    forall (P:Type -> Prop), ~(forall x:Type, P x) -> exists x:A, ~P x.
+Lemma DeMorganQuantified_Coq: forall (P : Type -> Prop), 
+    ~ (forall x : Type, P x) -> exists x : Type, ~ P x.
 Proof.
-    unfold not.             (* unfold negation *)
-    intros P H_notall.      (* move premises to the set of hypotheses *)
-    apply NNPP.             (* apply ~~P ==> P *)
     unfold not.
-    intro H_not_notexist.
-    cut (forall x:A, P x).       (* add new goal from the goal's premise *)
-    exact H_notall.
-    intro x.
-    apply NNPP.
-    unfold not.
-    intros H_not_P_x.
-    apply H_not_notexist.
-    [*\color{dkblue}{exists}*] x.
-    exact H_not_P_x.
+    intros P H_notall.
+    apply NNPP.  (* apply classic rule ~~P ==> P *)
+    unfold not. intro H_not_notexist.
+    cut (forall x:Type, P x).  (* add new goal from the goal's premise *)
+    - exact H_notall.
+    - intro x. apply NNPP.
+      unfold not.
+      intros H_not_P_x.
+      apply H_not_notexist.
+      exists x.
+      exact H_not_P_x.
 Qed.
 \end{lstlisting}
 
@@ -599,6 +597,7 @@ qed
 
 %proofs by simplification (\texttt{omega} in Coq)
 % source: https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
+\texttt{nat} is unary datatype
 \begin{lstlisting}[language=coq, caption={Proof of the formula for sum of n first number in Coq}, label={ex_nat_sum_coq}]
 Require Import Coq.[*omega*].Omega.
 Require Coq.Logic.Classical.
@@ -619,8 +618,8 @@ Proof.
     - simpl; omega.
 Qed.
 
-Theorem SimpleArithProgressionSumFormula_Coq: forall n,
-    2 * range_sum n = n * (n + 1).
+Theorem SimpleArithProgressionSumFormula_Coq:
+    forall n, 2 * range_sum n = n * (n + 1).
 Proof.
 intros.
 induction n.
@@ -638,6 +637,8 @@ Qed.
 
 //Extracted verified function \texttt{range\_sum}:
 
+%extraction is mainly performing a straightforward syntactic translation
+
 \begin{minipage}{.45\columnwidth}
 \begin{lstlisting}[caption={Extracted function in Haskell},frame=none]
 range_sum :: Nat -> Nat
@@ -652,21 +653,14 @@ range_sum n =
 (** val range_sum : nat -> nat **)
 
 let rec range_sum = function
-| O -> O
-| S p -> add (range_sum p) (S p)
+    | O -> O
+    | S p -> add (range_sum p) (S p)
 \end{lstlisting}
 \end{minipage}
 %\vspace{3pt}
 
 
------------
-remove?
-
-// Useful features: automatically find a model (SAT)
-\begin{lstlisting}[caption={Isabelle as an SAT solver}]
-... nitpick - finds a model
-...
-\end{lstlisting}
+%------------------------------------------------------------
 
 %// Sometimes Isabelle advices how it is possible to prove a statement more easily
 %иногда Подсказывает, как можно проще доказать
@@ -677,11 +671,6 @@ remove?
 %Auto solve_direct: the current goal can be solved directly with
 %Meson.disj_comm: ?P ∨ ?Q ⟹ ?Q ∨ ?P
 %// overview good at: https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf
-
-
-
-
-%------------------------------------------------------------
 
 
 % see https://people.cs.kuleuven.be/~bart.jacobs/coq-essence.pdf, 11 Coq versus classical logic

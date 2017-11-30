@@ -15,7 +15,7 @@
 - добавить комментарии в код
 - настроить всe caption, labels
 - текст
-- проверить *.notes.txt
+- проверить *.notes.txt + бумажки
 (4) - заключение!
 - сократить что-нб из lambda & type-theories
 - почитать https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
