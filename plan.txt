@@ -15,9 +15,12 @@
 - добавить комментарии в код
 - настроить всe caption, labels
 - текст
-- проверить *.notes
+- проверить *.notes.txt
 (4) - заключение!
+- почитать https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 - антиплагиат
 - показать
 
 coq's propos auto reasing is weaker (harder to work with)
+
+(r) https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined

@@ -107,20 +107,23 @@ A \implies (B \implies A).
 
 Together with axioms \eqref{axiom_hilbert_1} and \eqref{axiom_hilbert_2}, Modus ponens rule forms the Hilbert proof system which can process statements of classical propositional logic.
 %is not complete under classical semantics.
-Other classical logic systems often include the axiom of excluded middle~\eqref{axiom_excluded_middle}, and may derive the double negation law~\eqref{rule_double_negation}:
+Other classical logic systems often include the axiom of excluded middle~\eqref{axiom_excluded_middle}, and may derive the double negation introduction~\eqref{rule_double_negation_intr} and double negation elimination~\eqref{rule_double_negation_elim} laws:
 \begin{gather}
 A \lor \neg A.
 	\label{axiom_excluded_middle}\tag{EM} \\
 %
-\neg \neg A \Leftrightarrow A
-\label{rule_double_negation}\tag{DN}
+A \implies \neg \neg A
+\label{rule_double_negation_intr}\tag{DNi} \\
+%
+\neg \neg A \implies A
+\label{rule_double_negation_elim}\tag{DNe}
 \end{gather}
 
 Many classical logics may derive the de Morgan's laws~\eqref{tauto_demorgan1},~\eqref{tauto_demorgan2}, the law of contraposition~\eqref{tauto_contrapos}, the Peirce's law~\eqref{tauto_peirce} and many other tautologies:
 \begin{gather}
-\neg (A \land B) \Leftrightarrow \neg A \lor \neg B 
+\neg (A \land B) \Longleftrightarrow \neg A \lor \neg B 
     \label{tauto_demorgan1}\tag{DM1} \\
-\neg (A \lor B) \Leftrightarrow \neg A \land \neg B 
+\neg (A \lor B) \Longleftrightarrow \neg A \land \neg B 
     \label{tauto_demorgan2}\tag{DM2} \\
 (A \rightarrow B) \implies (\neg B \rightarrow \neg A) 
     \label{tauto_contrapos}\tag{CP} \\
@@ -286,7 +289,9 @@ We have chosen for our comparison two automated proof assistants, \textit{Coq} a
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
 
-\textit{Coq} is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Let08}. This facilitates using Coq as a tool for software verification.
+\textit{Coq} is a formal proof assistant system which has been developed at INRIA (Paris, France) since 1984. Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types, and represents an implementation of intuitionistic logic. Nonetheless, Coq's logic may be easily extended into classical logic by assuming the excluded middle axiom~\ref{axiom_excluded_middle}.
+
+As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Let08}. This facilitates using Coq as a tool for software verification.
 
 During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as an inference rule, it can use already proved statements, remove hypotheses or introduce variables. Coq may sometimes find an appropriate tactic from its collection in automatic mode.
 
@@ -344,27 +349,33 @@ Both systems admit proofs written in imperative fashion, i.e., such proof is a s
 
 \subsection{Major differences}
 
-The key differences between Coq and Isabelle lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic. Essentially, intuitionistic logic does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} and the double negation elimination rule~\eqref{rule_double_negation}.
-Therefore, numerous of theorems are not provable in intuitionistic logic, while being valid in classical logic, which makes the latter strictly weaker~\cite{Rush14} (for example, the classical logic tautology Peirce's law~\eqref{tauto_peirce} cannot be proven in intuitionistic logic).
+The key differences between Coq and Isabelle lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on intuitionistic logic, which does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} essential for classical logics. Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Example~\ref{ex_double_neg_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truth is to be proven from its double negation, then there is nothing known about the proposition itself so far.
 
-The following proof of the is a classical example that illustrates the inapplicability of some classical logic proofs which are valid, but in fact are unexploitable in applied problems. The theorem states that there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational. The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$. If it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational. If $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, qed. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
-Commonly, the proofs of existence of an element are non-constructive as in order to prove such a statement it is enough to find a valid example. %TODO: perhaps, remove last sentence.
-
-%TODO: // intuit. : completeness, ...
-%TODO: // class.:  complet... 
-
-Basic datatypes (\texttt{bool}, \texttt{nat}) are defined in similar way in both Coq and Isabelle, although there are some conceptual differences related to different underlying logic frameworks. For instance, Coq has two basic meta-datatypes, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types, in contrast to Isabelle, which defines propositions as a \texttt{Set} type as well. Detailed information on differences is presented in table in Appendix~\ref{appx_diff_table}.
-
-Excluded middle does not hold in coq...
-\begin{lstlisting}[language=coq, caption={Fail of the automatic proof of excluded middle axiom in Coq}, label={ex_mid_auto_fail_coq}]
-Lemma ExcludedMiddle_Coq: forall P: Prop,
-    P \/ ~P.
+\begin{lstlisting}[language=coq, caption={Proof failure of \eqref{rule_double_negation_elim} rule, and proof of \eqref{rule_double_negation_elim} rule in Coq}, label={ex_double_neg_coq}]
+Lemma DoubleNegElim_Coq : forall P: Prop,
+    ~~P -> P.
 Proof.
-    try tauto.
+    try tauto.  (* fails *)
 Abort.
+
+Lemma DoubleNegIntr_Coq : forall P: Prop,
+    P -> ~~P.
+Proof.
+    (* automatic tactic 'tauto' works fine *)
+    unfold not.
+    intros P P_holds P_impl_false.
+    apply P_impl_false. apply P_holds. 
+Qed.
 \end{lstlisting}
 
-Still, double negation can be proved solely in intuitionistic logic:
+In addition, the double negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Example~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, e.g., Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
+
+%<idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
+% source: http://coq-club.inria.narkive.com/jqsPmOBk/is-a-prop-a-a-provable-in-coq
+% from here https://stackoverflow.com/a/32813110 
+% TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
+%"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
+
 \begin{lstlisting}[language=coq, caption={Proof of the double negated excluded middle in Coq}, label={ex_double_neg_ex_mid_coq}]
 Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
     ~~(P \/ ~P).
@@ -380,16 +391,17 @@ Proof.
 Qed.
 \end{lstlisting}
 
-//TODO: Double negation translation!
+Therefore, numerous of theorems, such as the classical logic tautology Peirce's law~\eqref{tauto_peirce}, can not be proved in intuitionistic logic, while being valid in classical logic, which makes the latter strictly weaker~\cite{Rush14} (Coq's tactic for automatic reasoning of propositional statements \texttt{tauto} fails to prove this automatically).
 
-%<idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
-% source: http://coq-club.inria.narkive.com/jqsPmOBk/is-a-prop-a-a-provable-in-coq
-% from here https://stackoverflow.com/a/32813110 
-% TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
-%"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
+In classical logic, some proofs remain valid, yet completely inapplicable. For instance, the following non-constructive proof of the statement "\textit{there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational}" may serve as a classic example of it.
+The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$; if it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational; if $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, QED. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is rational or irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
+Commonly, the proofs of existence of an element are non-constructive as in order to prove such a statement it is enough to find a valid example.
+% perhaps, remove last sentence.
 
-Nonetheless, Coq's logic can be extended to classical logic by assuming the excluded middle axiom (we use that in the proof ??? of nth number of arith progr)
+%TODO: // intuit. : completeness, ...
+%TODO: // class.:  complet... 
 
+Although there are some conceptual differences related to different underlying logic frameworks, most basic datatypes (\texttt{bool}, \texttt{nat}) are defined in similar way in both Coq and Isabelle. For instance, Coq has two basic meta-datatypes, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types, in contrast to Isabelle, which defines propositions as a \texttt{Set} type as well. Detailed information on differences is presented in table in Appendix~\ref{appx_diff_table}.
 
 % In Coq, "Implications are functions" => theorems statements may be seen as functions %TODO
 
