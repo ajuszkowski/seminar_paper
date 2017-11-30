@@ -125,7 +125,7 @@ Many classical logics may derive the de Morgan's laws~\eqref{tauto_demorgan1},~\
 (A \rightarrow B) \implies (\neg B \rightarrow \neg A) 
     \label{tauto_contrapos}\tag{CP} \\
 ((A \rightarrow B) \rightarrow A) \implies B
-    \label{tauto_peirce}\tag{Peirce}
+    \label{tauto_peirce}\tag{PL}
 \end{gather}
 
 The axiom of excluded middle means that every logical statement is decidable, which might not be true in some applications. Adding this axiom to the formal system leads to the reasoning from \textit{truth} statements, in contrast to \textit{natural deduction systems} that use reasoning from \textit{assumptions}. Although the difference between these two kinds of formal systems seems to be subtle, the latter can be used more as framework, allowing to build new systems on the logical base of pre-defined premises and formal proof rules. % AUTHOR'S THOUGHTS, UNVERIFIED
@@ -294,7 +294,8 @@ In proofs, Coq combines two languages: \textit{Gallina}, a purely functional pro
 
 \subsubsection{Algorithm termination}
 %TODO
-...
+// "Syntactic restriction on recursive calls on term":
+// Coq doesn't allow to define recursive functions without decreasing argument => always terminates
 
 // ?else?
 
@@ -332,17 +333,18 @@ User-supplied termination proof
 
 In general, both Coq and Isabelle work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages.
 
-Both tools are being actively developed: on the moment of writing this paper (autumn 2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017. Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
+Both tools are being actively developed: on the moment of writing this paper (autumn~2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017. Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
 
 Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
-Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators -- tacticals -- which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Example~\ref{ex_isb_arith_sum}).
+Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators \textit{tacticals}, which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Example~\ref{ex_isb_arith_sum}). 
+
 
 %------------------------------------------------------------
 
-\subsection{Differences}
+\subsection{Major differences}
 
-The key difference between Coq and Isabelle lies in the difference between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic. Essentially, intuitionistic logic does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} and the double negation elimination rule~\eqref{rule_double_negation}.
+The key differences between Coq and Isabelle lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types and represents an implementation of intuitionistic logic. Essentially, intuitionistic logic does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} and the double negation elimination rule~\eqref{rule_double_negation}.
 Therefore, numerous of theorems are not provable in intuitionistic logic, while being valid in classical logic, which makes the latter strictly weaker~\cite{Rush14} (for example, the classical logic tautology Peirce's law~\eqref{tauto_peirce} cannot be proven in intuitionistic logic).
 
 The following proof of the is a classical example that illustrates the inapplicability of some classical logic proofs which are valid, but in fact are unexploitable in applied problems. The theorem states that there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational. The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$. If it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational. If $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, qed. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
@@ -353,48 +355,19 @@ Commonly, the proofs of existence of an element are non-constructive as in order
 
 Basic datatypes (\texttt{bool}, \texttt{nat}) are defined in similar way in both Coq and Isabelle, although there are some conceptual differences related to different underlying logic frameworks. For instance, Coq has two basic meta-datatypes, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types, in contrast to Isabelle, which defines propositions as a \texttt{Set} type as well. Detailed information on differences is presented in table in Appendix~\ref{appx_diff_table}.
 
-// In Coq, "Implications are functions" => theorems statements may be seen as functions %TODO
-
-%------------------------------------------------------------
-
-\subsection{Example Proofs}
-
-\subsubsection{Propositional Intuitionistic Logic in Coq}
-
-<tauto - the tactic to automatically prove propositional tautologies (need definition of tautology)>
-
-//Let's prove that ~$\vdash (P \lor \neg P) $
-
-\begin{lstlisting}[language=coq]
-Theorem DeMorgan_Auto_Coq : forall P Q : Prop, 
-    ~P /\ ~Q <-> ~(P \/ Q).
+Excluded middle does not hold in coq...
+\begin{lstlisting}[language=coq, caption={Fail of the automatic proof of excluded middle axiom in Coq}, label={ex_mid_auto_fail_coq}]
+Lemma ExcludedMiddle_Coq: forall P: Prop,
+    P \/ ~P.
 Proof.
-    tauto.
-Qed.
-\end{lstlisting}
-
-
-<but Coq's logic does not include the axiom of excluded middle:>
-% from here https://coq.inria.fr/tutorial/1-basic-predicate-calculus
-\begin{lstlisting}[language=coq]
-Lemma ExcludedMiddle_AutoFails_Coq:
-    forall P, P \/ ~P.
-Proof.
-    try tauto.  (* tauto fails in Coq's intuitionistic logic *)
+    try tauto.
 Abort.
 \end{lstlisting}
 
-// Note, that Coq's logic can be extended by assuming the excluded middle fact as an axiom (we use that in the proof ??? of nth number of arith progr)
-
-Nonetheless, <idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
-% source: http://coq-club.inria.narkive.com/jqsPmOBk/is-a-prop-a-a-provable-in-coq
-% from here https://stackoverflow.com/a/32813110 
-% TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
-%"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
-
-\begin{lstlisting}[language=coq]
-Lemma DoubleNegatedExcludedMiddle_Coq:
-    forall P : Prop, ~~(P \/ ~P).
+Still, double negation can be proved solely in intuitionistic logic:
+\begin{lstlisting}[language=coq, caption={Proof of the double negated excluded middle in Coq}, label={ex_double_neg_ex_mid_coq}]
+Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
+    ~~(P \/ ~P).
 Proof.
     unfold not.    (* apply ~P ==> P -> False *)
     intros P f.    (* move premises to the set of hypotheses *)
@@ -407,21 +380,34 @@ Proof.
 Qed.
 \end{lstlisting}
 
-// so, in this way intuitionistic logic can model classical logic (?)
+//TODO: Double negation translation!
 
-In Isabelle, vice versa: it can model intuitionistic logic by not using the excluded middle law (see theory IFOL [REFERENCE]):  % FOL: http://isabelle.in.tum.de/library/FOL/FOL/document.pdf
+%<idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
+% source: http://coq-club.inria.narkive.com/jqsPmOBk/is-a-prop-a-a-provable-in-coq
+% from here https://stackoverflow.com/a/32813110 
+% TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
+%"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
 
-Still, double negation is easily proved in classical logic:
-\begin{lstlisting}[language=isabelle]
-\end{lstlisting}
+Nonetheless, Coq's logic can be extended to classical logic by assuming the excluded middle axiom (we use that in the proof ??? of nth number of arith progr)
 
 
-//Figure~\ref{Coq:DeMorgan_Prop} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
+% In Coq, "Implications are functions" => theorems statements may be seen as functions %TODO
 
-//Let's prove that $\neg (P \lor Q) \leftrightarrow (\neg P \land \neg Q)$
-    (* this simple propositional formula can be easily solved by the tactic tauto *)
+%------------------------------------------------------------
+
+\subsection{Example Proofs}
+
+// as illustrative examples, concider proofs of the de Morgan's laws \ref{tauto_demorgan1} and \ref{tauto_demorgan2}.
+
+
+\subsubsection{Propositional Intuitionistic Logic in Coq}
+
+// TODO: fix appendix references!
+Both systems have tactics for automatic proving the propositional tautologies (see Appendix~\ref{appx_diff_table})
+
+//The following example~\ref{ex_morgan_propos_coq} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
     
-\begin{lstlisting}[language=coq,caption={Proof of propositional logic tautology in Coq: the de Morgan's law for propositions},label={DeMorganPropositional_Coq}]
+\begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for propositions in Coq}, label={ex_morgan_propos_coq}]
 Theorem DeMorganPropositional_Coq:
     forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.
 Proof.
@@ -441,8 +427,9 @@ Qed.
 
 //For Isabelle, same proof:
 % source: https://www.inf.ed.ac.uk/teaching/courses/ar/isabelle/exercises/propositional/sol.pdf
-\begin{lstlisting}[language=isabelle]
-lemma DeMorganPropositional_Isabelle: "(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
+\begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for propositions in Isabelle}, label={ex_morgan_propos_isabelle}]
+lemma DeMorganPropositional_Isabelle:
+    "(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
 (* 'apply blast' automatically solves the equasion *)
 
 apply (rule iffI)      (* split equality into two subgoals *)
@@ -474,6 +461,9 @@ done
 // see slide 53 from %https://www.labri.fr/perso/casteran/CoqArt/Tsinghua/C3.pdf
 %// "Predicates : a Predicate is just any function of type A1→A2 . . .An→Prop where Ai : Set for each i. Predicates are declared as any other function symbol"
 
+// to prove de morgan form of predicats with first-order quantifiers, we need to include the classical axiom of excluded middle
+
+% TODO: see below, plagiat
 % HONESTLY I TOOK THE PROOF FROM http://flint.cs.yale.edu/cs428/coq/library/Coq.Logic.Classical_Pred_Type.html
 \begin{lstlisting}[language=coq]
 Require Import Coq.Logic.Classical_Prop.  (* to use classical logic axioms *)
@@ -498,7 +488,11 @@ Proof.
 Qed.
 \end{lstlisting}
 
+% TODO: see below, plagiat
 For Isabelle, see here %https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
+
+proof to the contrary
+
 \begin{lstlisting}[language=isabelle]
 lemma DeMorganQuantified_Isabelle:
     assumes "\<not> (\<forall>x. P x)"
@@ -554,37 +548,21 @@ Proof.
     destruct a; simpl; reflexivity.
 Qed.
 \end{lstlisting}
-//for Isabelle, see p.10 'Polymorph. types', e.g. prove "Suc = Suc" %http://isabelle.in.tum.de/doc/intro.pdf
 
-
-% also see https://gist.github.com/bbc2/092e224a78f17ed9c437
-
-
-// Peano
-\begin{lstlisting}[language=coq]
-Inductive nat : Type :=
-	| O : nat
-	| S : nat -> nat.
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Recursive function definition: factorial}]
-... example here with 'Fixpoint' and 'Inductive'
-...//fix x (v : V) : X := t Recursive function.
-\end{lstlisting}
-// "Syntactic restriction on recursive calls on term":
-// Coq doesn't allow to define recursive functions without decreasing argument => always terminates
-
+todo: define list (or sth inductive/dependent, see in manuals)
 \begin{lstlisting}[caption={Inductive data type definition: ???}]
 ...
 ...
 \end{lstlisting}
 
 
-// ... A practical example: proof of correctness of an algorithm which sums n first members of arithmetic progression using formula $S_{n} = { {\frac {2 a_{1} + d (n - 1)}{2} \cdot n}}$ through direct counting of this sum: $S_{n} = \sum\limits_{k=0}^{n-1} (a_{1} + d \cdot k)$.
+\subsubsection{Inductive Types}
+
+\texttt{nat} -- inductive type in both systems
+
+// ... A practical example: given the sum n natural numbers $S_{n}$ defined recursively, proof the correctness of formula $2 * S_{n} = {n \cdot (n + 1)}$ 
 
 Isabelle:
-
-
 \begin{lstlisting}[language=isabelle,caption={???},label={ex_isb_arith_sum}]
 fun range_sum :: "nat => nat"
 	where "range_sum n = (\<Sum>k::nat=0..n . k)"
@@ -600,7 +578,6 @@ theorem SimpleArithProgressionSumFormula_Isabelle: "2 * (range_sum n) = n * (n +
   finally show "2 * (range_sum (Suc n)) = (Suc n) * (Suc n + 1)" by simp
 qed
 \end{lstlisting}
-
 
 
 proofs by simplification (\texttt{omega} in Coq)
@@ -642,8 +619,7 @@ induction n.
 Qed.
 \end{lstlisting}
 
-
-Extracted verified function \texttt{range\_sum}:
+//Extracted verified function \texttt{range\_sum}:
 
 \begin{minipage}{.45\columnwidth}
 \begin{lstlisting}[caption={Extracted function in Haskell},frame=none]
@@ -668,50 +644,10 @@ let rec range_sum = function
 
 
 
-%\begin{lstlisting}[language=isabelle,caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
-%primrec nth_member :: "nat => nat => nat => nat"
-%	where "nth_member a_0 d 0 = a_0"
-%	| "nth_member a_0 d (Suc p) = d + (nth_member a_0 d p)"
-%
-%theorem "(nth_member a_0 d n) = a_0 + d * n"
-%	apply (induct n)
-%	apply (auto)
-%	done
-%\end{lstlisting}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Isabelle's feature: non-constructive logic!
-%- иллюстрация доказательства в классической логике, от противного. Теор Кантора
-%https://isabelle.in.tum.de/doc/prog-prove.pdf стр 42.
-\begin{lstlisting}[caption={Propositional logic proof to the contrary}]
-Lemma DeMorgan_1 : (forall A B : Prop, ~(A /\ B) -> ~A \/ ~B).
-Proof.
-intros.
-...
-Qed.
-\end{lstlisting}
+-----------
+remove?
 
 // Useful features: automatically find a model (SAT)
 \begin{lstlisting}[caption={Isabelle as an SAT solver}]
@@ -728,22 +664,6 @@ Qed.
 %Auto solve_direct: the current goal can be solved directly with
 %Meson.disj_comm: ?P ∨ ?Q ⟹ ?Q ∨ ?P
 %// overview good at: https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf
-
-
-
-
-% FOR ISABELLE SUMMATION: https://github.com/seL4/isabelle/blob/master/src/HOL/Isar_Examples/Summation.thy 
-// ... [Also] A practical example: proof of correctness of an algorithm which sums n first members of arithmetic progression using formula $S_{n} = { {\frac {2 a_{1} + d (n - 1)}{2} \cdot n}}$ through direct counting of this sum: $S_{n} = \sum\limits_{k=0}^{n-1} (a_{1} + d \cdot k)$.
-%https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
-%, label={lst:example1}]
-\begin{lstlisting}[caption={First-order logic proof: formula of the sum of n first members of arithmetic progression}]
-Lemma ... ... 
-Proof.
-...
-...
-...
-Qed.
-\end{lstlisting}
 
 
 
@@ -806,10 +726,29 @@ Isabelle is very well documented, all its manuals and documentation is compiled 
 \label{appx_diff_table}
 % TODO: sverstat appendix correctly
 
-%decrease space between
 \bgroup
 \def\arraystretch{0}%  1 is the default, change whatever you need
 \begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
+
+\begin{center}Automatic proof of de Morgan's law in Isabelle\end{center}  &  \begin{center}Automatic proof of de Morgan's law in Coq\end{center} \\
+\begin{isabelle}
+    lemma DeMorganAuto_Isabelle:
+    "(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
+    apply auto
+    done
+\end{isabelle}
+&
+\begin{coq}
+    Theorem DeMorganAutoFail_Coq:
+    forall (P Q : Prop),
+    ~P /\ ~Q <-> ~(P \/ Q).
+    Proof.
+    tauto.
+    Qed.
+\end{coq}
+\\ \arrayrulecolor{gray}\hline
+
+
 \begin{center}Basic propositions definition in Isabelle\end{center}  &  \begin{center}Basic propositions definition in Coq\end{center} \\
 \begin{isabelle}
     (* In Isabelle, boolean type is defined simply as two-element enumeration, tertium non datur *)
@@ -825,19 +764,21 @@ Isabelle is very well documented, all its manuals and documentation is compiled 
 \end{coq}
 \\ \arrayrulecolor{gray}\hline
 
+
 \begin{center}Peano's natural numbers in Isabelle\end{center}  &  \begin{center}Peano's natural numbers in Coq\end{center} \\
 \begin{isabelle}
-    datatype nat = 
+datatype nat = 
     zero ("0")
     | Suc nat
 \end{isabelle}
 &
 \begin{coq}
-    Inductive nat : Type :=
+Inductive nat : Type :=
     | O : nat
     | S : nat -> nat.
 \end{coq}
 \\ \arrayrulecolor{gray}\hline
+
 
 \begin{center}Addition in Isabelle\end{center}  &  \begin{center}Addition in Coq\end{center} \\
 \begin{isabelle}
@@ -857,6 +798,7 @@ where "n + m" := (add n m) : nat_scope.
 \end{coq}
 \\ \arrayrulecolor{gray}\hline
 
+
 \begin{center}Higher-order statement in Isabelle\end{center}  &  \begin{center}Higher-order statement in Coq\end{center} \\
 \begin{isabelle}
 lemma lem:
@@ -869,13 +811,13 @@ Lemma lem:
 forall (f : bool -> bool) (b : bool),
     f (f (f b)) = f b.
 \end{coq}
-\\ \arrayrulecolor{gray}\hline
+
+
 \end{tabular}
 
-Inductive datatype
+// TODO: Inductive datatype
 
 Isabelle:"datatype ’a list = Nil | Cons ’a (’a list)" %https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
-
 
 
 \end{document}
