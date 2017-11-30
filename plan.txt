@@ -7,16 +7,17 @@
 - |please keep section 2 at a minimum. section 3 should really start at page 7.|
 	- изменить Section review + abstract
 - SAT ? - в таблице
-(3) - Double negation translation
+//(3) - Double negation translation
 (2) - termination [in both]
 (1) - CoC, curry-howard !!!
 //- |= \vDash
-- поправить порядок: сначала Isabelle , потом Coq.
+- поправить порядок: сначала Isabelle , потом Coq. (в т ч описания!)
 - добавить комментарии в код
 - настроить всe caption, labels
 - текст
 - проверить *.notes.txt
 (4) - заключение!
+- сократить что-нб из lambda & type-theories
 - почитать https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 - антиплагиат
 - показать
