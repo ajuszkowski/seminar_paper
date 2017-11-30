@@ -24,7 +24,7 @@
 The need for formal definition of the very basis of mathematics arose in the last century.
 The scale and complexity of mathematics, along with discovered paradoxes, revealed the danger of accumulating errors across theories. Although, according to Gödel's incompleteness theorems, it is not possible to construct a single formal system which will describe all phenomena in the world, being complete and consistent at the same time, that crisis has considerably improved philosophical views on mathematics. 
 In addition, it gave rise to rather practical areas of logic, such as the theory of automated theorem proving. This is a set of techniques used to verify mathematical statements mechanically using logical reasoning. Moreover, it can be used to solve complex engineering problems as well, for instance, to prove the security properties of a software system or an algorithm.
-This paper compares two widespread tools for automated theorem proving, Coq~\cite{tool_Coq} and Isabelle/HOL~\cite{tool_Isabelle}, with respect to the power of expressiveness and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges.
+This paper compares two widespread tools for automated theorem proving,  Isabelle/HOL~\cite{tool_Isabelle} and Coq~\cite{tool_Coq}, with respect to the power of expressiveness and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges.
 
 \vspace{3mm}
 \noindent KEYWORDS: logic, formal method, proof theory, automated theorem prover, Coq, Isabelle.
@@ -52,7 +52,7 @@ Section~\ref{sec:comparison} presents target comparison properties and the compa
 
 
 \subsection{Related work}
-A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen most common systems for the formalization of mathematics were compared against various properties, in particular, the size of supporting libraries, the strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). We propose more deep comparison of two aforementioned theorem provers, Coq and Isabelle, with respect to expressiveness and usability.
+A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen most common systems for the formalization of mathematics were compared against various properties, in particular, the size of supporting libraries, the strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). We propose more deep comparison of two aforementioned theorem provers, Isabelle and Coq, with respect to expressiveness and usability.
 
 
 %============================================================
@@ -334,20 +334,20 @@ In proofs, Coq combines two languages: \textit{Gallina}, a purely functional pro
 
 \subsection{Common features}
 
-In general, both Coq and Isabelle work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages.
+In general, both Isabelle and Coq work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages.
 
-Both tools are being actively developed: on the moment of writing this paper (autumn~2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017. Since their first release, both Coq and Isabelle have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
+Both tools are being actively developed: on the moment of writing this paper (autumn~2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017. Since their first release, both Isabelle and Coq have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
 
-Both Coq and Isabelle have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
+Both Isabelle and Coq have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
-Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators \textit{tacticals}, which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Examples~\ref{ex_nat_sum_isabelle} and~\ref{ex_morgan_quant_isabelle}).
+Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators \textit{tacticals}, which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Examples~\ref{ex_nat_sum_isabelle} and~\ref{ex_morgan_quant_isabelle}), while typically proofs are written in an imperative fashion, using sequences of tactic applications, implicitly changing the proof state at each step.
 
 
 %------------------------------------------------------------
 
 \subsection{Major differences}
 
-The key differences between Coq and Isabelle lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on intuitionistic logic, which does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} essential for classical logics.
+The key differences between Isabelle and Coq lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on intuitionistic logic, which does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} essential for classical logics.
 Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Example~\ref{ex_double_neg_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truth is to be proven from its double negation, then there is nothing known about the proposition itself so far.
 
 \begin{lstlisting}[language=coq, caption={Proof failure of \eqref{rule_double_negation_elim} rule, and proof of \eqref{rule_double_negation_elim} rule in Coq}, label={ex_double_neg_coq}]
@@ -367,15 +367,9 @@ Proof.
 Qed.
 \end{lstlisting}
 
-In addition, the double negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Example~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, e.g., Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
+In addition, the double-negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Example~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double-negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, e.g., Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
 
-%<idea: Assuming NOT(A OR NOT A), you first prove ~A, then find a contradiction.>
-% source: http://coq-club.inria.narkive.com/jqsPmOBk/is-a-prop-a-a-provable-in-coq
-% from here https://stackoverflow.com/a/32813110 
-% TODO: Make a reference to that answer or to the mailing list. OR BETTER DIRECTLY TO GLIVENKO'S THM!!! double-negation translation
-%"If φ is a propositional formula, then φ is a classical tautology if and only if ¬¬φ is an intuitionistic tautology."
-
-\begin{lstlisting}[language=coq, caption={Proof of the double negated excluded middle in Coq}, label={ex_double_neg_ex_mid_coq}]
+\begin{lstlisting}[language=coq, caption={Proof of the double-negated excluded middle in Coq}, label={ex_double_neg_ex_mid_coq}]
 Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
     ~~(P \/ ~P).
 Proof.
@@ -408,17 +402,13 @@ Commonly, the proofs of existence of an element are non-constructive as in order
 
 \subsection{Example proofs}
 
-// outline 
+This section provides some illustrative examples of proofs performed in Isabelle and Coq. As a basic statements to prove we have chosen the de Morgan's laws~\ref{tauto_demorgan1} and~\ref{tauto_demorgan2} in propositional and first-order logics, and the formula for the sum of first $n$ natural numbers, which are defined inductively in both Isabelle and Coq. After proving the correctness of this formula, we shall use Coq to extract the verified code in Haskell and OCaml.
 
-This section provides some illustrative examples of proofs performed in Coq and Isabelle.
- 
- //concider proofs of the de Morgan's laws \ref{tauto_demorgan1} and \ref{tauto_demorgan2}.
-
-// then: nth arith formula + extraction)
 
 \subsubsection{Propositional intuitionistic logic proofs}
 
-
+Firstly, we shall prove the de Morgan's law~\eqref{tauto_demorgan2} in Isabelle. In the proof, after each step we show in comments (holding between symbols '\texttt{(*}' and '\texttt{*)}') how the tactic has changed the proof state.
+ Note that it could be solved automatically by the tactic \texttt{blast}.
 %//For Isabelle, same de Morgan's law for propositions:
 % source: https://www.inf.ed.ac.uk/teaching/courses/ar/isabelle/exercises/propositional/sol.pdf
 \begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for propositions in Isabelle}, label={ex_morgan_propos_isabelle}]
@@ -449,6 +439,7 @@ lemma DeMorganPropositional_Isabelle:
 done
 \end{lstlisting}
 
+The proof looks similar in Coq, when formulated with the propositions of type \texttt{Prop} that have intuitionistic nature.
 
 %// TODO: fix appendix references!
 
@@ -473,7 +464,10 @@ Proof.
 Qed.
 \end{lstlisting}
 
-// with usage of \texttt{bool} type:
+
+
+The proof looks much simplier if the theorem is formulated with usage of type \textit{Set}-type \texttt{bool} defined simply by enumerating values (see Example~\ref{ex_typedefs_coq}). Thus, it is possible to use the tactic \texttt{destruct} to decompose type to different goals and prove them separately (in Coq, the '\texttt{;}' operator between two tactics instructs interpreter to apply next tactic to all subgoals produced by previous tactic call).
+
 %<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
 \begin{lstlisting}[language=coq,caption={Proof of the de Morgan's law for booleans in Coq}, label={ex_morgan_bool_coq}]
 (* define macroses: *)
@@ -483,8 +477,8 @@ Notation "a && b" := (andb a b).
 Theorem DeMorganBoolean_Coq:
 forall a b: bool, negb (a || b) = ((negb a) && (negb b)).
 Proof.
-    intros a b.
-    destruct a; simpl; reflexivity.
+intros a b.
+destruct a; simpl; reflexivity.
 Qed.
 \end{lstlisting}
 
@@ -492,16 +486,13 @@ Qed.
 
 \subsubsection{First-order logic proofs}
 
+In this section, we provide examples of usage Coq and Isabelle for proving proofs with first order quantifiers. In both systems, the proof necessarily relies on the axiom of excluded middle as the \textit{existence} of an element is to be proven\footnote{in contract to the previous proofs formulated in propositional logic, where the existence of both propositions was assumed.}.
 
-% TODO: see below, plagiat
-%For Isabelle, see here 
-MAKE A REFERENCE!
+
 %https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
 
-%proof to the contrary
-
 \begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for first-order propositions in Isabelle}, label={ex_morgan_quant_isabelle}]
-lemma DeMorganQuantified_Isabelle:
+lemma DeMorganQuantified_Isabelle[*\footnote{This proof was originally taken from the set of examples in Isabelle's documentation, see \\ \footnotesize{https://github.com/seL4/isabelle/blob/master/src/HOL/Isar\_Examples/Drinker.thy}}*]:
   assumes "\<not> (\<forall>x. P x)"
   shows "\<exists>x. \<not> P x"
 proof (rule classical)
