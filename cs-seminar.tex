@@ -309,7 +309,12 @@ As a proof assistant system, Coq offers multiple interactive proof methods calle
 Being based on the constructive foundation, Coq has two basic meta-types, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types.
 Unlikely Isabelle's type system, the \texttt{True} and \texttt{False} propositions are defined as of type of \texttt{Prop}, so that in order to be valid they need to be either assumed or proven. Nonetheless, Coq's library has the \texttt{bool} definition, which is of type of \texttt{Set} in the manner of Isabelle's proposition (as simple enumeration of two elements, tertium non datur).
 
-\begin{lstlisting}[language=coq, caption={Basic types definitions in Coq}, label={ex_typedefs_coq}]
+%\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=coq,
+    caption={Basic types definitions in Coq},
+    label={ex_typedefs_coq},
+    float,
+    floatplacement=H]
 (* boolean type is defined as simple enumeration *)
 Inductive bool : Set :=
     true  : bool | false : bool
@@ -321,7 +326,7 @@ Inductive True : Prop := I : True.
 (* Alternatively, a Set without type constructor is an empty set *)
 Inductive Empty_set : Set :=.
 \end{lstlisting}
-
+%\end{minipage}
 
 During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as an inference rule, it can use already proved statements, remove hypotheses or introduce variables. Coq may sometimes find an appropriate tactic from its collection in automatic mode.
 
