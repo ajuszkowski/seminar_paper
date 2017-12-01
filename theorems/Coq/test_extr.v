@@ -1,25 +1,31 @@
-
 Require Import Coq.omega.Omega.
 Require Coq.Logic.Classical.
+Require Extraction.
+Extraction Language Ocaml.
 
 
-Fixpoint range_sum (n: nat) : nat :=
+
+Module ArithmeticProgression.
+
+Fixpoint arsum (n: nat) : nat :=
   match n with
     | 0 => 0
-    | S p => range_sum p + (S p)
+    | S p => arsum p + (S p)
 end.
-Compute range_sum 3.
+Print arsum.
+Compute arsum 3.
 
-Lemma range_sum_successor_lemma: forall n: nat, range_sum (n + 1) = range_sum n + (n + 1).
+Lemma arsum_successor_lemma: forall n: nat, arsum (n + 1) = arsum n + (n + 1).
 Proof.
   intros.
   induction n.
   - simpl; reflexivity.
-  - simpl. omega.
+  - simpl; omega.
 Qed.
 
+
 Theorem SimpleArithProgressionSumFormula_Coq: forall n,
-  2 * range_sum n = n * (n + 1).
+  2 * arsum n = n * (n + 1).
 Proof.
   intros.
   induction n.
@@ -28,10 +34,12 @@ Proof.
     rewrite -> Nat.mul_1_r.
     rewrite -> (Nat.mul_succ_l n).
     rewrite <- (Nat.add_1_r n).
-    rewrite -> range_sum_successor_lemma.
+    rewrite -> arsum_successor_lemma.
     omega.
 Qed.
 
+Extraction Language Haskell.
 
-Extraction Language Haskell
-Extraction "divalg.hs" divalg
+Extraction arsum.
+Extraction arsum_successor_lemma.
+Extraction SimpleArithProgressionSumFormula_Coq.

@@ -74,6 +74,8 @@ Fixpoint range_sum (n: nat) : nat :=
 end.
 Compute range_sum 3.
 
+
+
 Lemma range_sum_successor_lemma: forall n: nat, range_sum (n + 1) = range_sum n + (n + 1).
 Proof.
   intros.
