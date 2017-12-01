@@ -45,6 +45,7 @@
     moredelim=**[is][\ttfamily\color{red}]{/&}{&/},
     %
     extendedchars=true,    % Enables ASCII chars 128 to 255
+    fontadjust=true,
 } % setup listings package
 \renewcommand*\lstlistingname{Example}
 
@@ -74,7 +75,6 @@
 \usepackage{include/lstcoq}
 \usepackage{include/lstisabelle}
 
-
-
-\newbox\longbox
-\newbox\shortbox
+\newlist{subitemize}{itemize}{3}
+\setlist[subitemize]{label=$\circ$,nolistsep}
+%\newenvironment{subitemize}{\itemize[label=$\circ$,nolistsep]}

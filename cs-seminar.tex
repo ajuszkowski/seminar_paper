@@ -2,8 +2,6 @@
 \input{include/cs-seminar.sty}
 \usepackage{listings}  % already imported in cs-seminar.sty, here is needed for correct syntax highlighting in TeXstudio.
 
-%\setlength{\textfloatsep}{-0.5cm}
-
 \usepackage[compatibility=false]{caption}
 
 \begin{document}
@@ -42,28 +40,32 @@ This paper compares two widespread tools for automated theorem proving,  Isabell
 
 
 \section{Introduction}
+\label{sec:introduction}
 
-Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually has an impact on numerous problems in modern life. As a result, \textit{formal approach} was developed as a new methodology for manipulating the abstract essences according basic rules in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
+Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually has an impact on numerous problems in modern life. As a result, \textit{formal approach} was developed as a new methodology for manipulating the abstract essences with respect to basic rules in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
 
 At present, a large number of tools have been developed to automate this process. Generally, these tools can be divided into two broad classes. 
 
 The first class contains tools pursuing the aim of validating the input statement (\textit{theorem}) with respect to the sequence of inference transitions (user-defined \textit{proof}) according to set of inference rules. Such tools are sometimes called \textit{proof assistants}, their purpose is to help users to develop new proofs. The tools \textit{Isabelle}~\cite{tool_Isabelle}, \textit{Coq}~\cite{tool_Coq}, \textit{PVS}~\cite{tool_Pvs} are well-known examples of such systems, which are commonly used in recent years.
 
-The second class consists of tools that automatically \textit{discover} the formal proof, which can rely either on induction, on meta argument, or on higher-order logic. Such tools are often called \textit{automated theorem provers}, they apply techniques of automated logical reasoning to develop the proof. The systems \textit{Otter}~\cite{tool_Otter} and \textit{ACL2}~\cite{tool_Acl} are commonly known examples of such tools. 
+The second class consists of tools that automatically \textit{discover} the formal proof, which can rely either on induction, on meta argument, or on higher-order logic. Such tools are often called \textit{automated theorem provers}, they apply techniques of automated logical reasoning to develop the proof automatically. The systems \textit{Otter}~\cite{tool_Otter} and \textit{ACL2}~\cite{tool_Acl} are commonly known examples of such tools.
 
 In this paper, only systems of the first class were considered in order to test the usability of such systems.
 
-This paper is organised as follows. Section~\ref{sec:formal_theory} describes basic foundations of logic necessary for understanding theorem provers. In particular, Section~\ref{sec:definitions} provides formal definition, Sections~\ref{sec:properties}--\ref{sec:curry_howard} describe different kinds, basic properties and theoretical limitations of formal systems.
-Section~\ref{sec:comparison} presents target comparison properties and the comparison itself, including description of common features and differences and providing the illustrative examples of different kinds of proofs in both considering systems.
+This paper is organised as follows. Section~\ref{sec:formal_theory} describes basic foundations of logic necessary for understanding theorem provers. In particular, Section~\ref{sec:definitions} provides formal definition, Sections~\ref{sec:properties}--\ref{sec:type_systems} describe different types, basic properties and theoretical limitations of formal systems.
+Section~\ref{sec:comparison} presents the comparison itself and provides the illustrative examples of different kinds of proofs in both considering systems.
+
 %------------------------------------------------------------
 
 
 \subsection{Related work}
-A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen most common systems for the formalization of mathematics were compared against various properties, in particular, the size of supporting libraries, the strength and expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). We propose more deep comparison of two aforementioned theorem provers, Isabelle and Coq, with respect to expressiveness and usability.
+A considerably extensive survey on theorem provers has been presented by F.~Wiedijk~\cite{Wie03}, where fifteen most common systems for the formalization of mathematics were compared against various properties, in particular, size of supporting libraries, expressiveness of underlying logic, size of proofs (the de Bruijn criterion) and level of automation (the Poincaré principle). 
+Another notable work was presented by D.~Griffioen and M.~Huisman~\cite{Griff98}, in which two theorem provers, PVS and Isabelle/HOL, were deeply compared with respect to numerous important aspects, such as properties of used logic, specification language, user interface, etc. In this paper, we propose analogous comparison of two widely used theorem provers, Isabelle and Coq, with respect to expressiveness, limitations and usability.
 
 
 %============================================================
 
+% TODO: reduce the size of theory
 
 \section{Foundations of formal approach}
 \label{sec:formal_theory}
@@ -163,6 +165,7 @@ In that case, modern tools, such as Coq, often restrict propositions to be eithe
 \subsection{Lambda-calculus}
 \label{sec:lambda}
 
+% TODO: reduce this section size
 % TODO: exclude this section at all, if there'll be no space...
 %// Or describe more that lambda is used in both Coq and Isabelle
 
@@ -187,6 +190,8 @@ $\lambda$-calculus described above is called the \textit{type-free} $\lambda$-ca
 \subsection{Type systems}
 \label{sec:type_systems}
 
+% TODO: reduce this section
+
 A \textit{type} is a collection of elements. In a type system, each element is associated with a type, which defines a basic structure of it and restricts set of possible operations with the element. This allows to reveal useful properties of the formal system. Therefore, type theory serves as an alternative to the classical set theory~\cite{Tho91}.
 % remove notation below if not used:
 %In our notation, the $a =_{\tau} b$ means that $a$ equals $b$ and both of them are of type $\tau$. This notation is used for convenience to encode information about type to equality.
@@ -198,20 +203,18 @@ The function that builds a new type from another is called \textit{type construc
 %In the context of current paper, it is useful to describe 
 The type can be defined declaratively, by assigning a label to set of values. Such types are called \textit{simple types}, they can be useful to avoid some paradoxes of set theory, e.g., separating sets of individuals and sets of sets allows to avoid famous Russel's paradox~\cite{Irv95}. Simple type theory can extend $\lambda$-calculus to a higher-order logic through connection between formulae and expressions of type Boolean~\cite{Paulson90}.
 
-% TODO: // == Pure Type System ?
+% TO-DO: // == Pure Type System ?
 % https://www.cl.cam.ac.uk/teaching/1516/Types/lectures/lecture-9.pdf
 % https://en.wikiversity.org/wiki/Foundations_of_Functional_Programming/Pure_type_systems
 % http://www4.di.uminho.pt/~mjf/pub/SFV-CIC-2up.pd
-
-
-% TODO: // == Polymorphic Type Theory ?
+% TO-DO: // == Polymorphic Type Theory ?
 %\subsubsection{Polymorphic Type Theory}
 % //not needed
+
 % --
 % \subsubsection{System F}
 % second-order lambda calculus, is a typed lambda calculus that differs from the simply typed lambda calculus by the introduction of a mechanism of universal quantification over types
 % //not needed
-
 
 \subsubsection{Martin-Löf type theory}
 The Martin-Löf type theory, also known as the \textit{Intuitionistic type theory}\footnote{In \textit{intuitionistic type theory} and \textit{intuitionistic logic}, we use the term \textit{intuitionistic} as a synonym for \textit{constructive}.}, is based on the principles of constructive mathematics, that require explicit definition of the way of "constructing" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is held by the \textit{inductive types}, which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
@@ -229,8 +232,8 @@ Another important constructive type theory is the Calculus of Constructions~(CoC
 % see also the Coq documentation: https://coq.inria.fr/refman/cic.html#conv-rules
 
 Whenever an inductive type is defined, the task of \textit{type-checking} becomes equivalent to the task of executing corresponding function in a programming language. Although in many programming languages this procedure is linear from the size of program, type-checking in CoC is \textit{undecidable} in general case. This problem is closely related to the \textit{Curry-Howard isomorphism}, a direct relationship between a program and an intuitionistic proof, where a base type in the program is equivalent to a propositional variable in the proof, an empty type represents \textit{false} and a singletone type represents \textit{truth}, a functional type $T_{1} \rightarrow T_{2}$ corresponds to an implication, a product type $T_{1} * T_{2}$ and a sum type $T_{1} + T_{2}$ correspond to conjunction and disjunction, respectively~\cite{Pierce2002}. Thus the Calculus of Constructions can be considered as an extension of the Curry-Howard isomorphism.
-
-An important feature of CoC type system is that it holds the \text{strong normalisation property}, which means that every sequence of inference eventually terminates with an irreducible normal form. This property does not admit the definitions of infinitely recursive structures and functions.
+An important feature of CoC type system is that it holds the \text{strong normalisation property}, which means that every sequence of inference eventually terminates with an irreducible normal form.
+%This property does not admit the definitions of infinitely recursive structures and functions.
 % TODO: check whether one can say that with respect to any formal system, not only to an abstract rewriting system
 
 %Inference rules for the Calculus of Constructions:
@@ -276,8 +279,8 @@ Although the language of CoC is rather expressive, its expressiveness is not eno
 
 We have chosen for our comparison two automated proof assistants, \textit{Isabelle/HOL}\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories such as Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, we consider the Isabelle/HOL as the startpoint for exploring the power of this proof assistant.} and \textit{Coq} as they both are widely used tools for theorem proving (according to the number of theorems that have already been formalised, see~\cite{Wiedijk100}).
 
-
 %------------------------------------------------------------
+
 
 \subsection{The Isabelle/HOL theorem prover}
 \label{sec:prover_isabelle}
@@ -303,21 +306,24 @@ Isabelle exploits classical logic, so even propositional type is declared as a s
 
 %------------------------------------------------------------
 
+
 \subsection{The Coq theorem prover}
 \label{sec:prover_coq}
 
-\textit{Coq} is another widespread proof assistant system, that has been developed at INRIA (Paris, France) since 1984. Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types, and represents an implementation of intuitionistic logic. Nonetheless, Coq's logic may be easily extended into classical logic by assuming the excluded middle axiom~\ref{axiom_excluded_middle}.
+\textit{Coq} is another widespread proof assistant system, that has been developed at INRIA (Paris, France) since 1984. Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types, and represents an implementation of intuitionistic logic. Nonetheless, Coq's logic may be easily extended into classical logic by assuming the excluded middle axiom~\ref{axiom_excluded_middle}. 
 
-As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Letouzey08}. This facilitates using Coq as a tool for software verification.
+// new line?
+
+A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Letouzey08}. This facilitates using Coq as a tool for software verification.
 
 Being based on the constructive foundation, Coq has two basic meta-types, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types.
 Unlikely Isabelle's type system, the \texttt{True} and \texttt{False} propositions are defined as of type of \texttt{Prop}, so that in order to be valid they need to be either assumed or proven. Nonetheless, Coq's library has the \texttt{bool} definition, which is of type of \texttt{Set} in the manner of Isabelle's proposition (as simple enumeration of two elements, tertium non datur).
 
 %\begin{minipage}{\linewidth}
+%, float,floatplacement=H
 \begin{lstlisting}[language=coq,
     caption={Basic types definitions in Coq},
-    label={ex_typedefs_coq},
-    float,floatplacement=H]
+    label={ex_typedefs_coq}]
 (* boolean type is defined as simple enumeration *)
 Inductive bool : Set :=
     true  : bool | false : bool
@@ -331,9 +337,7 @@ Inductive Empty_set : Set :=.
 \end{lstlisting}
 %\end{minipage}
 
-During the proof process, Coq remembers its state, a set of \textit{premises}, which are considered to be true, and set of \textit{goals} (or subgoals), the statements to be proved. The proof consists of sequence of commands describing which tactic Coq should apply. Tactic may be thought as an inference rule, it can use already proved statements, remove hypotheses or introduce variables. Coq may sometimes find an appropriate tactic from its collection in automatic mode.
-
-In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, and calls of the tactics (inference rules) are written in Ltac.
+In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, while the proof process itself is being controlled by the commands written in Ltac language.
 
 % TERMINATION - not include in the paper yet
 %\subsubsection{Algorithm termination}
@@ -345,13 +349,18 @@ In proofs, Coq combines two languages: \textit{Gallina}, a purely functional pro
 
 \subsection{Common features}
 
-In general, both Isabelle and Coq work in a similar way: given definition of a statement, they can either verify already written proof, or help user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted. Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages.
+In general, both Isabelle and Coq work in a similar way: given the definition of a statement, they can either verify already written proof, or assist user to develop such proof in an interactive fashion, so that the invalid proofs cannot be accepted.
+During the proof process, the systems save the proof state, a set of \textit{premises} and set of \textit{goals} (the statements to be proved). Therefore, the proof may represents the sequence of \textit{tactics} applied to the proof state. A tactic may be thought as an inference rule, it can use already proved statements, remove hypotheses or introduce variables. Some tactics work on very high level, they can automatically solve complex equations or prove complex statements, so that the proof assistant acquires the features of an automated theorem provers described in Section~\ref{sec:introduction}.
+
+Both systems have rather large libraries with considerable amount of already proven lemmas and theorems; in addition, they can be used as functional programming languages as they allow to construct new data types and recursive functions, they have pattern matching, type inference and other features inherent for functional languages.
 
 Both tools are being actively developed: on the moment of writing this paper (autumn~2017), the latest versions were Coq 8.7.0 (stable) and Isabelle2017, both released in October 2017. Since their first release, both Isabelle and Coq have already been used to formalize enormous amount of mathematical theorems, including those which have very large or even controversial proof, such as Four colour theorem (2004), Lax-Milgram theorem (2017), and other important theorems~\cite{Wiedijk100}. Moreover, the theorem provers have been successfully used for testing and verifying of software programs, including the general-purpose operating system kernel~seL4~(2009)~\cite{Klein09}, the C~standard~(2015)~\cite{Krebbers15}, and others.
 
-Both Isabelle and Coq have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to the next or previous statement only. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
+Both Isabelle and Coq have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to backward or forward linearly. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, we used the native IDEs of each proof assistant in order to minimize the impact of third-party tools to our research.
 
-Both systems admit proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators \textit{tacticals}, which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar permits writing the goals explicitly in the proof code (see Examples~\ref{ex_nat_sum_isabelle} and~\ref{ex_morgan_quant_isabelle}), while typically proofs are written in an imperative fashion, using sequences of tactic applications, implicitly changing the proof state at each step.
+Both systems accept proofs written in imperative fashion, i.e., such proof is a sequence of tactic calls compound by control-flow operators \textit{tacticals}, which combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar allows writing the goals explicitly in the proof code (see Examples~\ref{ex_nat_sum_isabelle} and~\ref{ex_morgan_quant_isabelle}), while typically proofs are written in an imperative fashion, using sequences of tactic applications, implicitly changing the proof state at each step.
+
+%<already in text, see paragraph above> Isar accepts more relaxed syntax in sense that its proof may look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume \<not> P x then have \<exists>x. \<not> P x}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
 
 
 %------------------------------------------------------------
@@ -400,10 +409,10 @@ Qed.
 In addition, the double-negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Example~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double-negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, e.g., Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
 
 %\begin{minipage}[t]{\linewidth}
+%, float,floatplacement=H
 \begin{lstlisting}[language=coq,
     caption={Proof of the double-negated excluded middle in Coq},
-    label={ex_double_neg_ex_mid_coq},
-    float,floatplacement=H]
+    label={ex_double_neg_ex_mid_coq}]
 Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
     ~~(P \/ ~P).
 Proof.
@@ -687,31 +696,64 @@ let rec range_sum = function
 \subsection{Results of comparison}
 \label{sec:joint_comparison}
 
-//TODO: perhaps in table:
+In this paper, the authors have made an attempt to compare to different theorem provers, Coq and Isabelle/HOL, and both of them have been found highly developed and useful, although they both require deep understanding of metamathematical concepts of the proof process. The list below summarises main features of these two tools that authors have noticed.
+
 \begin{itemize}
 	\itemsep0em
-	\item expressiveness of logic used
-	\item time of proving
-	\item num of supporting theories
-	\item set of techniques to prove automatically
-	\item Volume of proof (as text)
-	\item num of user interaction steps
-	\item usability
-	\item etc ...
+  
+	\item \textit{Expressiveness of underlying logic}
+    \begin{subitemize}
+    	\item Isabelle/HOL uses classical higher-order logic;
+      \item Coq uses intuitionistic logic based on Calculus of Inductive Constructions theory, but may be extended to classical logic by assuming the axiom of excluded middle;
+    \end{subitemize}
+  
+  \item \textit{Necessary background for using the theorem provers}
+  \begin{subitemize}
+    \item From the author's personal point of view, Coq requires much deeper understanding of underlying logic theory, since usually intuitionistic logic is being studying as a further development of classical logic that adds large number of additional constraints to it;
+    \item Nonetheless, the whole proof process may seem unfamiliar for users with traditional mathematical background, so that for these users both systems require large amount of additional learning (at least, understanding and memorising the most common tactics is least necessary requirement for using these systems);
+  \end{subitemize}
+
+  \item \textit{The level of the proof automation}
+  \begin{subitemize}
+    \item Both systems have automatic tactics for proving (e.g., \texttt{auto} in Isabelle, \texttt{auto}, \texttt{tauto} in Coq) or simplification complex statements (e.g., automatic reasoner \texttt{blast} in Isabelle, automatic tactics \texttt{simpl}, \texttt{omega} in Coq). However, in some cases these tactics offer insufficient level of automation, particularly in proving theorems over natural numbers (see Example~\ref{ex_nat_sum_coq}, where numerous steps for rewriting the equation by calling \texttt{rewrite} had been performed in order to apply automatic tactic \texttt{omega});
+  \end{subitemize}
+  
+  \item \textit{Size of proof}
+  \begin{subitemize}
+    \item Analogous proofs have approximately equal size in both systems, caeteris paribus;
+  \end{subitemize}
+
+ \item \textit{Number of supporting theories}
+  \begin{subitemize}
+    \item Both Isabelle and Coq have rather large set of libraries containing formalised theories and data structures, that are being constantly replenished, see~\cite{tool_Isabelle} and~\cite{tool_Coq};
+  \end{subitemize}
+  
+  \item \textit{Expressiveness of syntax}
+    \begin{subitemize}
+      \item Both systems have the built-in powerful functional languages, which can be used to define complex recursive structures;
+      \item Both systems accept proofs written in imperative style as a sequence of tactics calls. Nonetheless, Isabelle supports syntax which explicitly states the target goal for every tactic (with keywords \texttt{show}, \texttt{have}, \texttt{assume}, etc.), so that the proof become much more readable, yet it requires more time to be written;
+    \end{subitemize}
+  
+  \item \textit{Usability of syntax}
+    \begin{subitemize}
+      \item Although Isabelle recognises common mathematical ASCII symbols in proof which makes it much more readable, it may seem inconvenient to use them within IDE (e.g., character \isabelleinline{\<forall>} is incoded as \texttt{\textbackslash<forall>}, \isabelleinline{\<Sum>} as \texttt{\textbackslash<Sum>}, etc.);
+      \item The syntax of Coq is closer to the syntax of a programming language rather a mathematical proof, apparently it was designed for comfortable work with a keyboard;
+    \end{subitemize}
+  
+  \item \textit{Usability of the native IDE}
+  \begin{subitemize}
+    \item The authours are inclined to consider the Isabelle's jEdit Prover IDE more user-friendly as the proof user is writing is being fully recompiled every time user changes the syntax tree, which allows user to acquire the proof state for arbitrary any step of the proof;
+    \item In contrast, the CoqIDE can change the proof state backward and forward linearly, which however implies less system overload;
+  \end{subitemize}
+
+  \item \textit{Additional comparison information}
+  \begin{subitemize}
+    \item Coq has an essential feature that distincts it from most other theorem provers: it can extract the verified code for which the properties have been proved in a constructive way. This encourages using Coq as a software verification tool.
+  \end{subitemize}
+      
+    
+  
 \end{itemize}
-
-
-Coq requires more mathematical background to even understand manuals (not just tactics, but rather deep knowledge of lambda-calculus to understand different types of reduction, functional programming and inductively created types ... ... ...)
-
-Isabelle has more powerful meta-language syntax to operate tactics: it allows to use the functional combinators of tactics called tacticals for building up complex tactics from simpler ones. Common tacticals perform sequential composition, disjunctive choice, iteration, or goal addressing, which make Isar the Turing-complete language in the domain of logic <TODO: say better (?)>. [REFERENCE: implementaion.pdf in Isabelle Jedit]. In comparison, Coq allows to use only the composition of tactics. 
-NOTE!!! Coq allows combinations of tactics as well, see: %https://stackoverflow.com/questions/43823343/how-to-repeat-proof-tactics-in-case-in-coq
-
-Moreover, Isar allow more relaxed syntax in sense that its proof may look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume "\<not> P x" then have "\<exists>x. \<not> P x"}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
-
-Isabelle is very well documented, all its manuals and documentation is compiled as a set of pdf files and is supplied with Isabelle setup bundle. Coq's manuals were in web, so numerous of files were inaccessible or even lost.
-
-
-% у isabelle вначале предполагаем, потом проверяем, у coq просто приходим к этому
 
 %============================================================
 

@@ -1,17 +1,20 @@
 //1. arith in isabelle
-2. inductive (recursive - diff?) datatypes in both. structural induction?
+//2. inductive (recursive - diff?) datatypes in both. structural induction?
 //3. extract program in coq!
 //4. double negation in Isabelle + double negation in Isab.
+
 
 - Appendix
 - |please keep section 2 at a minimum. section 3 should really start at page 7.|
 	- изменить Section review + abstract
-- SAT ? - в таблице
+//- SAT ? - в таблице. Не надо.
 //(3) - Double negation translation
-(2) - termination [in both]
-(1) - CoC, curry-howard !!!
+//(2) - termination [in both]. Не буду.
+//(1) - CoC, curry-howard !!!
 //- |= \vDash
 - поправить порядок: сначала Isabelle , потом Coq. (в т ч описания!)
+- упорядочить, м б выделить секции по теме сравнения
+- проверить отступы в листингах
 - добавить комментарии в код
 - настроить всe caption, labels
 - текст
@@ -21,6 +24,9 @@
 - почитать https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 - антиплагиат
 - показать
+- since -> as
+
+изменить название на 'Comparison of two theorem provers: Coq and Isabelle/HOL' or 'Comparison of Coq and Isabelle/HOL'
 
 coq's propos auto reasing is weaker (harder to work with)
 
