@@ -2,6 +2,10 @@
 \input{include/cs-seminar.sty}
 \usepackage{listings}  % already imported in cs-seminar.sty, here is needed for correct syntax highlighting in TeXstudio.
 
+%\setlength{\textfloatsep}{-0.5cm}
+
+\usepackage[compatibility=false]{caption}
+
 \begin{document}
 %\counterwithin{lstlisting}{section}
 
@@ -313,8 +317,7 @@ Unlikely Isabelle's type system, the \texttt{True} and \texttt{False} propositio
 \begin{lstlisting}[language=coq,
     caption={Basic types definitions in Coq},
     label={ex_typedefs_coq},
-    float,
-    floatplacement=H]
+    float,floatplacement=H]
 (* boolean type is defined as simple enumeration *)
 Inductive bool : Set :=
     true  : bool | false : bool
@@ -356,28 +359,51 @@ Both systems admit proofs written in imperative fashion, i.e., such proof is a s
 \subsection{Major differences}
 
 The key differences between Isabelle and Coq lie in the differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with decidable non-dependent types, Coq is based on intuitionistic logic, which does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} essential for classical logics.
-Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Example~\ref{ex_double_neg_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truth is to be proven from its double negation, then there is nothing known about the proposition itself so far.
+Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Examples~\ref{ex_double_neg_elim_coq} and~\ref{ex_double_neg_intro_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truth is to be proven from its double negation, then there is nothing known about the proposition itself so far.
 
-\begin{lstlisting}[language=coq, caption={Proof failure of \eqref{rule_double_negation_elim} rule, and proof of \eqref{rule_double_negation_elim} rule in Coq}, label={ex_double_neg_coq}]
+\begin{raggedleft}
+\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
+%\begin{figure}[!h]
+%\begin{minipage}[t]{.48\textwidth}
+\begin{lstlisting}[language=coq,
+    caption={Proof failure of the \eqref{rule_double_negation_elim} rule in Coq},
+    label=ex_double_neg_elim_coq]
 Lemma DoubleNegElim_Coq : forall P: Prop,
     ~~P -> P.
 Proof.
     try tauto.  (* fails *)
 Abort.
 
-Lemma DoubleNegIntr_Coq : forall P: Prop,
+
+[*$ $*]
+\end{lstlisting} % empty lines after code and [*$ $*] are needed for caption alignment
+&
+%\end{minipage}
+%\begin{minipage}[t]{.48\textwidth}
+\begin{lstlisting}[language=coq,
+    caption={Proof of the \eqref{rule_double_negation_elim} rule in Coq},
+    label=ex_double_neg_intro_coq]
+Lemma DoubleNegIntro_Coq : forall P: Prop,
     P -> ~~P.
 Proof.
-    (* automatic tactic 'tauto' works fine *)
+    (* automatic 'tauto' works here *)
     unfold not.
     intros P P_holds P_impl_false.
     apply P_impl_false. apply P_holds. 
 Qed.
 \end{lstlisting}
+%\end{minipage}
+%\end{figure}
+\end{tabular}
+\end{raggedleft}
 
 In addition, the double-negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Example~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double-negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, e.g., Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
 
-\begin{lstlisting}[language=coq, caption={Proof of the double-negated excluded middle in Coq}, label={ex_double_neg_ex_mid_coq}]
+%\begin{minipage}[t]{\linewidth}
+\begin{lstlisting}[language=coq,
+    caption={Proof of the double-negated excluded middle in Coq},
+    label={ex_double_neg_ex_mid_coq},
+    float,floatplacement=H]
 Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
     ~~(P \/ ~P).
 Proof.
@@ -391,11 +417,12 @@ Proof.
     exact P_holds. (* match the goal with one of the hypotheses *)
 Qed.
 \end{lstlisting}
+%\end{minipage}
 
 Therefore, numerous of theorems, such as the classical logic tautology Peirce's law~\eqref{tauto_peirce}, can not be proved in intuitionistic logic, while being valid in classical logic, which makes the latter strictly weaker~\cite{Rush14} and incomplete (Coq's tactic for automatic reasoning of propositional statements \texttt{tauto} fails to prove this automatically).
 
 In classical logic, some proofs remain valid, yet completely inapplicable. For instance, the following non-constructive proof of the statement "\textit{there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational}" may serve as a classic example of it.
-The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$; if it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational; if $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, QED. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is rational or irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
+The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$; if it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational; if $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}^{2}$, so that $x^{y}$ is rational, q.e.d. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is rational or irrational. More importantly, it gives no algorithm for finding such numbers. Therefore, the main purpose of constructive proofs used in intuitionistic logics is to define such a solution schema for a problem, in addition to simply proving the claims.
 Commonly, the proofs of existence of an element are non-constructive as in order to prove such a statement it is enough to find a valid example.
 % perhaps, remove last sentence.
 
@@ -447,7 +474,7 @@ lemma DeMorganPropositional_Isabelle:
 done
 \end{lstlisting}
 
-The proof looks similar in Coq, when formulated with the propositions of type \texttt{Prop} that have intuitionistic nature.
+In Coq, the proof is similar when formulated with the propositions of type \texttt{Prop}, which have intuitionistic nature.
 
 %// TODO: fix appendix references!
 
@@ -552,7 +579,7 @@ Qed.
 
 %------------------------------------------------------------
 
-\subsubsection{Inductive Types}
+\subsubsection{Inductive types}
 
 In both Isabelle and Coq, natural numbers type \texttt{nat} is defined inductively as in Peano arithmetic (see Appendix~\ref{TODO!!!!!!!!!!!!!}). Next two examples provide proofs for correctness of the simple formula 
 $2 \cdot S_{n} = {n \cdot (n + 1)}$ for sum $S_{n}$ of first $n$ integer numbers (note that the definition of type \texttt{nat} bases on induction on zero):
@@ -616,28 +643,31 @@ induction n.
 Qed.
 \end{lstlisting}
 
+
+\subsubsection{Code extraction in Coq}
 Furthermore, after the correctness of defined function \texttt{range\_sum} has been proven, it is possible to extract from Coq the verified function code in Haskell or Ocaml:
 
-\begin{minipage}{.45\columnwidth}
-\begin{lstlisting}[caption={Extracted function in Haskell},frame=none]
+\begin{raggedleft}
+\begin{tabular}{p{.48\columnwidth} p{.48\columnwidth}}
+\begin{lstlisting}[caption={Extracted function in Haskell}]
 range_sum :: Nat -> Nat
 range_sum n =
   case n of {
     O -> O;
     S p -> add (range_sum p) (S p)}
-\end{lstlisting}
-\end{minipage}
-\begin{minipage}{.45\columnwidth}
-\begin{lstlisting}[caption={Extracted function in OCaml},frame=none]
+\end{lstlisting} % empty lines after code and [*$ $*] are needed for caption alignment
+&
+\begin{lstlisting}[caption={Extracted function in OCaml}]
 (** val range_sum : nat -> nat **)
 
 let rec range_sum = function
     | O -> O
     | S p -> add (range_sum p) (S p)
 \end{lstlisting}
-\end{minipage}
-%\vspace{3pt}
+\end{tabular}
+\end{raggedleft}
 
+%extraction is mainly performing a straightforward syntactic translation
 
 %------------------------------------------------------------
 
@@ -702,7 +732,9 @@ Isabelle is very well documented, all its manuals and documentation is compiled 
 
 \newpage
 \appendix 
+\section{Appendix}
 
+// TODO: split proofs at separate appendices. Perhaps: remove some of them.
 
 \label{appx_diff_table}
 % TODO: sverstat appendix correctly
