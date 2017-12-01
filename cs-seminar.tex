@@ -23,6 +23,9 @@
 
 The need for formal definition of the very basis of mathematics arose in the last century.
 The scale and complexity of mathematics, along with discovered paradoxes, revealed the danger of accumulating errors across theories. Although, according to Gödel's incompleteness theorems, it is not possible to construct a single formal system which will describe all phenomena in the world, being complete and consistent at the same time, that crisis has considerably improved philosophical views on mathematics. 
+
+// WTF?!?! What 'it' ?!?!?!
+
 In addition, it gave rise to rather practical areas of logic, such as the theory of automated theorem proving. This is a set of techniques used to verify mathematical statements mechanically using logical reasoning. Moreover, it can be used to solve complex engineering problems as well, for instance, to prove the security properties of a software system or an algorithm.
 This paper compares two widespread tools for automated theorem proving,  Isabelle/HOL~\cite{tool_Isabelle} and Coq~\cite{tool_Coq}, with respect to the power of expressiveness and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges.
 
@@ -58,13 +61,13 @@ A considerably extensive survey on theorem provers has been presented by F.~Wied
 %============================================================
 
 
-\section{Foundations of Formal Approach}
+\section{Foundations of formal approach}
 \label{sec:formal_theory}
 
 The formal approach appeared in the beginning of previous century when mathematics experienced deep fundamental crisis caused by the need for a formal definition of the very basis. At that time, multiple paradoxes in several fields of mathematics have been discovered. Moreover, the radically new theories appeared just by modification of the set of axioms, e.g., reducing the parallel postulate of Euclidean geometry has lead to completely different non-Euclidian geometries, such as Lobachevsky's hyperbolic geometry or Riemman's elliptic geometry, that eventually have a large number of applications in both natural sciences and engineering.
 
 
-\subsection{Definition of the Formal System}
+\subsection{Definition of the formal system}
 \label{sec:definitions}
 
 % TODO: add citations!
@@ -177,7 +180,7 @@ The central concept in $\lambda$-calculus is an \textit{expression}, which can b
 
 $\lambda$-calculus described above is called the \textit{type-free} $\lambda$-calculus. The more strong calculi can be constructed by using the types of expressions to the system, for which some useful properties can be proven (e.g., termination and memory safety)~\cite{Bar13}.
 
-\subsection{Type Systems}
+\subsection{Type systems}
 \label{sec:type_systems}
 
 A \textit{type} is a collection of elements. In a type system, each element is associated with a type, which defines a basic structure of it and restricts set of possible operations with the element. This allows to reveal useful properties of the formal system. Therefore, type theory serves as an alternative to the classical set theory~\cite{Tho91}.
@@ -187,7 +190,7 @@ A \textit{type} is a collection of elements. In a type system, each element is a
 The function that builds a new type from another is called \textit{type constructor}. Such functions have been used long before type theories had been constructed formally, even in the~19th~century Giuseppe Peano used type constructor $S$ called the \textit{successor} function, along with zero element 0, to axiomatise natural number arithmetic. Thus, number 3 can be constructed as $S(S(S(0))))$.
 
 
-\subsubsection{Simple Type Theory}
+\subsubsection{Simple type theory}
 %In the context of current paper, it is useful to describe 
 The type can be defined declaratively, by assigning a label to set of values. Such types are called \textit{simple types}, they can be useful to avoid some paradoxes of set theory, e.g., separating sets of individuals and sets of sets allows to avoid famous Russel's paradox~\cite{Irv95}. Simple type theory can extend $\lambda$-calculus to a higher-order logic through connection between formulae and expressions of type Boolean~\cite{Paulson90}.
 
@@ -206,7 +209,7 @@ The type can be defined declaratively, by assigning a label to set of values. Su
 % //not needed
 
 
-\subsubsection{Martin-Löf Type Theory}
+\subsubsection{Martin-Löf type theory}
 The Martin-Löf type theory, also known as the \textit{Intuitionistic type theory}\footnote{In \textit{intuitionistic type theory} and \textit{intuitionistic logic}, we use the term \textit{intuitionistic} as a synonym for \textit{constructive}.}, is based on the principles of constructive mathematics, that require explicit definition of the way of "constructing" an object in order to prove its existence. Therefore, an important place in intuitionistic type theory is held by the \textit{inductive types}, which were constructed recursively using a basic type (zero) and successor function which defines "next" element.
 
 The Intuitionistic type theory also uses a wide class of \textit{dependent types}, whose definition depends on a value. For instance, the $n$-ary tuple is a dependent type that is defined by the value of~$n$. However, the type checking for such a system is an undecidable problem since determining of the equality of two arbitrary dependent types turns to be tantamount to a problem of inducing the equivalence of two non-trivial programs (which is undecidable in general case according to the Rice's theorem~\cite{Rice53}).
@@ -301,7 +304,7 @@ Isabelle exploits classical logic, so even propositional type is declared as a s
 
 \textit{Coq} is another widespread proof assistant system, that has been developed at INRIA (Paris, France) since 1984. Coq is based on Calculus of Inductive Constructions, which uses inductive and dependent types, and represents an implementation of intuitionistic logic. Nonetheless, Coq's logic may be easily extended into classical logic by assuming the excluded middle axiom~\ref{axiom_excluded_middle}.
 
-As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Letouzey}. This facilitates using Coq as a tool for software verification.
+As a proof assistant system, Coq offers multiple interactive proof methods called \textit{tactics} and decision algorithms for letting the user define new proof methods. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Letouzey08}. This facilitates using Coq as a tool for software verification.
 
 Being based on the constructive foundation, Coq has two basic meta-types, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types.
 Unlikely Isabelle's type system, the \texttt{True} and \texttt{False} propositions are defined as of type of \texttt{Prop}, so that in order to be valid they need to be either assumed or proven. Nonetheless, Coq's library has the \texttt{bool} definition, which is of type of \texttt{Set} in the manner of Isabelle's proposition (as simple enumeration of two elements, tertium non datur).
