@@ -1,6 +1,7 @@
 \documentclass[article]{aaltoseries}
 \input{include/cs-seminar.sty}
 \usepackage{listings}  % already imported in cs-seminar.sty, here is needed for correct syntax highlighting in TeXstudio.
+%\usepackage[titletoc]{appendix}
 
 \usepackage[compatibility=false]{caption}
 
@@ -270,7 +271,9 @@ Although the language of CoC is rather expressive, its expressiveness is not eno
 \section{Comparison of two theorem provers}
 \label{sec:comparison}
 
-In this work, two automated proof assistants, \textit{Isabelle/HOL}\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories such as Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, the Isabelle/HOL has been considered as the startpoint for exploring the power of this proof assistant.} and \textit{Coq} have been chosed for comparison as they both are widely used tools for theorem proving (according to the number of theorems that have already been formalised, see~\cite{Wiedijk100}).
+In this work, two automated proof assistants, \textit{Isabelle/HOL}\footnote{Roughly speaking, Isabelle is a core for an automated theorem proving which supports multiple logical theories: Higher-Order Logic (HOL), first-order logic theories such as Zermelo-Fraenkel Set Theory (ZF), Classical Computational Logic (CCL), etc. In this paper, the Isabelle/HOL has been considered as the startpoint for exploring the power of this proof assistant.} and \textit{Coq} have been chosed for comparison as they both are widely used tools for theorem proving (according to the number of theorems that have already been formalised, see~\cite{Wiedijk100}). 
+
+This section discusses some common and different features of these two theorem provers, providing illustrative examples of proofs performed in Coq and Isabelle. As a startpoint, the de Morgan's laws~\eqref{tauto_demorgan1} and~\eqref{tauto_demorgan2} in propositional and first-order logics have been chosen. Afterwards, the formula for sum of first $n$ natural numbers, defined inductively in both Isabelle and Coq, is being discussed. An example of extraction in Coq the verified code in Haskell and OCaml follows the proof of correctness of this formula.
 
 %------------------------------------------------------------
 
@@ -306,25 +309,9 @@ Isabelle exploits classical logic, so even propositional type is declared as a s
 \textit{Coq} is another widespread proof assistant system that has been developed at INRIA (Paris, France) since 1984. Coq is based on Calculus of Inductive Constructions, an implementation of intuitionistic logic which uses inductive and dependent types. Nonetheless, Coq's logic may be easily extended to classical logic by assuming the excluded middle axiom~\eqref{axiom_excluded_middle}. A key feature of Coq is a capability of extraction of the verified program (in OCaml, Haskell or Scheme) from the constructive proof of its formal specification~\cite{Letouzey08}. This facilitates using Coq as a tool for software verification.
 
 Being based on the constructive foundation, Coq has two basic meta-types, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types.
-Unlikely Isabelle's type system, the \texttt{True} and \texttt{False} propositions are defined as of type of \texttt{Prop}, so that in order to be valid they need to be either assumed or proven. Nonetheless, Coq's library has the \texttt{bool} definition, which is of type of \texttt{Set} in the manner of Isabelle's proposition (as simple enumeration of two elements, tertium non datur).
+Unlikely Isabelle's type system, the \texttt{True} and \texttt{False} propositions are defined as of type of \texttt{Prop}, so that in order to be valid they need to be either assumed or proven (see Appendix~\ref{apx:type_definitions} Fig.\ref{ex_typedef_prop_coq}). Nonetheless, Coq's library has the \texttt{bool} definition, which is of type of \texttt{Set} in the manner of Isabelle's proposition (as simple as enumeration of two elements, tertium non datur; see Appendix~\ref{apx:type_definitions} Fig.\ref{ex_typedef_bool_coq}).
 
-%\begin{minipage}{\linewidth}
-%, float,floatplacement=H
-\begin{lstlisting}[language=coq,
-    caption={Basic types definitions in Coq},
-    label={ex_typedefs_coq}]
-(* boolean type is defined as simple enumeration *)
-Inductive bool : Set :=
-    true  : bool | false : bool
-(* In Coq, False is an unobservable proposition,
-which is defined as a propositional type without constructor *)
-Inductive False : Prop := .
-(* On other hand, True is defined as always true proposition *)
-Inductive True : Prop := I : True.
-(* Alternatively, a Set without type constructor is an empty set *)
-Inductive Empty_set : Set :=.
-\end{lstlisting}
-%\end{minipage}
+
 
 In proofs, Coq combines two languages: \textit{Gallina}, a purely functional programming language, and \textit{Ltac}, a procedural language for manipulating the proof process. A statement for proof and structures it relies on are written in Gallina, while the proof process itself is being controlled by the commands written in Ltac language.
 
@@ -347,7 +334,7 @@ Both tools are being actively developed: on the moment of writing this paper (au
 
 Both Isabelle and Coq have their own Integrated Development Environment (IDE) to work in (gtk-based CoqIDE and jEdit Prover IDE, respectively). In general, both native IDEs of these theorem provers provide the facility for interactive executing scripts step-by-step while preserving the state of proof (\textit{environment}), which for each step describes the set of premises along with already proved statements (\textit{context}) and the set of statements to be proven (\textit{goals}). However, Isabelle's native IDE allows to change the proof state arbitrarily, in contrast to the CoqIDE, which provides only the capability of switching the proof state to backward or forward linearly. Alternatively, both considering theorem provers have numerous of plugins for many popular IDEs, for instance, the Proof General~\cite{tool_PG} is a plugin for Emacs, which supports numerous proof assistants. During the work on this paper, only native IDEs of each proof assistant have been used in order to minimize the impact of third-party tools to the research.
 
-Both systems accept proofs written in an imperative fashion (\textit{forward proof}), i.e., such proof represents a sequence of tactic calls, that implicitly change the proof state at each step, compounded by the control-flow operators called \textit{tacticals}, that combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar allows writing goals explicitly in the proof code (\textit{backward proof}, see Examples~\ref{ex_nat_sum_isabelle} and~\ref{ex_morgan_quant_isabelle}).
+Both systems accept proofs written in an imperative fashion (\textit{forward proof}), i.e., such proof represents a sequence of tactic calls, that implicitly change the proof state at each step, compounded by the control-flow operators called \textit{tacticals}, that combine tactics together, separate their results, repeat calls, etc. In addition, the syntax of Isar allows writing goals explicitly in the proof code (\textit{backward proof}, see Figures~\ref{ex_nat_sum_isabelle} and~\ref{ex_morgan_quant_isabelle}).
 
 %<already in text, see paragraph above> Isar accepts more relaxed syntax in sense that its proof may look more like mathematical proof because of writing the goals during the proof (e.g., '\isabelleinline{assume \<not> P x then have \<exists>x. \<not> P x}') and using the connectors that can be read conveniently by human (e.g., '\isabelleinline{then}' abbreviates '\isabelleinline{from this}', '\isabelleinline{hence}' expands to '\isabelleinline{then have}', etc.). In contrast, proofs written in Coq look more like programs written in imperative programming language: the sequence of states need to be executed in order to check how the directives (application of tactics) change the state of proof. On the other hand, the brevity of Gallina language may let the experienced user, that knows the syntax and tactics well, spend less time for writing the proof in Coq rather than in Isabelle.
 
@@ -357,7 +344,7 @@ Both systems accept proofs written in an imperative fashion (\textit{forward pro
 \subsection{Major differences}
 
 The key differences between Isabelle and Coq lie in differences between logical theories they based on. While Isabelle/HOL exploits higher order logic along with non-dependent types, Coq is based on intuitionistic logic, which does not include the axiom of excluded middle~\eqref{axiom_excluded_middle} essential for classical logics.
-Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Examples~\ref{ex_double_neg_elim_coq} and~\ref{ex_double_neg_intro_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truthfulness is to be proven from its double negation, then there is nothing known about the proposition itself so far.
+Consequently, the double negation elimination rule~\eqref{rule_double_negation_elim} does not hold, however the double negation introduction law~\eqref{rule_double_negation_intr} can be easily proven (see Figures~\ref{ex_double_neg_elim_coq} and~\ref{ex_double_neg_intro_coq}). This follows from the fact that, if a proposition is known as truth, then double negation works as in classic logic, but if the proposition truthfulness is to be proven from its double negation, then there is nothing known about the proposition itself so far.
 
 \begin{raggedleft}
 \begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
@@ -395,37 +382,13 @@ Qed.
 \end{tabular}
 \end{raggedleft}
 
-In addition, the double-negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Fig.~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double-negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, such as Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
-
-%\begin{minipage}[t]{\linewidth}
-%, float,floatplacement=H
-\begin{lstlisting}[language=coq,
-    caption={Proof of the double-negated excluded middle in Coq},
-    label={ex_double_neg_ex_mid_coq}]
-Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
-    ~~(P \/ ~P).
-Proof.
-    unfold not.    (* apply ~P ==> P -> False *)
-    intros P f.    (* move premises to the set of hypotheses *)
-    apply f.       (* replace the goal with premise of implication in f *)
-    right.         (* apply disjunction elimination inference rule *)
-    intro P_holds. (* move P to the set of hypotheses *)
-    apply f.       (* replace the goal with premise of implication in f *)
-    left.          (* apply disjunction elimination inference rule *)
-    exact P_holds. (* match the goal with one of the hypotheses *)
-Qed.
-\end{lstlisting}
-%\end{minipage}
+In addition, the double-negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Appendix~\ref{apx:double_negated} Fig.\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double-negation translation}~\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, such as Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
 
 Therefore, numerous of theorems, such as the classical logic tautology Peirce's law~\eqref{tauto_peirce}, can not be proved in intuitionistic logic, while being valid in classical logic, which makes the latter strictly weaker~\cite{Rush14} and incomplete (Coq's tactic for automatic reasoning of propositional statements \texttt{tauto} fails to prove this automatically).
 
 In classical logic, some proofs remain valid, yet completely inapplicable. For instance, the following non-constructive proof of the statement "\textit{there exist algebraic irrational numbers $x$ and $y$ such that $x^y$ is rational}" may serve as a classic example of it.
 The proof relies on the axiom of excluded middle~\cite{Harrison09}. Consider the number $\sqrt{2}^{\sqrt{2}}$; if it is rational, then consider $x = \sqrt{2}$ and $y = \sqrt{2}$, which both are irrational; if $\sqrt{2}^{\sqrt{2}}$ is irrational, then consider $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}$, so that $x^{y}$ is rational, q.e.d. Although this proof is clear and concise, it reveals no information about whether the number $\sqrt{2}^{\sqrt{2}}$ is rational or irrational. More importantly, it gives no algorithm for finding other such numbers. Therefore, the main purpose of constructive proofs is to define such a solution schema for a problem, in addition to proving the claim.
 Commonly, the proofs of existence\footnote{as well as proofs of non-universally valid statements "$\neg \forall$", which in classical logics are equivalent to existence proofs "$\exists$".} of an element are non-constructive as in order to prove such a statement it is enough to find single valid example.
-% perhaps, remove last sentence.
-
-%TODO: // intuit. : completeness, ...
-%TODO: // class.:  complet... 
 
 %Although there are some conceptual differences related to different underlying logic frameworks, most basic datatypes (\texttt{bool}, \texttt{nat}) are defined in similar way in both Coq and Isabelle. For instance, Coq has two basic meta-datatypes, \texttt{Prop} as a type of propositions, and \texttt{Set} as a type of other types, in contrast to Isabelle, which defines propositions as a \texttt{Set} type as well. 
 
@@ -433,213 +396,34 @@ Commonly, the proofs of existence\footnote{as well as proofs of non-universally 
 
 %------------------------------------------------------------
 
-\subsection{Example proofs}
+\subsubsection{Proofs in propositional logic}
 
-This section provides some illustrative examples of proofs performed in Isabelle and Coq. As a basic statements to prove the authors have chosen the de Morgan's laws~\ref{tauto_demorgan1} and~\ref{tauto_demorgan2} in propositional and first-order logics, and the formula for the sum of first $n$ natural numbers, which are defined inductively in both Isabelle and Coq. After the correctness of this formula is proved, it is possible in Coq to extract the verified code in Haskell and OCaml.
-
-
-\subsubsection{Propositional intuitionistic logic proofs}
-
-Firstly, the de Morgan's law~\eqref{tauto_demorgan2} will be proved in Isabelle. In the proof, after each step the comments (holding between symbols '\texttt{(*}' and '\texttt{*)}') show how the tactic has changed the proof state.
- Note that it could be solved automatically by the tactic \texttt{blast}.
-%//For Isabelle, same de Morgan's law for propositions:
-% source: https://www.inf.ed.ac.uk/teaching/courses/ar/isabelle/exercises/propositional/sol.pdf
-\begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for propositions in Isabelle}, label={ex_morgan_propos_isabelle}]
-lemma DeMorganPropositional_Isabelle:
-"(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
-  (* 'apply blast' automatically solves the equasion *)
-  apply (rule iffI)      (* split equality into two subgoals *)
-
-  (* "Forward" subgoal: 1. \<not>(P \<and> Q) ==> \<not> P \<or> \<not> Q *)
-  apply (rule classical) (* 1. \<not> (P \<and> Q) ==> \<not> (\<not> P \<or> \<not> Q) ==> \<not> P \<or> \<not> Q *)
-  apply (erule notE)     (* 1. \<not> (\<not> P \<or> \<not> Q) ==> P \<and> Q *)
-  apply (rule conjI)     (* 1. \<not> (\<not> P \<or> \<not> Q) ==> P; 2. \<not> (\<not> P \<or> \<not> Q) ==> Q *)
-  apply (rule classical) (* 1. \<not> (\<not> P \<or> \<not> Q) ==> \<not> P ==> P *)
-  apply (erule notE)     (* 1. \<not> P ==> \<not> P \<or> \<not> Q *)
-  apply (rule disjI1)    (* 1. \<not> P ==> \<not> P *)
-  apply assumption       (* 1. (solved). 2. \<not> (\<not> P \<or> \<not> Q) ==> Q *)
-  apply (rule classical) (* 2. \<not> (\<not> P \<or> \<not> Q) ==> \<not> Q ==> Q *)
-  apply (erule notE)     (* 2. \<not> Q ==> \<not> P \<or> \<not> Q *)
-  apply (rule disjI2)    (* 2. \<not> Q ==> \<not> Q *)
-  apply assumption       (* 2. (solved) *)
-
-  (* "Backward" subgoal: 3. \<not> P \<or> \<not> Q ==> \<not> (P \<and> Q) *)
-  apply (rule notI)   (* 3. \<not> P \<or> \<not> Q ==> P \<and> Q ==> False *)   
-  apply (erule conjE) (* 3. \<not> P \<or> \<not> Q ==> P ==> Q ==> False *)
-  apply (erule disjE) (* 3. P ==> Q ==> \<not>P ==>False; 4. P ==> Q==> \<not>Q==> False *)
-  apply (erule notE, assumption)+  (* 3. (solved); 4. (solved) *)
-
-done
-\end{lstlisting}
-
-In Coq, the proof is similar when formulated with the propositions of type \texttt{Prop}, which have intuitionistic nature.
-
-%// TODO: fix appendix references!
-
+As an example of proof statement in propositional logic, the de Morgan's law~\eqref{tauto_demorgan2} has been chosen. Although both proof assistants can operate with propositional statements, the proof in Isabelle relies on the classical logic by applying excluded middle~\eqref{axiom_excluded_middle} axiom (see "\texttt{apply (rule classical)}", Appendix~\ref{apx:morgan_propos} Fig.\ref{ex_morgan_propos_isabelle}), and the proof in Coq does not use this axiom, working completely within intuitionistic logic with propositional variables of meta-type \texttt{Prop} (see Appendix~\ref{apx:morgan_propos} Fig.\ref{ex_morgan_propos_coq}). Note that both system can prove this statement automatically (using tactic \texttt{blast} in Isabelle or tactic \texttt{tauto} in Coq).
+ 
 %Both systems have tactics for automatic proving the propositional tautologies (see Appendix~\ref{appx_diff_table})
 
-%//Fig.~\ref{ex_morgan_propos_coq} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
-    
-\begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for propositions in Coq}, label={ex_morgan_propos_coq}]
-Theorem DeMorganPropositional_Coq:
-    forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.
-Proof.
-    intros P Q. unfold iff.
-    split.
-    - intros H_not_or. unfold not. constructor.
-      + intro H_P. apply H_not_or. left. apply H_P.
-      + intro H_Q. apply H_not_or. right. apply H_Q.
-    - intros H_and_not H_or.
-      destruct H_and_not as [H_not_P H_not_Q].
-      destruct H_or as [H_P | H_Q].
-      + apply H_not_P. assumption.
-      + apply H_not_Q. assumption.
-Qed.
-\end{lstlisting}
+%//Fig.\ref{ex_morgan_propos_coq} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
 
-
-
-The proof looks much simplier if the theorem is formulated with usage of type \textit{Set}-type \texttt{bool} defined simply by enumerating values (see Fig.~\ref{ex_typedef_bool_coq}). Thus, it is possible to use the tactic \texttt{destruct} to decompose type to different goals and prove them separately (in Coq, the '\texttt{;}' operator between two tactics instructs interpreter to apply next tactic to all subgoals produced by previous tactic call).
-
-%<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
-\begin{lstlisting}[language=coq,caption={Proof of the de Morgan's law for booleans in Coq}, label={ex_morgan_bool_coq}]
-(* define macroses: *)
-Notation "a || b" := (orb a b).
-Notation "a && b" := (andb a b).
-
-Theorem DeMorganBoolean_Coq:
-forall a b: bool, negb (a || b) = ((negb a) && (negb b)).
-Proof.
-intros a b.
-destruct a; simpl; reflexivity.
-Qed.
-\end{lstlisting}
+The proof in Coq can be much simpler if the theorem is formulated with usage of \textit{Set}-type \texttt{bool} (see definition of \texttt{bool} in Appendix~\ref{apx:type_definitions} Fig.\ref{ex_typedef_bool_coq}, see proof in Appendix~\ref{apx:morgan_propos} Fig.\ref{ex_morgan_bool_coq}). There, it is possible to use the tactic \texttt{destruct} to decompose type to different goals and prove them separately (in Coq, the '\texttt{;}' operator between two tactics instructs interpreter to apply next tactic to all subgoals produced by previous tactic call). Note that when the theorem was formulated in terms of variables of meta-type \texttt{Set}, the automatic tactic \texttt{tauto} fails, as it works only with propositions of meta-type \texttt{Prop}.
 
 %------------------------------------------------------------
 
-\subsubsection{First-order logic proofs}
+\subsubsection{Proofs in first-order logic}
 
-This section provides examples of usage Coq and Isabelle for proving proofs with first order quantifiers. In both systems, the proof necessarily relies on the axiom of excluded middle as the \textit{existence} of an element is to be proven\footnote{in contract to the previous proofs formulated in propositional logic, where the existence of both propositions was assumed.}.
-
-
-%https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
-
-\begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for first-order propositions in Isabelle}, label={ex_morgan_quant_isabelle}]
-lemma DeMorganQuantified_Isabelle[*\footnote{This proof was originally taken from the set of examples in Isabelle's documentation, see \\ \footnotesize{https://github.com/seL4/isabelle/blob/master/src/HOL/Isar\_Examples/Drinker.thy}}*]:
-  assumes "\<not> (\<forall>x. P x)"
-  shows "\<exists>x. \<not> P x"
-proof (rule classical)
-  assume "\<nexists>x. \<not> P x"
-  have "\<forall>x. P x"
-  proof
-    fix x show "P x"
-    proof (rule classical)
-      assume "\<not> P x"
-      then have "\<exists>x. \<not> P x" ..
-      with <\<nexists>x. \<not> P x> show ?thesis by contradiction
-    qed
-  qed
-  with <\<not>(\<forall>x. P x)> show ?thesis by contradiction
-qed
-\end{lstlisting}
-
-
+As an example of proof in first-order logic, the first-order quantified de Morgan's laws have been chosen. In both Coq and Isabelle, the proof necessarily relies on the axiom of excluded middle as the \textit{existence} of an element is to be proven\footnote{in contract to the previous proofs formulated in propositional logic, where the existence of both propositions was assumed.}. The proof in Isabelle is written as a \textit{backward proof} (see Appendix~\ref{apx:morgan_firstorder} Fig.\ref{ex_morgan_quant_isabelle}). The Coq's proof imports the library \texttt{Coq.Logic.Classical\_Prop}, which contains definitions of classical logic, which are useful to extend intuitionistic logic to classical logic (see Appendix~\ref{apx:morgan_firstorder} Fig.\ref{ex_morgan_quant_coq}).
 
 %// see slide 53 from %https://www.labri.fr/perso/casteran/CoqArt/Tsinghua/C3.pdf
 %// "Predicates : a Predicate is just any function of type A1→A2 . . .An→Prop where Ai : Set for each i. Predicates are declared as any other function symbol"
 
 %// to prove de morgan form of predicats with first-order quantifiers, we need to include the classical axiom of excluded middle
 
-In Coq, the library \texttt{Coq.Logic.Classical\_Prop} contains definitions of classical logic, which are useful to extend intuitionistic logic to classical logic:
-
-% HONESTLY I TOOK THE PROOF FROM http://flint.cs.yale.edu/cs428/coq/library/Coq.Logic.Classical_Pred_Type.html
-\begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for first-order propositions in Coq}, label={ex_morgan_quant_coq}]
-Require Import Coq.Logic.Classical_Prop.
-
-Lemma DeMorganQuantified_Coq: forall (P : Type -> Prop), 
-    ~ (forall x : Type, P x) -> exists x : Type, ~ P x.
-Proof.
-    unfold not.
-    intros P H_notall.
-    apply NNPP.  (* apply classic rule ~~P ==> P *)
-    unfold not. intro H_not_notexist.
-    cut (forall x:Type, P x).  (* add new goal from the goal's premise *)
-    - exact H_notall.
-    - intro x. apply NNPP.
-      unfold not.
-      intros H_not_P_x.
-      apply H_not_notexist.
-      exists x.
-      exact H_not_P_x.
-Qed.
-\end{lstlisting}
-
 
 %------------------------------------------------------------
 
-\subsubsection{Inductive types}
+\subsubsection{Proofs using inductive types}
 
-In both Isabelle and Coq, natural numbers type \texttt{nat} is defined inductively as in Peano arithmetic (see Appendix~\ref{TODO!!!!!!!!!!!!!}). Next two examples provide proofs for correctness of the simple formula 
-$2 \cdot S_{n} = {n \cdot (n + 1)}$ for sum $S_{n}$ of first $n$ integer numbers (note that the definition of type \texttt{nat} bases on induction on zero):
-
-\begin{lstlisting}[language=isabelle, caption={Proof of the formula for sum of n first number in Isabelle}, label={ex_nat_sum_isabelle}]
-fun range_sum :: "nat => nat"
-	where "range_sum n = (\<Sum>k::nat=0..n . k)"
-value "range_sum 10"
-
-theorem SimpleArithProgressionSumFormula_Isabelle: "2 * (range_sum n) = n * (n + 1)"
-  proof (induct n)
-    show "2 * range_sum 0 = 0 * (0 + 1)" by simp
-  next
-  fix n have "2 * range_sum (n + 1) = 2 * (range_sum n) + 2 * (n + 1)" by simp
-  also assume "2 * (range_sum n) = n * (n + 1)"
-  also have "\<dots> + 2 * (n + 1) = (n + 1) * (n + 2)" by simp
-  finally show "2 * (range_sum (Suc n)) = (Suc n) * (Suc n + 1)" by simp
-qed
-\end{lstlisting}
-
-
-%proofs by simplification (\texttt{omega} in Coq)
-% source: https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
-In Coq, the library \texttt{Coq.omega.Omega} contains powerful tactics to simplifying and proving natural numbers formulae:
-%Fig.~\ref{ex_nat_sum_coq} shows how the theorem could use the result of previously proven lemma.
-
-\begin{lstlisting}[language=coq, caption={Proof of the formula for sum of n first number in Coq}, label={ex_nat_sum_coq}]
-Require Import Coq.[*omega*].Omega.
-Require Coq.Logic.Classical.
-
-Fixpoint range_sum (n: nat) : nat :=
-match n with
-    | O => 0
-    | S p => range_sum p + (S p)
-end.
-Compute range_sum 3.  (* output: '= 6 : nat' *)
-
-Lemma range_sum_lemma: forall n: nat,
-    range_sum (n + 1) = range_sum n + (n + 1).
-Proof.
-    intros.
-    induction n.
-    - simpl; reflexivity.
-    - simpl; omega.
-Qed.
-
-Theorem SimpleArithProgressionSumFormula_Coq:
-    forall n, 2 * range_sum n = n * (n + 1).
-Proof.
-intros.
-induction n.
-(* goal: '2 * range_sum 0 = 0 * (0 + 1)' *)
- - simpl; reflexivity.
-(* goal: '2 * range_sum (S n) = S n * (S n + 1)' *)
- - rewrite -> Nat.mul_add_distr_l. (* '2*range_sum(S n) = S n * S n + S n * 1' *)
-   rewrite -> Nat.mul_1_r.         (* '2*range_sum(S n) = S n * S n + S n' *)
-   rewrite -> (Nat.mul_succ_l n).  (* '2*range_sum(S n) = n * S n + S n + S n' *)
-   rewrite <- (Nat.add_1_r n).     (* '2*range_sum(n+1) = n*(n+1)+(n+1)+(n+1)' *)
-   rewrite -> range_sum_lemma.  (* '2*(range_sum(n)+(n+1)) = n*(n+1)+(n+1)+(n+1)' *)
-   omega.                          (* automatically solve arithmetic equation *)
-Qed.
-\end{lstlisting}
+In both Isabelle and Coq, the natural numbers type \texttt{nat} is defined inductively on induction on zero as in Peano arithmetic (see Appendix~\ref{TODO!!!!!!!!!!!!!}). As an example of statement with the type \texttt{nat}, the simple formula 
+$2 \cdot S_{n} = {n \cdot (n + 1)}$ for sum $S_{n}$ of first $n$ integer numbers has been chosen (see proof in Isabelle in Appendix~\ref{apx:sum_inductive} Fig.\ref{ex_nat_sum_isabelle}, see proof in Coq in Appendix~\ref{apx:sum_inductive} Fig.\ref{ex_nat_sum_coq}). Note that the proof in Coq uses the library \texttt{Coq.omega.Omega}, which contains powerful tactics to simplifying and proving natural numbers formulae.
 
 
 \subsubsection{Code extraction in Coq}
@@ -679,13 +463,12 @@ let rec range_sum = function
 %Meson.disj_comm: ?P ∨ ?Q ⟹ ?Q ∨ ?P
 %// overview good at: https://pdfs.semanticscholar.org/95bf/a1bf0cbf5ae2c2a70daa13d4966143bd96f8.pdf
 
-
 % see https://people.cs.kuleuven.be/~bart.jacobs/coq-essence.pdf, 11 Coq versus classical logic
 
 \subsection{Results of comparison}
 \label{sec:joint_comparison}
 
-In this paper, the authors have made an attempt to compare to different theorem provers, Coq and Isabelle/HOL, and both of them have been found highly developed and useful, although they both require deep understanding of metamathematical concepts of the proof process. The list below summarises main features of these two tools that authors have noticed.
+In this paper, the authors have made an attempt to compare to different theorem provers, Coq and Isabelle/HOL, and both of them have been found highly developed and valuable, although they both require deep understanding of metamathematical concepts of the proof process. The list below summarises main features of these two tools that authors have noticed.
 
 \begin{itemize}
 	\itemsep0em
@@ -696,15 +479,15 @@ In this paper, the authors have made an attempt to compare to different theorem 
       \item Coq uses intuitionistic logic based on Calculus of Inductive Constructions theory, but may be extended to classical logic by assuming the axiom of excluded middle;
     \end{subitemize}
   
-  \item \textit{Necessary background for using the theorem provers}
+  \item \textit{Necessary background for using the theorem prover}
   \begin{subitemize}
-    \item From the author's personal point of view, Coq requires much deeper understanding of underlying logic theory, since usually intuitionistic logic is being studying as a further development of classical logic that adds large number of additional constraints to it;
+    \item From the author's personal point of view, Coq requires deeper understanding of underlying logic theory, since usually the intuitionistic logic is being studying as a further development of classical logic that adds large number of additional constraints to it;
     \item Nonetheless, the whole proof process may seem unfamiliar for users with traditional mathematical background, so that for these users both systems require large amount of additional learning (at least, understanding and memorising the most common tactics is least necessary requirement for using these systems);
   \end{subitemize}
 
   \item \textit{The level of the proof automation}
   \begin{subitemize}
-    \item Both systems have automatic tactics for proving (e.g., \texttt{auto} in Isabelle, \texttt{auto}, \texttt{tauto} in Coq) or simplification complex statements (e.g., automatic reasoner \texttt{blast} in Isabelle, automatic tactics \texttt{simpl}, \texttt{omega} in Coq). However, in some cases these tactics offer insufficient level of automation, particularly in proving theorems over natural numbers (see Fig.~\ref{ex_nat_sum_coq}, where numerous steps for rewriting the equation by calling \texttt{rewrite} had been performed in order to apply automatic tactic \texttt{omega});
+    \item Both systems have automatic tactics for proving (e.g., \texttt{auto} in Isabelle; \texttt{auto}, \texttt{tauto} in Coq) or simplification complex statements (e.g., automatic reasoner \texttt{blast} in Isabelle; automatic tactics \texttt{simpl}, \texttt{omega} in Coq). However, in some cases these tactics offer insufficient level of automation, particularly in proving theorems over natural numbers (see example in Appendix~\ref{apx:sum_inductive} Fig.\ref{ex_nat_sum_coq}, where numerous steps for rewriting the equation by calling \texttt{rewrite} had been performed in order to apply automatic tactic \texttt{omega});
   \end{subitemize}
   
   \item \textit{Size of proof}
@@ -720,7 +503,7 @@ In this paper, the authors have made an attempt to compare to different theorem 
   \item \textit{Expressiveness of syntax}
     \begin{subitemize}
       \item Both systems have the built-in powerful functional languages, which can be used to define complex recursive structures;
-      \item Both systems accept forward proofs (written in imperative style as a sequence of tactics calls). This method may seem non-natural mathematically, as the search for proof is being performed "blindly", with keeping the goal implicitly. 
+      \item Both systems accept forward proofs (written in imperative style as a sequence of tactics calls). This method may seem non-natural mathematically, as the search for proof is being performed "blindly", preserving the goal of the implicitly. 
       
       \item In contrast, the backward proof supported by Isabelle firstly states the target goal explicitly for every tactic (with keywords \texttt{show}, \texttt{have}, \texttt{assume}, etc.), so that the proof become much more readable, yet it requires more time to be written;
     \end{subitemize}
@@ -728,12 +511,12 @@ In this paper, the authors have made an attempt to compare to different theorem 
   \item \textit{Usability of syntax}
     \begin{subitemize}
       \item Although Isabelle recognises common mathematical ASCII symbols in proof which makes it much more readable, it may seem inconvenient to use them within IDE (e.g., character \isabelleinline{\<forall>} is incoded as \texttt{\textbackslash<forall>}, \isabelleinline{\<Sum>} as \texttt{\textbackslash<Sum>}, etc.);
-      \item The syntax of Coq is closer to the syntax of a programming language rather a mathematical proof, apparently it was designed for comfortable work with a keyboard;
+      \item The syntax of Coq is closer to the syntax of a programming language rather than mathematics, apparently it was designed for convenient work with a keyboard;
     \end{subitemize}
   
   \item \textit{Usability of the native IDE}
   \begin{subitemize}
-    \item The authours are inclined to consider the Isabelle's jEdit Prover IDE more user-friendly as the proof user is writing is being fully recompiled every time user changes the syntax tree, which allows user to acquire the proof state for arbitrary any step of the proof;
+    \item The authours are inclined to consider the Isabelle's jEdit Prover IDE more user-friendly as the whole proof is being recompiled every time user changes the syntax tree, which facilitates user to acquire the proof state for any arbitrary step of the proof;
     \item In contrast, the CoqIDE can change the proof state backward and forward linearly, which however implies less system overload;
   \end{subitemize}
 
@@ -762,8 +545,256 @@ Although this paper does not pretend to give a fully exhaustive comparative anal
 %============================================================
 
 \newpage
-\appendix 
-\section{Appendix}
+\appendix
+%\addcontentsline{toc}{section}{Appendices}
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices}
+\renewcommand{\thesubsection}{A.\arabic{subsection}}
+
+\subsection{Basic type definitions}
+\label{apx:type_definitions}
+
+\begin{lstlisting}[language=coq,
+  caption={Basic \texttt{Prop} types definitions in Coq},
+  label={ex_typedef_prop_coq}]
+(* In Coq, False is an unobservable proposition, which
+   is defined as a propositional type without constructor *)
+Inductive False : Prop := .
+
+(* On the other hand, True is defined as always true proposition *)
+Inductive True : Prop := I : True.
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=coq, 
+  caption={Basic \texttt{Set} types definitions in Coq},
+  label={ex_typedef_bool_coq}]
+(* boolean type is defined as simple enumeration: *)
+Inductive bool : Set :=
+    true  : bool | false : bool
+
+(* Similartly to the False, an empty set is a Set without type constructor: *)
+Inductive Empty_set : Set := .
+\end{lstlisting}
+
+
+//todo: isabelle here
+
+\subsection{Example proofs of double-negated theorems in Coq}
+\label{apx:double_negated}
+
+
+%\begin{minipage}[t]{\linewidth}
+%, float,floatplacement=H
+\begin{lstlisting}[language=coq,
+    caption={Proof of the double-negated excluded middle in Coq},
+    label={ex_double_neg_ex_mid_coq}]
+Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
+    ~~(P \/ ~P).
+Proof.
+    unfold not.    (* apply ~P ==> P -> False *)
+    intros P f.    (* move premises to the set of hypotheses *)
+    apply f.       (* replace the goal with premise of implication in f *)
+    right.         (* apply disjunction elimination inference rule *)
+    intro P_holds. (* move P to the set of hypotheses *)
+    apply f.       (* replace the goal with premise of implication in f *)
+    left.          (* apply disjunction elimination inference rule *)
+    exact P_holds. (* match the goal with one of the hypotheses *)
+Qed.
+\end{lstlisting}
+%\end{minipage}
+
+
+\subsection{Example proofs of de Morgan's laws in propositional logics}
+\label{apx:morgan_propos}
+
+In proofs, the  each step the comments (holding between symbols '\texttt{(*}' and '\texttt{*)}') show how the tactic has changed the proof state.
+%//For Isabelle, same de Morgan's law for propositions:
+% source: https://www.inf.ed.ac.uk/teaching/courses/ar/isabelle/exercises/propositional/sol.pdf
+\begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for propositions in Isabelle}, label={ex_morgan_propos_isabelle}]
+lemma DeMorganPropositional_Isabelle:
+  "(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
+  
+  (* 'apply blast' automatically solves the equation *)
+  apply (rule iffI)      (* split equality into two subgoals *)
+  
+  (* "Forward" subgoal: 1. \<not>(P \<and> Q) ==> \<not> P \<or> \<not> Q *)
+  apply (rule classical) (* 1. \<not> (P \<and> Q) ==> \<not> (\<not> P \<or> \<not> Q) ==> \<not> P \<or> \<not> Q *)
+  apply (erule notE)     (* 1. \<not> (\<not> P \<or> \<not> Q) ==> P \<and> Q *)
+  apply (rule conjI)     (* 1. \<not> (\<not> P \<or> \<not> Q) ==> P; 2. \<not> (\<not> P \<or> \<not> Q) ==> Q *)
+  apply (rule classical) (* 1. \<not> (\<not> P \<or> \<not> Q) ==> \<not> P ==> P *)
+  apply (erule notE)     (* 1. \<not> P ==> \<not> P \<or> \<not> Q *)
+  apply (rule disjI1)    (* 1. \<not> P ==> \<not> P *)
+  apply assumption       (* 1. (solved). 2. \<not> (\<not> P \<or> \<not> Q) ==> Q *)
+  apply (rule classical) (* 2. \<not> (\<not> P \<or> \<not> Q) ==> \<not> Q ==> Q *)
+  apply (erule notE)     (* 2. \<not> Q ==> \<not> P \<or> \<not> Q *)
+  apply (rule disjI2)    (* 2. \<not> Q ==> \<not> Q *)
+  apply assumption       (* 2. (solved) *)
+  
+  (* "Backward" subgoal: 3. \<not> P \<or> \<not> Q ==> \<not> (P \<and> Q) *)
+  apply (rule notI)   (* 3. \<not> P \<or> \<not> Q ==> P \<and> Q ==> False *)   
+  apply (erule conjE) (* 3. \<not> P \<or> \<not> Q ==> P ==> Q ==> False *)
+  apply (erule disjE) (* 3. P ==> Q ==> \<not>P ==>False; 4. P ==> Q==> \<not>Q==> False *)
+  apply (erule notE, assumption)+  (* 3. (solved); 4. (solved) *)
+  
+done
+\end{lstlisting}
+
+
+    
+\begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for propositions in Coq}, label={ex_morgan_propos_coq}]
+Theorem DeMorganPropositional_Coq:
+    forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.  
+Proof.
+  (* 'tauto' automatically solves the equation *)
+  intros P Q. unfold iff.
+  split.
+  - intros H_not_or. unfold not. constructor.
+    + intro H_P. apply H_not_or. left. apply H_P.
+    + intro H_Q. apply H_not_or. right. apply H_Q.
+  - intros H_and_not H_or.
+    destruct H_and_not as [H_not_P H_not_Q].
+    destruct H_or as [H_P | H_Q].
+    + apply H_not_P. assumption.
+    + apply H_not_Q. assumption.
+Qed.
+\end{lstlisting}
+
+
+
+%<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
+\begin{lstlisting}[language=coq,caption={Proof of the de Morgan's law for booleans in Coq}, label={ex_morgan_bool_coq}]
+(* define macroses: *)
+Notation "a || b" := (orb a b).
+Notation "a && b" := (andb a b).
+
+Theorem DeMorganBoolean_Coq:
+    forall a b: bool, negb (a || b) = ((negb a) && (negb b)).
+Proof.
+    try tauto.  (* automatic tactic fails here *)
+    intros a b.
+    destruct a; simpl; reflexivity.
+Qed.
+\end{lstlisting}
+
+
+\subsection{Example proofs of first-order quantified de Morgan's laws}
+\label{apx:morgan_firstorder}
+
+%https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle/browser_info/HOL/HOL-Proofs-ex/Drinker.html
+\begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for first-order propositions in Isabelle}, label={ex_morgan_quant_isabelle}]
+lemma DeMorganQuantified_Isabelle[*\footnote{This proof was originally taken from the set of examples in Isabelle's documentation, see \\ \footnotesize{https://github.com/seL4/isabelle/blob/master/src/HOL/Isar\_Examples/Drinker.thy}}*]:
+  assumes "\<not> (\<forall>x. P x)"
+  shows "\<exists>x. \<not> P x"
+proof (rule classical)
+  assume "\<nexists>x. \<not> P x"
+  have "\<forall>x. P x"
+  proof
+    fix x show "P x"
+    proof (rule classical)
+      assume "\<not> P x"
+      then have "\<exists>x. \<not> P x" ..
+      with <\<nexists>x. \<not> P x> show ?thesis by contradiction
+    qed
+  qed
+  with <\<not>(\<forall>x. P x)> show ?thesis by contradiction
+qed
+\end{lstlisting}
+
+
+% HONESTLY I TOOK THE PROOF FROM http://flint.cs.yale.edu/cs428/coq/library/Coq.Logic.Classical_Pred_Type.html
+\begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for first-order propositions in Coq}, label={ex_morgan_quant_coq}]
+Require Import Coq.Logic.Classical_Prop.
+
+Lemma DeMorganQuantified_Coq: forall (P : Type -> Prop), 
+    ~ (forall x : Type, P x) -> exists x : Type, ~ P x.
+Proof.
+    unfold not.
+    intros P H_notall.
+    apply NNPP.  (* apply classic rule ~~P ==> P *)
+    unfold not. intro H_not_notexist.
+    cut (forall x:Type, P x).  (* add new goal from the goal's premise *)
+    - exact H_notall.
+    - intro x. apply NNPP.
+      unfold not.
+      intros H_not_P_x.
+      apply H_not_notexist.
+      exists x.
+      exact H_not_P_x.
+Qed.
+\end{lstlisting}
+
+
+\subsection{Example proofs of the formula for sum of first $n$ numbers using inductive types}
+\label{apx:sum_inductive}
+
+\begin{lstlisting}[language=isabelle, caption={Proof of the formula for sum of n first number in Isabelle}, label={ex_nat_sum_isabelle}]
+fun range_sum :: "nat => nat"
+  where "range_sum n = (\<Sum>k::nat=0..n . k)"
+value "range_sum 10"  (* check the function *)
+
+theorem SimpleArithProgressionSumFormula_Isabelle: "2 * (range_sum n) = n * (n + 1)"
+  proof (induct n)
+    show "2 * range_sum 0 = 0 * (0 + 1)" by simp
+  next
+  fix n have "2 * range_sum (n + 1) = 2 * (range_sum n) + 2 * (n + 1)" by simp
+  also assume "2 * (range_sum n) = n * (n + 1)"
+  also have "\<dots> + 2 * (n + 1) = (n + 1) * (n + 2)" by simp
+  finally show "2 * (range_sum (Suc n)) = (Suc n) * (Suc n + 1)" by simp
+qed
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[language=coq, caption={Proof of the formula for sum of n first number in Coq}, label={ex_nat_sum_coq}]
+Require Import Coq.[*omega*].Omega.
+Require Coq.Logic.Classical.
+
+Fixpoint range_sum (n: nat) : nat :=
+match n with
+    | O => 0
+    | S p => range_sum p + (S p)
+end.
+Compute range_sum 3.  (* output: '= 6 : nat' *)
+
+Lemma range_sum_lemma: forall n: nat,
+    range_sum (n + 1) = range_sum n + (n + 1).
+Proof.
+    intros.
+    induction n.
+    - simpl; reflexivity.
+    - simpl; omega.
+Qed.
+
+Theorem SimpleArithProgressionSumFormula_Coq:
+    forall n, 2 * range_sum n = n * (n + 1).
+Proof.
+    intros.
+    induction n.
+    (* goal: '2 * range_sum 0 = 0 * (0 + 1)' *)
+    - simpl; reflexivity.
+    (* goal: '2 * range_sum (S n) = S n * (S n + 1)' *)
+    - rewrite -> Nat.mul_add_distr_l. (* '2*range_sum(S n) = S n * S n + S n * 1' *)
+      rewrite -> Nat.mul_1_r.         (* '2*range_sum(S n) = S n * S n + S n' *)
+      rewrite -> (Nat.mul_succ_l n).  (* '2*range_sum(S n) = n * S n + S n + S n' *)
+      rewrite <- (Nat.add_1_r n).     (* '2*range_sum(n+1) = n*(n+1)+(n+1)+(n+1)' *)
+      rewrite -> range_sum_lemma.     (* '2*(range_sum(n)+(n+1)) = n*(n+1)+(n+1)+(n+1)' *)
+      omega.                          (* automatically solve arithmetic equation *)
+Qed.
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // TODO: split proofs at separate appendices. Perhaps: remove some of them.
 
@@ -845,6 +876,5 @@ forall (f : bool -> bool) (b : bool),
 // TODO: Inductive datatype
 
 Isabelle:"datatype ’a list = Nil | Cons ’a (’a list)" %https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
-
 
 \end{document}
