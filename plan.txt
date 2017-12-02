@@ -4,6 +4,7 @@
 //4. double negation in Isabelle + double negation in Isab.
 
 
+- ABSTRACT!
 - Appendix + изменить все Example на Appendix.
 - |please keep section 2 at a minimum. section 3 should really start at page 7.|
 	- изменить Section review + abstract
@@ -24,7 +25,7 @@
 - почитать https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 - антиплагиат
 - показать
-- since -> as
+- since -> as + запятые перед
 - заровнять текст
 
 изменить название на 'Comparison of two theorem provers: Coq and Isabelle/HOL' or 'Comparison of Coq and Isabelle/HOL'
@@ -33,6 +34,10 @@ coq's propos auto reasing is weaker (harder to work with)
 
 (r) https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 
+
+
+
+Considering my old question about Isabelle's notation `[| A; B; C; |] ==> D`, I have found it suitable and included it into my paper.
 
 Still, I don't fully understand the essence of the code extraction provided by Coq: if it is just a syntactic transformation of the function or datatype definition (written in Coq's functional language, which is in an ML family), then we don't truly need the to have the constructive proof of correctness of this function, simple classical reasoning would be enough for that. Moreover, it could be more convenient for the proof assistant to work in the opposite direction: to import code written in different languages and make reasoning based on them. 
 This all holds unless Coq can extract the proof itself (which I couldn't do, unfortunately), but here the question remains: why do we need the proof written in Haskell or OCaml? To re-run them when the code of a function changes? Still there, the reversed schema I described above seems to me more natural.

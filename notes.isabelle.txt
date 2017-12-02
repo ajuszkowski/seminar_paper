@@ -1,12 +1,12 @@
-very well documented
+//very well documented
 
-much more нагляднее, e.g. in coq: за счет использования матем-х unicode-символов
+//much more нагляднее, e.g. in coq: за счет использования матем-х unicode-символов
 
-удобно , что state вычисляется интерактивно в з-ти от местоположения курсора в синтаксическом дереве кода.Можно возвращаться чтобы посмотреть старое. Пересчитывает при изменении чего-нибудь выше. какбе, Isabelle "random access", but Coq какбе "стек" , только "вверх и вниз".
+//удобно , что state вычисляется интерактивно в з-ти от местоположения курсора в синтаксическом дереве кода.Можно возвращаться чтобы посмотреть старое. Пересчитывает при изменении чего-нибудь выше. какбе, Isabelle "random access", but Coq какбе "стек" , только "вверх и вниз".
 
 
-http://www.inf.ed.ac.uk/teaching/courses/ar/2004-05/slides/small-isabelle-hol-8-9.pdf
-• Forward and backward proofs
-• Natural Deduction
-- Introduction Rules
-- Elimination Rules
+//http://www.inf.ed.ac.uk/teaching/courses/ar/2004-05/slides/small-isabelle-hol-8-9.pdf
+//• Forward and backward proofs
+//• Natural Deduction
+//- Introduction Rules
+//- Elimination Rules
