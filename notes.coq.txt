@@ -1,17 +1,17 @@
 COQ
 
-https://coq.inria.fr/faq
+//https://coq.inria.fr/faq
 
-> Is Coq a theorem prover?
-Coq comes with decision and semi-decision procedures ( propositional calculus, Presburger's arithmetic, ring and field simplification, resolution, ...) but the main style for proving theorems is interactively by using LCF-style tactics.
+//> Is Coq a theorem prover?
+//Coq comes with decision and semi-decision procedures ( propositional calculus, Presburger's arithmetic, ring and field simplification, resolution, ...) but the main style for proving theorems is interactively by using LCF-style tactics.
 
-> What is Coq?
-The Coq tool is a formal proof management system: a proof done with Coq is mechanically checked by the machine. In particular, Coq allows:
-- the definition of mathematical objects and programming objects,
-- to state mathematical theorems and software specifications,
-- to interactively develop formal proofs of these theorems,
-- to check these proofs by a small certification “kernel”.
-Coq is based on a logical framework called “Calculus of Inductive Constructions” extended by a modular development system for theories.
+//> What is Coq?
+//The Coq tool is a formal proof management system: a proof done with Coq is mechanically checked by the machine. In particular, Coq allows:
+//- the definition of mathematical objects and programming objects,
+//- to state mathematical theorems and software specifications,
+//- to interactively develop formal proofs of these theorems,
+//- to check these proofs by a small certification “kernel”.
+//Coq is based on a logical framework called “Calculus of Inductive Constructions” extended by a modular development system for theories.
 
 Programming in Coq [https://cel.archives-ouvertes.fr/inria-00001173v5/document]
 - In the Coq system, programs are usually represented by functions.

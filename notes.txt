@@ -1,3 +1,4 @@
+
 - PLAN ---------------------------------------------------------------
 Content of the seminar paper
 First draft
@@ -159,5 +160,5 @@ REFERENCES (pre):
 - WHat real profit gives us the Coq's Calculus of Constructions?
 
 
-To Mr Rybicki:
-	- do we need to use 'lemmata' instead of 'lemmas' as 'formulae' instead of 'formulas' ?
+//To Mr Rybicki:
+//	- do we need to use 'lemmata' instead of 'lemmas' as 'formulae' instead of 'formulas' ?

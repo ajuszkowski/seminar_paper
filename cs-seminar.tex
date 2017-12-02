@@ -24,16 +24,11 @@
 \begin{abstract}
 
 The need for formal definition of the very basis of mathematics arose in the last century.
-The scale and complexity of mathematics, along with discovered paradoxes, revealed the danger of accumulating errors across theories. Although, according to Gödel's incompleteness theorems, it is not possible to construct a single formal system which will describe all phenomena in the world, being complete and consistent at the same time, that crisis has considerably improved philosophical views on mathematics. 
-
-// WTF?!?! What 'it' ?!?!?!
-
-In addition, it gave rise to rather practical areas of logic, such as the theory of automated theorem proving. This is a set of techniques used to verify mathematical statements mechanically using logical reasoning. Moreover, it can be used to solve complex engineering problems as well, for instance, to prove the security properties of a software system or an algorithm.
-This paper compares two widespread tools for automated theorem proving,  Isabelle/HOL~\cite{tool_Isabelle} and Coq~\cite{tool_Coq}, with respect to the power of expressiveness and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges.
+The scale and complexity of mathematics, along with discovered paradoxes, revealed the danger of accumulating errors across theories. Although, according to Gödel's incompleteness theorems, it is not possible to construct a single formal system which will describe all phenomena in the world, being complete and consistent at the same time, it gave rise to rather practical areas of logic, such as the theory of automated theorem proving. This is a set of techniques used to verify mathematical statements mechanically using logical reasoning. Moreover, it can be used to solve complex engineering problems as well, for instance, to prove the security properties of a software system or an algorithm.
+This paper compares two widespread tools for automated theorem proving, Isabelle/HOL~\cite{tool_Isabelle} and Coq~\cite{tool_Coq}, with respect to the expressiveness, limitations and usability. For this reason, it firstly gives a brief introduction to the bases of formal systems and automated deduction theory, its main problems and challenges, and then provides detailed comparison of most notable features of these systems with support of illustrative proof examples.
 
 \vspace{3mm}
-\noindent KEYWORDS: logic, formal method, proof theory, automated theorem prover, Coq, Isabelle.
-	
+\noindent KEYWORDS: proof assistant, Coq, Isabelle/HOL, classical logic, intuitionistic logic, Calculus of Constructions, proof theory, type theory, formal method, logic.
 \end{abstract}
 
 %============================================================
@@ -42,14 +37,12 @@ This paper compares two widespread tools for automated theorem proving,  Isabell
 \section{Introduction}
 \label{sec:introduction}
 
-Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually has an impact on numerous problems in modern life. As a result, \textit{formal approach} was developed as a new methodology for manipulating the abstract essences with respect to basic rules in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
+Nowadays, the search for foundations of mathematics has become one of the key questions in philosophy of mathematics, which eventually has an impact on numerous problems in modern life. As a result, \textit{formal approach} was developed as a new methodology for manipulating the abstract essences in a verifiable way. In other words, it is possible to follow the sequence of such manipulations in order to check the validity of each statement and, as a result, of a system at whole. Moreover, automating such a verification process can significantly increase reliability of formal models and systems based on them.
 
 At present, a large number of tools have been developed to automate this process. Generally, these tools can be divided into two broad classes. 
-
-The first class contains tools pursuing the aim of validating the input statement (\textit{theorem}) with respect to the sequence of inference transitions (user-defined \textit{proof}) according to set of inference rules. Such tools are sometimes called \textit{proof assistants}, their purpose is to help users to develop new proofs. The tools \textit{Isabelle}~\cite{tool_Isabelle}, \textit{Coq}~\cite{tool_Coq}, \textit{PVS}~\cite{tool_Pvs} are well-known examples of such systems, which are commonly used in recent years.
+The first class contains tools pursuing the aim of validating the input statement (\textit{theorem}) with respect to the sequence of inference transitions (user-defined \textit{proof}) according to set of inference rules (defined by logic). Such tools are sometimes called \textit{proof assistants}, their purpose is to help users to develop new proofs. The tools \textit{Isabelle}~\cite{tool_Isabelle}, \textit{Coq}~\cite{tool_Coq}, \textit{PVS}~\cite{tool_Pvs} are well-known examples of such systems, which are commonly used in recent years.
 
 The second class consists of tools that automatically \textit{discover} the formal proof, which can rely either on induction, on meta argument, or on higher-order logic. Such tools are often called \textit{automated theorem provers}, they apply techniques of automated logical reasoning to develop the proof automatically. The systems \textit{Otter}~\cite{tool_Otter} and \textit{ACL2}~\cite{tool_Acl} are commonly known examples of such tools.
-
 In this paper, only systems of the first class were considered in order to test the usability of such systems.
 
 This paper is organised as follows. Section~\ref{sec:formal_theory} describes basic foundations of logic necessary for understanding theorem provers. In particular, Section~\ref{sec:definitions} provides formal definition, Sections~\ref{sec:properties}--\ref{sec:type_systems} describe different types, basic properties and theoretical limitations of formal systems.
@@ -750,7 +743,7 @@ In this paper, the authors have made an attempt to compare to different theorem 
 
   \item \textit{Additional comparison information}
   \begin{subitemize}
-    \item Coq has an essential feature that distincts it from most other theorem provers: it can extract the verified code for which the properties have been proved in a constructive way. This encourages using Coq as a software verification tool.
+    \item Coq has an essential feature that distincts it from most other theorem provers: it can extract the verified code for which compliance with the specification have been proved in a constructive way. This encourages using Coq as a software verification tool.
   \end{subitemize}
       
     
