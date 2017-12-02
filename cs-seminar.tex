@@ -581,8 +581,8 @@ datatype nat =
 &
 \begin{lstlisting}[language=coq, caption={Definition of Peano's natural numbers type \texttt{nat} in Coq}, label={ex_nat_definition_coq}]
 Inductive nat : Type :=
-  | O : nat
-  | S : nat -> nat.
+    | O : nat
+    | S : nat -> nat.
 \end{lstlisting}
 \end{tabular}
 \end{raggedleft}
@@ -602,8 +602,8 @@ fun add :: "nat => nat => nat"
     \begin{lstlisting}[language=coq, caption={Definition of addition over \texttt{nat} in Coq}]
 Fixpoint add (n m: nat) : nat :=
     match n with
-      | O => m
-      | S n' => S (n' + m)
+        | O => m
+        | S n' => S (n' + m)
     end
 where "n + m" := (add n m) : nat_scope.
     \end{lstlisting}
@@ -766,8 +766,8 @@ Qed.
   \begin{tabular}{p{.48\linewidth} p{.48\linewidth}}
     \begin{lstlisting}[language=isabelle, caption={Higher-order statement definition in Isabelle}] 
 lemma lem:
-    "\<forall> (f::bool=>bool) (b::bool) .
-    f (f (f b)) = f b"
+  "\<forall> (f::bool=>bool) (b::bool) .
+  f (f (f b)) = f b"
     \end{lstlisting}
     &
     \begin{lstlisting}[language=coq, caption={Higher-order statement definition in Coq}]
