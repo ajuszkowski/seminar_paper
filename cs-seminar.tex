@@ -551,6 +551,7 @@ Although this paper does not pretend to give a fully exhaustive comparative anal
 \addcontentsline{toc}{section}{Appendices}
 \renewcommand{\thesubsection}{A.\arabic{subsection}}
 
+
 \subsection{Basic type definitions}
 \label{apx:type_definitions}
 
@@ -565,7 +566,6 @@ Inductive False : Prop := .
 Inductive True : Prop := I : True.
 \end{lstlisting}
 
-
 \begin{lstlisting}[language=coq, 
   caption={Basic \texttt{Set} types definitions in Coq},
   label={ex_typedef_bool_coq}]
@@ -578,11 +578,49 @@ Inductive Empty_set : Set := .
 \end{lstlisting}
 
 
-//todo: isabelle here
+\begin{raggedleft}
+\begin{tabular}{p{.48\linewidth} p{.48\linewidth}}
+\begin{lstlisting}[language=isabelle, caption={Definition of Peano's natural numbers type \texttt{nat} in Isabelle}]
+datatype nat = 
+    zero ("0") |
+    Suc nat
+\end{lstlisting}
+&
+\begin{lstlisting}[language=coq, caption={Definition of Peano's natural numbers type \texttt{nat} in Coq}]
+Inductive nat : Type :=
+  | O : nat
+  | S : nat -> nat.
+\end{lstlisting}
+\end{tabular}
+\end{raggedleft}
 
-\subsection{Example proofs of double-negated theorems in Coq}
+
+\begin{raggedleft}
+  \begin{tabular}{p{.48\linewidth} p{.48\linewidth}}
+    \begin{lstlisting}[language=isabelle, caption={Definition of addition over \texttt{nat} in Isabelle}]
+fun add :: "nat => nat => nat"
+  where
+    "add 0 n = n" |
+    "add (Suc m) n = Suc(add m n)"
+
+[* $ $ *]
+    \end{lstlisting}
+    &
+    \begin{lstlisting}[language=coq, caption={Definition of addition over \texttt{nat} in Coq}]
+Fixpoint add (n m: nat) : nat :=
+    match n with
+      | O => m
+      | S n' => S (n' + m)
+    end
+where "n + m" := (add n m) : nat_scope.
+    \end{lstlisting}
+  \end{tabular}
+\end{raggedleft}
+
+
+\newpage
+\subsection{Example proof of double-negated classical tautology in Coq}
 \label{apx:double_negated}
-
 
 %\begin{minipage}[t]{\linewidth}
 %, float,floatplacement=H
@@ -592,6 +630,7 @@ Inductive Empty_set : Set := .
 Lemma DoubleNegatedExcludedMiddle_Coq: forall P: Prop,
     ~~(P \/ ~P).
 Proof.
+    (* 'tauto' automatically proves the statement *)
     unfold not.    (* apply ~P ==> P -> False *)
     intros P f.    (* move premises to the set of hypotheses *)
     apply f.       (* replace the goal with premise of implication in f *)
@@ -605,10 +644,11 @@ Qed.
 %\end{minipage}
 
 
+\newpage
 \subsection{Example proofs of de Morgan's laws in propositional logics}
 \label{apx:morgan_propos}
 
-In proofs, the  each step the comments (holding between symbols '\texttt{(*}' and '\texttt{*)}') show how the tactic has changed the proof state.
+In proofs, some steps are followed by the comments (holding between symbols '\texttt{(*}' and '\texttt{*)}') that show how the tactic has changed the proof state.
 %//For Isabelle, same de Morgan's law for propositions:
 % source: https://www.inf.ed.ac.uk/teaching/courses/ar/isabelle/exercises/propositional/sol.pdf
 \begin{lstlisting}[language=isabelle, caption={Proof of the de Morgan's law for propositions in Isabelle}, label={ex_morgan_propos_isabelle}]
@@ -646,7 +686,7 @@ done
 Theorem DeMorganPropositional_Coq:
     forall P Q : Prop, ~(P \/ Q) <-> ~P /\ ~Q.  
 Proof.
-  (* 'tauto' automatically solves the equation *)
+  (* 'tauto' automatically proves the equation *)
   intros P Q. unfold iff.
   split.
   - intros H_not_or. unfold not. constructor.
@@ -661,7 +701,7 @@ Qed.
 \end{lstlisting}
 
 
-
+\newpage
 %<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
 \begin{lstlisting}[language=coq,caption={Proof of the de Morgan's law for booleans in Coq}, label={ex_morgan_bool_coq}]
 (* define macroses: *)
@@ -678,6 +718,7 @@ Qed.
 \end{lstlisting}
 
 
+\newpage
 \subsection{Example proofs of first-order quantified de Morgan's laws}
 \label{apx:morgan_firstorder}
 
@@ -725,6 +766,27 @@ Qed.
 \end{lstlisting}
 
 
+\newpage
+\subsection{Example of higher-order statement definitions}
+
+\begin{raggedleft}
+  \begin{tabular}{p{.48\linewidth} p{.48\linewidth}}
+    \begin{lstlisting}[language=isabelle, caption={Higher-order statement definition in Isabelle}] 
+lemma lem:
+    "\<forall> (f::bool=>bool) (b::bool) .
+    f (f (f b)) = f b"
+    \end{lstlisting}
+    &
+    \begin{lstlisting}[language=coq, caption={Higher-order statement definition in Coq}]
+Lemma lem: 
+    forall (f : bool -> bool) (b : bool),
+    f (f (f b)) = f b.
+    \end{lstlisting}
+  \end{tabular}
+\end{raggedleft}
+
+
+\newpage
 \subsection{Example proofs of the formula for sum of first $n$ numbers using inductive types}
 \label{apx:sum_inductive}
 
@@ -751,17 +813,16 @@ Require Import Coq.[*omega*].Omega.
 Require Coq.Logic.Classical.
 
 Fixpoint range_sum (n: nat) : nat :=
-match n with
-    | O => 0
-    | S p => range_sum p + (S p)
-end.
+    match n with
+        | O => 0
+        | S p => range_sum p + (S p)
+    end.
 Compute range_sum 3.  (* output: '= 6 : nat' *)
 
 Lemma range_sum_lemma: forall n: nat,
     range_sum (n + 1) = range_sum n + (n + 1).
 Proof.
-    intros.
-    induction n.
+    intros. induction n.
     - simpl; reflexivity.
     - simpl; omega.
 Qed.
@@ -793,88 +854,7 @@ Qed.
 
 
 
-
-
-
-// TODO: split proofs at separate appendices. Perhaps: remove some of them.
-
-\label{appx_diff_table}
-% TODO: sverstat appendix correctly
-
-\bgroup
-\def\arraystretch{0}%  1 is the default, change whatever you need
-\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
-
-\begin{center}Automatic proof of de Morgan's law in Isabelle\end{center}  &  \begin{center}Automatic proof of de Morgan's law in Coq\end{center} \\
-\begin{isabelle}
-    lemma DeMorganAuto_Isabelle:
-    "(\<not> (P \<and> Q)) = (\<not> P \<or> \<not> Q)"
-    apply auto
-    done
-\end{isabelle}
-&
-\begin{coq}
-Theorem DeMorganAutoFail_Coq:
-    forall (P Q : Prop), ~P /\ ~Q <-> ~(P \/ Q).
-Proof.
-    tauto.
-Qed.
-\end{coq}
-\\ \arrayrulecolor{gray}\hline
-
-\begin{center}Peano's natural numbers in Isabelle\end{center}  &  \begin{center}Peano's natural numbers in Coq\end{center} \\
-\begin{isabelle}
-datatype nat = 
-    zero ("0")
-    | Suc nat
-\end{isabelle}
-&
-\begin{coq}
-Inductive nat : Type :=
-    | O : nat
-    | S : nat -> nat.
-\end{coq}
-\\ \arrayrulecolor{gray}\hline
-
-
-\begin{center}Addition in Isabelle\end{center}  &  \begin{center}Addition in Coq\end{center} \\
-\begin{isabelle}
-fun add :: "nat => nat => nat"
-  where
-    "add 0 n = n"
-    | "add (Suc m) n = Suc(add m n)"
-\end{isabelle}
-&
-\begin{coq}
-Fixpoint add (n m: nat) : nat :=
-  match n with
-    | O => m
-    | S n' => S (n' + m)
-  end
-where "n + m" := (add n m) : nat_scope.
-\end{coq}
-\\ \arrayrulecolor{gray}\hline
-
-
-\begin{center}Higher-order statement in Isabelle\end{center}  &  \begin{center}Higher-order statement in Coq\end{center} \\
-\begin{isabelle}
-lemma lem:
-"\<forall> (f::bool=>bool) (b::bool) .
-    f (f (f b)) = f b"
-\end{isabelle}
-&
-%see https://github.com/blindFS/Software-Foundations-Solutions/blob/master/MoreCoq.v
-\begin{coq}
-Lemma lem: 
-forall (f : bool -> bool) (b : bool),
-    f (f (f b)) = f b.
-\end{coq}
-
-
-\end{tabular}
-
-// TODO: Inductive datatype
-
-Isabelle:"datatype ’a list = Nil | Cons ’a (’a list)" %https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
+%// TODO: Inductive datatype
+%Isabelle:"datatype ’a list = Nil | Cons ’a (’a list)" %https://www.it.uu.se/education/phd_studies/phd_courses/gc0910/isabelle/slide2.pdf
 
 \end{document}
