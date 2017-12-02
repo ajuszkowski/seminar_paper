@@ -4,7 +4,16 @@
 //4. double negation in Isabelle + double negation in Isab.
 
 
-- ABSTRACT!
+
+
+План на завтра:
+1. вычитать текст начиная с 3.3
+2. оформить Appendix
+3. в отдельной ветке вынести все примеры в Appendix и посмотреть
+4. проверить все что ниже
+
+
+//- ABSTRACT!
 - Appendix + изменить все Example на Appendix.
 - |please keep section 2 at a minimum. section 3 should really start at page 7.|
 	- изменить Section review + abstract
@@ -30,11 +39,22 @@
 - заровнять текст -- че?! а, по страницам. ага.
 - lemmata?
 
+
 изменить название на 'Comparison of two theorem provers: Coq and Isabelle/HOL' or 'Comparison of Coq and Isabelle/HOL'
 
 coq's propos auto reasing is weaker (harder to work with)
 
 (r) https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
+
+
+
+
+
+
+
+
+
+
 
 
 
