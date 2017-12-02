@@ -3,6 +3,7 @@
 \usepackage{listings}  % already imported in cs-seminar.sty, here is needed for correct syntax highlighting in TeXstudio.
 %\usepackage[titletoc]{appendix}
 
+
 \usepackage[compatibility=false]{caption}
 
 \begin{document}
@@ -58,8 +59,6 @@ Another notable work was presented by D.~Griffioen and M.~Huisman~\cite{Griff98}
 
 
 %============================================================
-
-% TODO: reduce the size of theory
 
 \section{Foundations of formal approach}
 \label{sec:formal_theory}
@@ -159,10 +158,6 @@ In that case, modern tools, such as Coq, often restrict propositions to be eithe
 \subsection{Lambda-calculus}
 \label{sec:lambda}
 
-% TODO: reduce this section size
-% TODO: exclude this section at all, if there'll be no space...
-%// Or describe more that lambda is used in both Coq and Isabelle
-
 The necessity of building the automatic reasoning systems has lead to development of models that abstract the computation process. That time, the concept of effective computability was being evolving rapidly, causing development of multiple formalisations of computation, such as Turing Machine, Normal Markov algorithms, Recursive functions, and other. One of the fist and most effective models was $\lambda$-\textit{calculus} invented by Alonzo Church in 1930s. This formalism provides solid theoretical foundation for the family of functional programming languages~\cite{Roj15}. In $\lambda$-calculus, functions are first-order objects, which means functions can be applied as arguments to other functions.
 
 The central concept in $\lambda$-calculus is an \textit{expression}, which can be defined as a subject for application the rewriting rules~\cite{Bar88}. The basic rewriting rules of $\lambda$-calculus are listed below:
@@ -184,13 +179,11 @@ $\lambda$-calculus described above is called the \textit{type-free} $\lambda$-ca
 \subsection{Type systems}
 \label{sec:type_systems}
 
-% TODO: reduce this section
-
 A \textit{type} is a collection of elements. In a type system, each element is associated with a type, which defines a basic structure of it and restricts set of possible operations with the element. This allows to reveal useful properties of the formal system. Therefore, type theory serves as an alternative to the classical set theory~\cite{Tho91}.
 % remove notation below if not used:
 %In our notation, the $a =_{\tau} b$ means that $a$ equals $b$ and both of them are of type $\tau$. This notation is used for convenience to encode information about type to equality.
 
-The function that builds a new type from another is called \textit{type constructor}. Such functions have been used long before type theories had been constructed formally, even in the~19th~century Giuseppe Peano used type constructor $S$ called the \textit{successor} function, along with zero element 0, to axiomatise natural number arithmetic. Thus, number 3 can be constructed as $S(S(S(0))))$.
+The function that builds a new type from another is called \textit{type constructor}. Such functions have been used long before type theories had been constructed formally, even in the~19th~century Giuseppe Peano used type constructor $S$ called the \textit{successor} function, along with zero element 0, to axiomatise natural number arithmetic. Thus, number $3$ can be constructed as $S(S(S(0))))$.
 
 
 \subsubsection{Simple type theory}
@@ -422,7 +415,7 @@ As an example of proof in first-order logic, the first-order quantified de Morga
 
 \subsubsection{Proofs using inductive types}
 
-In both Isabelle and Coq, the natural numbers type \texttt{nat} is defined inductively on induction on zero as in Peano arithmetic (see Appendix~\ref{TODO!!!!!!!!!!!!!}). As an example of statement with the type \texttt{nat}, the simple formula 
+In both Isabelle and Coq, the natural numbers type \texttt{nat} is defined inductively on induction on zero as in Peano arithmetic (see Appendix~\ref{apx:type_definitions} Fig.\ref{ex_nat_definition_isabelle} and Fig.\ref{ex_nat_definition_coq}). As an example of statement with the type \texttt{nat}, the simple formula 
 $2 \cdot S_{n} = {n \cdot (n + 1)}$ for sum $S_{n}$ of first $n$ integer numbers has been chosen (see proof in Isabelle in Appendix~\ref{apx:sum_inductive} Fig.\ref{ex_nat_sum_isabelle}, see proof in Coq in Appendix~\ref{apx:sum_inductive} Fig.\ref{ex_nat_sum_coq}). Note that the proof in Coq uses the library \texttt{Coq.omega.Omega}, which contains powerful tactics to simplifying and proving natural numbers formulae.
 
 
@@ -580,13 +573,13 @@ Inductive Empty_set : Set := .
 
 \begin{raggedleft}
 \begin{tabular}{p{.48\linewidth} p{.48\linewidth}}
-\begin{lstlisting}[language=isabelle, caption={Definition of Peano's natural numbers type \texttt{nat} in Isabelle}]
+\begin{lstlisting}[language=isabelle, caption={Definition of Peano's natural numbers type \texttt{nat} in Isabelle}, label={ex_nat_definition_isabelle}]
 datatype nat = 
     zero ("0") |
     Suc nat
 \end{lstlisting}
 &
-\begin{lstlisting}[language=coq, caption={Definition of Peano's natural numbers type \texttt{nat} in Coq}]
+\begin{lstlisting}[language=coq, caption={Definition of Peano's natural numbers type \texttt{nat} in Coq}, label={ex_nat_definition_coq}]
 Inductive nat : Type :=
   | O : nat
   | S : nat -> nat.
