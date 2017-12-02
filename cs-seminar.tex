@@ -395,7 +395,7 @@ Qed.
 \end{tabular}
 \end{raggedleft}
 
-In addition, the double-negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Example~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double-negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, such as Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
+In addition, the double-negated axiom of excluded middle can be proven as well solely in intuitionistic logic, see Fig.~\ref{ex_double_neg_ex_mid_coq}. This is a way for embedding the classical propositional logic into intuitionistic logic and known as \textit{Glivenko's double-negation translation}\cite{Glivenko29}, which maps all classical tautologies to intuitionistic ones by double-negating them. Furthermore, there are other schemes of the translation for other classical logics, such as Gödel-Gentzen translation, Kuroda's translation, etc.~\cite{Kolmogorov25}.
 
 %\begin{minipage}[t]{\linewidth}
 %, float,floatplacement=H
@@ -478,7 +478,7 @@ In Coq, the proof is similar when formulated with the propositions of type \text
 
 %Both systems have tactics for automatic proving the propositional tautologies (see Appendix~\ref{appx_diff_table})
 
-%//Example~\ref{ex_morgan_propos_coq} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
+%//Fig.~\ref{ex_morgan_propos_coq} shows the proof of De Morgan's law in Coq system. The law statement is being proved for all propositions of type \texttt{Prop}  <which is ...> ... . For arguments of type \texttt{bool} the proof is trivial.
     
 \begin{lstlisting}[language=coq, caption={Proof of the de Morgan's law for propositions in Coq}, label={ex_morgan_propos_coq}]
 Theorem DeMorganPropositional_Coq:
@@ -499,7 +499,7 @@ Qed.
 
 
 
-The proof looks much simplier if the theorem is formulated with usage of type \textit{Set}-type \texttt{bool} defined simply by enumerating values (see Example~\ref{ex_typedefs_coq}). Thus, it is possible to use the tactic \texttt{destruct} to decompose type to different goals and prove them separately (in Coq, the '\texttt{;}' operator between two tactics instructs interpreter to apply next tactic to all subgoals produced by previous tactic call).
+The proof looks much simplier if the theorem is formulated with usage of type \textit{Set}-type \texttt{bool} defined simply by enumerating values (see Fig.~\ref{ex_typedef_bool_coq}). Thus, it is possible to use the tactic \texttt{destruct} to decompose type to different goals and prove them separately (in Coq, the '\texttt{;}' operator between two tactics instructs interpreter to apply next tactic to all subgoals produced by previous tactic call).
 
 %<here bool the datatype, which is inductively defined as a \texttt{Set} => can use destruct, which expands the definition of inductive type>
 \begin{lstlisting}[language=coq,caption={Proof of the de Morgan's law for booleans in Coq}, label={ex_morgan_bool_coq}]
@@ -602,7 +602,7 @@ qed
 %proofs by simplification (\texttt{omega} in Coq)
 % source: https://coq.inria.fr/library/Coq.Logic.Classical_Pred_Type.html
 In Coq, the library \texttt{Coq.omega.Omega} contains powerful tactics to simplifying and proving natural numbers formulae:
-%Example~\ref{ex_nat_sum_coq} shows how the theorem could use the result of previously proven lemma.
+%Fig.~\ref{ex_nat_sum_coq} shows how the theorem could use the result of previously proven lemma.
 
 \begin{lstlisting}[language=coq, caption={Proof of the formula for sum of n first number in Coq}, label={ex_nat_sum_coq}]
 Require Import Coq.[*omega*].Omega.
@@ -704,7 +704,7 @@ In this paper, the authors have made an attempt to compare to different theorem 
 
   \item \textit{The level of the proof automation}
   \begin{subitemize}
-    \item Both systems have automatic tactics for proving (e.g., \texttt{auto} in Isabelle, \texttt{auto}, \texttt{tauto} in Coq) or simplification complex statements (e.g., automatic reasoner \texttt{blast} in Isabelle, automatic tactics \texttt{simpl}, \texttt{omega} in Coq). However, in some cases these tactics offer insufficient level of automation, particularly in proving theorems over natural numbers (see Example~\ref{ex_nat_sum_coq}, where numerous steps for rewriting the equation by calling \texttt{rewrite} had been performed in order to apply automatic tactic \texttt{omega});
+    \item Both systems have automatic tactics for proving (e.g., \texttt{auto} in Isabelle, \texttt{auto}, \texttt{tauto} in Coq) or simplification complex statements (e.g., automatic reasoner \texttt{blast} in Isabelle, automatic tactics \texttt{simpl}, \texttt{omega} in Coq). However, in some cases these tactics offer insufficient level of automation, particularly in proving theorems over natural numbers (see Fig.~\ref{ex_nat_sum_coq}, where numerous steps for rewriting the equation by calling \texttt{rewrite} had been performed in order to apply automatic tactic \texttt{omega});
   \end{subitemize}
   
   \item \textit{Size of proof}
