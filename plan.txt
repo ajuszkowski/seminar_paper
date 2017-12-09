@@ -46,24 +46,3 @@ coq's propos auto reasing is weaker (harder to work with)
 
 (r) https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-1. Considering my old question about Isabelle's notation `[| A; B; C; |] ==> D`, I have found it suitable and included it into my paper.
-
-2. I did not go into details on explanation the termination properties for Coq (more precisely, Calculus of Constructions) and Isabelle. Should I?
-
-3. I like how the theoretical part looks like now, and, taking into account the fact that the comparison iteslf (Section 3) starts on (the very end of) page 7 as you have been advicing, I think I should not reduce size of paper at expence of sections 1-2. Still, there are multiple improvements in these sections (you may see diff on the link I have sent you before, it compares actual version with version Draft 2.0 that you have been reviewed, see file 'cs-seminar.tex' there), especially in Sections 1.1, 2.1, 2.4 (part 'Calculus of Constructions' has appeared).
-
-Still, I don't fully understand the essence of the code extraction provided by Coq: if it is just a syntactic transformation of the function or datatype definition (written in Coq's functional language, which is in an ML family), then we don't truly need the to have the constructive proof of correctness of this function, simple classical reasoning would be enough for that. Moreover, it could be more convenient for the proof assistant to work in the opposite direction: to import code written in different languages and make reasoning based on them. 
-This all holds unless Coq can extract the proof itself (which I couldn't do, unfortunately), but here the question remains: why do we need the proof written in Haskell or OCaml? To re-run them when the code of a function changes? Still there, the reversed schema I described above seems to me more natural.
