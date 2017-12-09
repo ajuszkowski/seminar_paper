@@ -10,7 +10,23 @@
 % modify this file as you see fit and even to delete this copyright
 % notice. 
 
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage{listliketab}
+
+\usepackage{../include/cs-seminar}
+\usepackage{../include/lstcoq}
+\usepackage{../include/lstisabelle}
+
+\lstset{ 
+  frame=none,
+  captionpos=t, 
+}
+
+\usepackage{caption}
+\DeclareCaptionFont{ninept}{\fontsize{8pt}{11pt}\selectfont #1}
+\captionsetup{singlelinecheck=false, font=ninept}
+\renewcommand*\lstlistingname{Example}  % not Example, not Listing. See
 
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
@@ -19,25 +35,25 @@
 % one:
 %\usetheme{AnnArbor} % фу желто-синий
 %\usetheme{Antibes} % черно-синий
-%\usetheme{Bergen} % вертик синяя линия
+%\usetheme{Bergen}
 %\usetheme{Berkeley}
 %\usetheme{Berlin}
-\usetheme{Boadilla}  %бирюз оч милая
+%\usetheme{Boadilla}  %бирюз оч милая
 %\usetheme{boxes}
 %\usetheme{CambridgeUS} %красная красивая
 %\usetheme{Copenhagen}
 %\usetheme{Darmstadt}
 %\usetheme{default}  %прост белая
 %\usetheme{Frankfurt}
-%\usetheme{Goettingen}
+\usetheme{Goettingen} %голубая с оглавлением
 %\usetheme{Hannover}
 %\usetheme{Ilmenau}
-%\usetheme{JuanLesPins}
+%\usetheme{JuanLesPins}  %черная, ничего так
 %\usetheme{Luebeck}
 %\usetheme{Madrid} %стандартн
 %\usetheme{Malmoe}
 %\usetheme{Marburg}
-%\usetheme{Montpellier} %светлая красивая
+%\usetheme{Montpellier} %светлая супеh-красивая
 %\usetheme{PaloAlto}
 %\usetheme{Pittsburgh}
 %\usetheme{Rochester} %синяя квадратная
@@ -45,7 +61,9 @@
 %\usetheme{Szeged} % тоже милая
 %\usetheme{Warsaw}
 
-\title{Comparison of theorem provers}
+%\setbeamertemplate{itemize items}[circle]
+
+\title{Comparison of two theorem provers: \\ Isabelle \& Coq}
 
 % A subtitle is optional and this may be deleted
 %\subtitle{Optional Subtitle}
@@ -62,7 +80,7 @@
   %\inst{1}%
   Department of Computer Science \\
   School of Science \\
-  Aalto University
+  \textbf{Aalto University}
   %\and
   %\inst{2}%
   %Department of Theoretical Philosophy\\
@@ -71,7 +89,7 @@
   % - Use the \inst command only if there are several affiliations.
   % - Keep it simple, no one is interested in your street address.
 
-\date{Seminar on Computer Science, \newline autumn 2017}
+\date{ $ $\\ CS-E4000: Seminar in Computer Science \\ autumn 2017 }
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
 %   yourself) who are reading the slides online
@@ -89,12 +107,12 @@
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>{Outline}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-}
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
 
 % Let's get started
 \begin{document}
@@ -112,12 +130,12 @@
 % and table of contents.
 \section{Foundations of Formal Approach}
 
-\subsection{Classical and Intuitionistic Logics}
+\subsection{The Formal System}
 
-\begin{frame}{First Slide Title}{Optional Subtitle}
+\begin{frame}{Definition of the Formal System}%{Optional Subtitle}
   \begin{itemize}
   \item {
-    My first point.
+    // TODO
   }
   \item {
     My second point.
@@ -125,38 +143,121 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Second Subsection}
+\subsection{Properties of a Formal System}
+\begin{frame}{Properties of a Formal System}
+
+A formal system $\Gamma = \ <A, V, \Omega, R>$ is called:
+
+%\storestyleof{itemize}
+%\begin{listliketab}
+%\begin{tabular}{Llll}
+\begin{itemize}
+   \item  \textit{consistent}, \ \ \ \ if $\nexists \phi \in \Gamma: \ \Gamma \vdash \phi \land  \Gamma \vdash \neg \phi  \ \Leftrightarrow \ \Gamma \nvdash \bot$; \\
+  \item \textit{complete}, \ \ \ \ \ if $\forall \phi \in U: \ A \vdash \phi \lor A \vdash \neg \phi$ ; \\
+  \item \textit{independent}, \ if $\not \exists a \in A: \ A \vdash a$.
+\end{itemize}
+%\end{tabular}
+%\end{listliketab}
+
+\end{frame}
+
+\subsection{Classical and Intuitionistic Logics}
 
 % You can reveal the parts of a slide one at a time
 % with the \pause command:
-\begin{frame}{Second Slide Title}
-  \begin{itemize}
-  \item {
-    First item.
-    \pause % The slide will pause after showing the first item
-  }
-  \item {   
-    Second item.
-  }
-  % You can also specify when the content should appear
-  % by using <n->:
-  \item<3-> {
-    Third item.
-  }
-  \item<4-> {
-    Fourth item.
-  }
-  % or you can use the \uncover command to reveal general
-  % content (not just \items):
-  \item<5-> {
-    Fifth item. \uncover<6->{Extra text in the fifth item.}
-  }
-  \end{itemize}
+\begin{frame}{Classical and Intuitionistic Logics}
+// Classical: set of axioms
+
+// Intuitionistic: same, but without EM
 \end{frame}
 
-\section{Second Main Section}
 
-\subsection{Another Subsection}
+
+\section{Two Theorem Provers}
+
+\subsection{Isabelle}
+
+\begin{frame}[fragile]{Isabelle: First Acquaintance}
+
+%Isabelle/HOL includes powerful specification tools, e.g. for (co)datatypes, (co)inductive definitions and recursive functions with complex pattern matching.
+
+\vspace{10pt}
+\begin{itemize}
+  \item a generic proof assistant
+  \item a successor of HOL theorem prover //TODO: cite
+  \item created in 1986 by
+    \begin{itemize}
+    \item Larry Paulson \ @ University of Cambridge, and
+    \item Tobias Nipkow @ Technische Universit\"{a}t M\"{u}nchen
+    \end{itemize}
+  \item based on classical higher-order logic
+  \item uses powerful functional language \texttt{HOL}
+  \item has large collection of formalised theories  //TODO: HOL, ZF, CCL, ...
+\end{itemize}
+
+\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
+\begin{lstlisting}[language=isabelle, caption={Definition of basic datatypes 
+%in Isabelle:
+}]
+datatype bool = 
+  True | False
+  
+datatype nat = 
+  zero ("0") | Suc nat
+\end{lstlisting}
+&
+   
+\begin{lstlisting}[language=isabelle,caption={???}]
+???
+\end{lstlisting}
+\end{tabular}
+%\end{raggedleft}
+
+\end{frame}
+
+\subsection{Coq}
+
+
+\begin{frame}[fragile]{Coq: First Acquaintance}
+
+\vspace{10pt}
+\begin{itemize}
+  \item a formal proof management system
+  \item created at INRIA (Paris, France) in 1984
+  \item based on Calculus of Inductive Constructions theory (an implementation of intuitionistic logic)
+  \item uses powerful functional language \texttt{Gallina}
+  \item has large collection of formalised theories  //TODO
+  \item widely used in software verification (proof code extraction)
+\end{itemize}
+
+\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
+  \begin{lstlisting}[language=coq, caption={Definition of basic datatypes 
+  %in Isabelle:
+  }]
+Inductive False : Prop := .
+
+Inductive True : Prop := I : True.
+
+Inductive nat : Type :=
+  | O : nat
+  | S : nat -> nat.
+\end{lstlisting}
+  &
+  
+  \begin{lstlisting}[language=isabelle,caption={???}]
+  ???
+  \end{lstlisting}
+\end{tabular}
+%\end{raggedleft}
+
+\end{frame}
+
+
+
+
+\section{Comparison of the Theorem Provers}
+\subsection{Common Features}
+\subsection{Major Differences}
 
 \begin{frame}{Blocks}
 \begin{block}{Block Title}
