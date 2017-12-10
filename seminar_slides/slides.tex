@@ -20,6 +20,8 @@
 
 %\usepackage{render_to_a4}
 
+\usepackage{tabularx}
+
 
 \lstset{ 
   frame=none,
@@ -166,9 +168,9 @@
   \\
   \item A contradiction $\bot$ & \item[$-$] & \item[] $\vdash \neg \phi$
 \end{tabular}
-
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}{Definition of the Formal System}%{Optional Subtitle}
 
@@ -190,6 +192,7 @@ where each $\psi_i$ is either an axiom $\phi_{A_i}$, or a formula inferred from 
 
 \end{frame}
 
+
 \subsection{Properties of a Formal System}
 \begin{frame}
 %<presentation:0>
@@ -197,9 +200,6 @@ where each $\psi_i$ is either an axiom $\phi_{A_i}$, or a formula inferred from 
 
 A formal system $\Gamma$ is called:
 
-%\storestyleof{itemize}
-%\begin{listliketab}
-%\begin{tabular}{Llll}
 \begin{itemize}
 \item  \textit{consistent}, \ \ \ \ if $\nexists \phi \in \Gamma: \ \Gamma \vdash \phi \land  \Gamma \vdash \neg \phi  \ \Leftrightarrow \ \Gamma \nvdash \bot$; 
 \\ \vspace{3pt}
@@ -207,57 +207,52 @@ A formal system $\Gamma$ is called:
 \\ \vspace{3pt}
 \item \textit{independent}, \ if $\not \exists a \in A: \ A \vdash a$.
 \end{itemize}
-%\end{tabular}
-%\end{listliketab}
-
 
 \end{frame}
 
+
 \subsection{Classical and Intuitionistic Logics}
-
-% You can reveal the parts of a slide one at a time
-% with the \pause command:
-\begin{frame}{Classical Logic}
-{Example: The Hilbert System}
-
-\vspace{15pt}
-Set of axioms:
-\begin{gather}
-A \rightarrow (B \rightarrow A)
-\tag{A1} \\
-(A \rightarrow (B \rightarrow C)) \rightarrow ((A \rightarrow B) \rightarrow (A \rightarrow C))
-\tag{A2}
-\end{gather}
-
-Single inference rule:
-\begin{gather} 
-[\![ A, A \rightarrow B ]\!] \longrightarrow B
-\tag{MP}
-\end{gather}
-
-Some tautologies:
-\begin{align*}
-& A \lor \neg A
-\tag{EM} \\
-%
-\neg \neg & (A \lor \neg A)
-\tag{nnEM} \\
-%
-& A \rightarrow \neg \neg A
-\tag{DNi} \\
-%
-\neg \neg & A \rightarrow A
-\tag{DNe}
-\end{align*}
-
 %\begin{theorem}
 %\begin{equation}
 %\exists x,y \in \mathbb{I}: \ x^{y} \in \mathbb{Q}
 %\end{equation}
 %\end{theorem}
 
+\begin{frame}{Classical Logic}
+{example: The Hilbert System}
+
+%\vspace{10pt}
+\textcolor{dkblue}{Set of axioms:}
+\begin{gather}
+A \rightarrow (B \rightarrow A)
+\tag{A1} \\
+(A \rightarrow (B \rightarrow C)) \rightarrow ((A \rightarrow B) \rightarrow (A \rightarrow C))
+\tag{A2} \\
+A \lor \neg A
+\tag{EM} 
+\end{gather}
+
+\textcolor{dkblue}{Single inference rule (\textit{Modus Ponens})}
+\begin{gather} 
+[\![ A, A \rightarrow B ]\!] \longrightarrow B
+\tag{MP}
+\end{gather}
+%\vspace{5pt}
+\textcolor{dkblue}{Some provable tautologies:}
+
+\begin{tabular}{p{.32\linewidth}p{.2\linewidth} p{.3\linewidth}p{.25\linewidth}}
+$\neg \neg (A \lor \neg A)$ & (nnEM) & $\neg (A \land B) \rightarrow \neg A \lor \neg B $ & (DMdi) \\
+$A \rightarrow \neg \neg A$ & (DNi)  & $\neg (A \lor B) \rightarrow \neg A \land \neg B $ & (DMci) \\
+$\neg \neg A \rightarrow A$ & (DNe)  & $\neg A \land \neg B \rightarrow  \neg (A \lor B) $ & (DMce) \\
+%$(A \rightarrow B) \rightarrow (\neg B \rightarrow \neg A)$ & (CP) &  
+$((A \rightarrow B) \rightarrow A) \implies B$ & (PL) & $\neg A \lor \neg B \rightarrow  \neg (A \land B) $ & (DMde)
+\end{tabular}
+
+\end{frame}
 
 
+
+\begin{frame}{Intuitionistic Logic}
 \end{frame}
 
 
