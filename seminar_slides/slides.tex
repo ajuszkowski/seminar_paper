@@ -10,13 +10,16 @@
 % modify this file as you see fit and even to delete this copyright
 % notice. 
 
-\documentclass[aspectratio=169]{beamer}
+\documentclass[aspectratio=169, fleqn]{beamer}
 
 \usepackage{listliketab}
 
 \usepackage{../include/cs-seminar}
 \usepackage{../include/lstcoq}
 \usepackage{../include/lstisabelle}
+
+%\usepackage{render_to_a4}
+
 
 \lstset{ 
   frame=none,
@@ -27,6 +30,9 @@
 \DeclareCaptionFont{ninept}{\fontsize{8pt}{11pt}\selectfont #1}
 \captionsetup{singlelinecheck=false, font=ninept}
 \renewcommand*\lstlistingname{Example}  % not Example, not Listing. See
+
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
 
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
@@ -130,34 +136,80 @@
 % and table of contents.
 \section{Foundations of Formal Approach}
 
-\subsection{The Formal System}
+\subsection{A Formal System}
+
+\begin{frame}{Elements of a Formal System}%{Elements}
+
+%\setlength{\tabcolsep}{0pt}
+%\setlength\extrarowheight{0pt}
+%\begin{tabular}{p{0.3\textwidth}p{0.7\textwidth}}
+
+\begin{itemize} 
+  \setlength\itemsep{0pt}
+  \item A formula (judgement, statement) $\phi \in \Phi$: 
+  \begin{align*} \phi := \ & p \ | \ q \ | \ ... \ \\ 
+  & | \ \phi_1 \land \phi_2 \ | \ \phi_1 \lor \phi_2 \ | \ \neg \phi_1 \ | \ \phi_1 \rightarrow \phi_2 \\
+  & | \ true \ | \ false \\
+  & | \ ... 
+  \end{align*}
+
+\begin{tabular}{p{0.41\textwidth} p{0\textwidth} p{0.7\textwidth}}  
+  \item Propositional variables: & \item[$-$] & \item[] $p, q, ... \in V$
+  \\
+  \item An axiom & \item[$-$] & \item[] $\phi_{A} \in A$ %a judgement evidently claimed to be true
+  \\
+  \item An inference rule $\tau$ & \item[$-$] & \item[] a transition function $\tau: \Phi \rightarrow \Phi$
+  \\
+  \item A formula $\phi$ provable from $\Phi$ & \item[$-$] & \item[] $\Phi \vdash \phi$
+  \\
+  \item A tautology $\top$ & \item[$-$] & \item[] $\vdash \phi$
+  \\
+  \item A contradiction $\bot$ & \item[$-$] & \item[] $\vdash \neg \phi$
+\end{tabular}
+
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Definition of the Formal System}%{Optional Subtitle}
-  \begin{itemize}
-  \item {
-    // TODO
-  }
-  \item {
-    My second point.
-  }
-  \end{itemize}
+
+A \textit{formal system} is a quadruple $\Gamma = \ <A, V, \Omega, R>$, where
+\begin{itemize}
+  \item $A$ -- set of axioms
+  \item $V$ -- set of propositional variables
+  \item $\Omega$ -- set of logical operators
+  \item $R$ -- set of inference rules
+\end{itemize} 
+
+\vspace{15pt}
+
+A \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements 
+\begin{align*}
+\psi_1 \xrightarrow{\tau_1} \psi_2 \xrightarrow{\tau_2} ... \xrightarrow{\tau_n} \psi_n 
+\end{align*}
+where each $\psi_i$ is either an axiom $\phi_{A_i}$, or a formula inferred from the set of previously derived formulas according the rules of inference.
+
 \end{frame}
 
 \subsection{Properties of a Formal System}
-\begin{frame}{Properties of a Formal System}
+\begin{frame}
+%<presentation:0>
+{Properties of a Formal System}
 
-A formal system $\Gamma = \ <A, V, \Omega, R>$ is called:
+A formal system $\Gamma$ is called:
 
 %\storestyleof{itemize}
 %\begin{listliketab}
 %\begin{tabular}{Llll}
 \begin{itemize}
-   \item  \textit{consistent}, \ \ \ \ if $\nexists \phi \in \Gamma: \ \Gamma \vdash \phi \land  \Gamma \vdash \neg \phi  \ \Leftrightarrow \ \Gamma \nvdash \bot$; \\
-  \item \textit{complete}, \ \ \ \ \ if $\forall \phi \in U: \ A \vdash \phi \lor A \vdash \neg \phi$ ; \\
-  \item \textit{independent}, \ if $\not \exists a \in A: \ A \vdash a$.
+\item  \textit{consistent}, \ \ \ \ if $\nexists \phi \in \Gamma: \ \Gamma \vdash \phi \land  \Gamma \vdash \neg \phi  \ \Leftrightarrow \ \Gamma \nvdash \bot$; 
+\\ \vspace{3pt}
+\item \textit{complete}, \ \ \ \ \ if $\forall \phi \in U: \ A \vdash \phi \lor A \vdash \neg \phi$;
+\\ \vspace{3pt}
+\item \textit{independent}, \ if $\not \exists a \in A: \ A \vdash a$.
 \end{itemize}
 %\end{tabular}
 %\end{listliketab}
+
 
 \end{frame}
 
@@ -165,10 +217,47 @@ A formal system $\Gamma = \ <A, V, \Omega, R>$ is called:
 
 % You can reveal the parts of a slide one at a time
 % with the \pause command:
-\begin{frame}{Classical and Intuitionistic Logics}
-// Classical: set of axioms
+\begin{frame}{Classical Logic}
+{Example: The Hilbert System}
 
-// Intuitionistic: same, but without EM
+\vspace{15pt}
+Set of axioms:
+\begin{gather}
+A \rightarrow (B \rightarrow A)
+\tag{A1} \\
+(A \rightarrow (B \rightarrow C)) \rightarrow ((A \rightarrow B) \rightarrow (A \rightarrow C))
+\tag{A2}
+\end{gather}
+
+Single inference rule:
+\begin{gather} 
+[\![ A, A \rightarrow B ]\!] \longrightarrow B
+\tag{MP}
+\end{gather}
+
+Some tautologies:
+\begin{align*}
+& A \lor \neg A
+\tag{EM} \\
+%
+\neg \neg & (A \lor \neg A)
+\tag{nnEM} \\
+%
+& A \rightarrow \neg \neg A
+\tag{DNi} \\
+%
+\neg \neg & A \rightarrow A
+\tag{DNe}
+\end{align*}
+
+%\begin{theorem}
+%\begin{equation}
+%\exists x,y \in \mathbb{I}: \ x^{y} \in \mathbb{Q}
+%\end{equation}
+%\end{theorem}
+
+
+
 \end{frame}
 
 
@@ -191,8 +280,8 @@ A formal system $\Gamma = \ <A, V, \Omega, R>$ is called:
     \item Tobias Nipkow @ Technische Universit\"{a}t M\"{u}nchen
     \end{itemize}
   \item based on classical higher-order logic
-  \item uses powerful functional language \texttt{HOL}
-  \item has large collection of formalised theories  //TODO: HOL, ZF, CCL, ...
+  \item \textcolor{dkgray}{ uses powerful functional language \texttt{HOL} }
+  \item \textcolor{dkgray}{ has large collection of formalised theories  //TODO: HOL, ZF, CCL, ... }
 \end{itemize}
 
 \begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
@@ -215,6 +304,14 @@ datatype nat =
 
 \end{frame}
 
+
+
+\begin{frame}{Isabelle: Native GUI}
+\includegraphics[scale=0.38]{img/isabelle.png}
+\end{frame}
+
+
+
 \subsection{Coq}
 
 
@@ -225,9 +322,9 @@ datatype nat =
   \item a formal proof management system
   \item created at INRIA (Paris, France) in 1984
   \item based on Calculus of Inductive Constructions theory (an implementation of intuitionistic logic)
-  \item uses powerful functional language \texttt{Gallina}
-  \item has large collection of formalised theories  //TODO
-  \item widely used in software verification (proof code extraction)
+  \item \textcolor{dkgray}{ uses powerful functional language \texttt{Gallina} }
+  \item \textcolor{dkgray}{ has large collection of formalised theories  //TODO }
+  \item \textcolor{dkgray}{ widely used in software verification (proof code extraction) }
 \end{itemize}
 
 \begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
@@ -252,24 +349,36 @@ Inductive nat : Type :=
 
 \end{frame}
 
+\begin{frame}{The Coq theorem prover}
+\includegraphics[scale=0.4]{img/coq.png}
+\end{frame}
 
+\begin{frame}{The Coq theorem prover}
+\includegraphics[scale=0.4]{img/coq_qed.png}
+\end{frame}
 
 
 \section{Comparison of the Theorem Provers}
+
 \subsection{Common Features}
+
+
+
+
+
 \subsection{Major Differences}
 
-\begin{frame}{Blocks}
-\begin{block}{Block Title}
-You can also highlight sections of your presentation in a block, with it's own title
-\end{block}
-\begin{theorem}
-There are separate environments for theorems, examples, definitions and proofs.
-\end{theorem}
-\begin{example}
-Here is an example of an example block.
-\end{example}
-\end{frame}
+%\begin{frame}{Blocks}
+%\begin{block}{Block Title}
+%You can also highlight sections of your presentation in a block, with it's own title
+%\end{block}
+%\begin{theorem}
+%There are separate environments for theorems, examples, definitions and proofs.
+%\end{theorem}
+%\begin{example}
+%Here is an example of an example block.
+%\end{example}
+%\end{frame}
 
 % Placing a * after \section means it will not show in the
 % outline or table of contents.
@@ -304,30 +413,31 @@ Here is an example of an example block.
 \section<presentation>*{\appendixname}
 \subsection<presentation>*{For Further Reading}
 
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-    
-  \begin{thebibliography}{10}
-    
-  \beamertemplatebookbibitems
-  % Start with overview books.
+%\begin{frame}[allowframebreaks]
+%  \frametitle<presentation>{For Further Reading}
+%    
+%  \begin{thebibliography}{10}
+%    
+%  \beamertemplatebookbibitems
+%  % Start with overview books.
+%
+%  \bibitem{Author1990}
+%    A.~Author.
+%    \newblock {\em Handbook of Everything}.
+%    \newblock Some Press, 1990.
+% 
+%    
+%  \beamertemplatearticlebibitems
+%  % Followed by interesting articles. Keep the list short. 
+%
+%  \bibitem{Someone2000}
+%    S.~Someone.
+%    \newblock On this and that.
+%    \newblock {\em Journal of This and That}, 2(1):50--100,
+%    2000.
+%  \end{thebibliography}
+%\end{frame}
 
-  \bibitem{Author1990}
-    A.~Author.
-    \newblock {\em Handbook of Everything}.
-    \newblock Some Press, 1990.
- 
-    
-  \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short. 
-
-  \bibitem{Someone2000}
-    S.~Someone.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100,
-    2000.
-  \end{thebibliography}
-\end{frame}
 
 \end{document}
 
