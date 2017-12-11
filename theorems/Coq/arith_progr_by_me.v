@@ -13,27 +13,6 @@ Fixpoint nth_member (a_0 d n: nat) : nat :=
 end.
 Compute nth_member 3 2 4.
 
-(*Lemma nth_member_lemma : forall a_0 d n : nat,
-    nth_member a_0 d (S n) = d + (nth_member a_0 d n).
-Proof.
-  intros. induction n.
-  - simpl. reflexivity.
-  - simpl. omega.
-Qed.
-
-Lemma sum_mul_distr_lemma : forall d n : nat,
-    d + d * S n = d * S (S n).
-Proof.
-  intros.
-  rewrite <- Nat.add_1_l.
-  rewrite -> Nat.mul_add_distr_l.
-  rewrite -> (Nat.mul_succ_r d (1 + n)).
-  rewrite -> Nat.add_assoc.
-  rewrite -> Nat.mul_add_distr_l. 
-  omega.
-Qed.
-*)
-
 Theorem nth_member_formula : forall a_0 d n: nat,
   (nth_member a_0 d n) = a_0 + d * n.
 Proof.
@@ -154,4 +133,27 @@ Proof.
 
 Abort.
 
+*)
+
+
+
+(*Lemma nth_member_lemma : forall a_0 d n : nat,
+    nth_member a_0 d (S n) = d + (nth_member a_0 d n).
+Proof.
+  intros. induction n.
+  - simpl. reflexivity.
+  - simpl. omega.
+Qed.
+
+Lemma sum_mul_distr_lemma : forall d n : nat,
+    d + d * S n = d * S (S n).
+Proof.
+  intros.
+  rewrite <- Nat.add_1_l.
+  rewrite -> Nat.mul_add_distr_l.
+  rewrite -> (Nat.mul_succ_r d (1 + n)).
+  rewrite -> Nat.add_assoc.
+  rewrite -> Nat.mul_add_distr_l. 
+  omega.
+Qed.
 *)

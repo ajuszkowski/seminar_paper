@@ -12,6 +12,9 @@
 
 \documentclass[aspectratio=169, fleqn]{beamer}
 
+\usepackage{graphicx} 
+\usepackage{animate}
+
 \usepackage{listliketab}
 
 \usepackage{../include/cs-seminar}
@@ -20,8 +23,9 @@
 
 %\usepackage{render_to_a4}
 
-\usepackage{tabularx}
-
+%\usepackage{tabularx}
+\usepackage[normalem]{ulem}
+\usepackage{mwe,tikz}
 
 \lstset{ 
   frame=none,
@@ -35,6 +39,11 @@
 
 \setlength{\abovedisplayskip}{0pt}
 \setlength{\belowdisplayskip}{0pt}
+
+
+% strikeout text : \hcancel[red]{text...}
+\newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{2pt}}}}#2}
 
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
@@ -193,10 +202,8 @@ where each $\psi_i$ is either an axiom $\phi_{A_i}$, or a formula inferred from 
 \end{frame}
 
 
-\subsection{Properties of a Formal System}
-\begin{frame}
-%<presentation:0>
-{Properties of a Formal System}
+%\subsection{Properties of a Formal System}
+\begin{frame}<presentation:0>{Properties of a Formal System}
 
 A formal system $\Gamma$ is called:
 
@@ -245,16 +252,50 @@ $\neg \neg (A \lor \neg A)$ & (nnEM) & $\neg (A \land B) \rightarrow \neg A \lor
 $A \rightarrow \neg \neg A$ & (DNi)  & $\neg (A \lor B) \rightarrow \neg A \land \neg B $ & (DMci) \\
 $\neg \neg A \rightarrow A$ & (DNe)  & $\neg A \land \neg B \rightarrow  \neg (A \lor B) $ & (DMce) \\
 %$(A \rightarrow B) \rightarrow (\neg B \rightarrow \neg A)$ & (CP) &  
-$((A \rightarrow B) \rightarrow A) \implies B$ & (PL) & $\neg A \lor \neg B \rightarrow  \neg (A \land B) $ & (DMde)
+$((A \rightarrow B) \rightarrow A) \rightarrow B$ & (PL) & $\neg A \lor \neg B \rightarrow  \neg (A \land B) $ & (DMde)
 \end{tabular}
 
 \end{frame}
 
 
-
 \begin{frame}{Intuitionistic Logic}
+{a.k.a. Constructive Logic}
+
+%\vspace{10pt}
+\textcolor{dkblue}{Set of axioms:}
+\begin{gather}
+A \rightarrow (B \rightarrow A)
+\tag{A1} \\
+(A \rightarrow (B \rightarrow C)) \rightarrow ((A \rightarrow B) \rightarrow (A \rightarrow C))
+\tag{A2} \\
+\hcancel[red]{ A \lor \neg A }
+\tag{EM} 
+\end{gather}
+
+\textcolor{dkblue}{Single inference rule (\textit{Modus Ponens})}
+\begin{gather} 
+[\![ A, A \rightarrow B ]\!] \longrightarrow B
+\tag{MP}
+\end{gather}
+%\vspace{5pt}
+\textcolor{dkblue}{Some provable tautologies:}
+
+\begin{tabular}{p{.32\linewidth}p{.2\linewidth} p{.3\linewidth}p{.25\linewidth}}
+  $\neg \neg (A \lor \neg A)$ & (nnEM) & $\hcancel[red]{ \neg (A \land B) \rightarrow \neg A \lor \neg B }$ & (DMdi) \\
+  $\hcancel[red]{ A \rightarrow \neg \neg A }$ & (DNi)  & $\neg (A \lor B) \rightarrow \neg A \land \neg B $ & (DMci) \\
+  $\neg \neg A \rightarrow A$ & (DNe)  & $\neg A \land \neg B \rightarrow  \neg (A \lor B) $ & (DMce) \\
+  %$(A \rightarrow B) \rightarrow (\neg B \rightarrow \neg A)$ & (CP) &  
+  $\hcancel[red]{ ((A \rightarrow B) \rightarrow A) \rightarrow B }$ & (PL) & $\neg A \lor \neg B \rightarrow  \neg (A \land B) $ & (DMde)
+\end{tabular}
+
 \end{frame}
 
+\begin{frame}{Curry-Howard Correspondence}
+
+The direct relationship between computer programs and mathematical proofs.
+
+[To be done]
+\end{frame}
 
 
 \section{Two Theorem Provers}
@@ -268,15 +309,14 @@ $((A \rightarrow B) \rightarrow A) \implies B$ & (PL) & $\neg A \lor \neg B \rig
 \vspace{10pt}
 \begin{itemize}
   \item a generic proof assistant
-  \item a successor of HOL theorem prover //TODO: cite
+  \item based on classical higher-order logic
   \item created in 1986 by
     \begin{itemize}
     \item Larry Paulson \ @ University of Cambridge, and
     \item Tobias Nipkow @ Technische Universit\"{a}t M\"{u}nchen
     \end{itemize}
-  \item based on classical higher-order logic
   \item \textcolor{dkgray}{ uses powerful functional language \texttt{HOL} }
-  \item \textcolor{dkgray}{ has large collection of formalised theories  //TODO: HOL, ZF, CCL, ... }
+  \item \textcolor{dkgray}{ the proof system core \textit{Isabelle} is extended by various theories: Isabelle/HOL, Isabelle/ZF, Isabelle/CCL, etc. }
 \end{itemize}
 
 \begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
@@ -290,19 +330,15 @@ datatype nat =
   zero ("0") | Suc nat
 \end{lstlisting}
 &
-   
-\begin{lstlisting}[language=isabelle,caption={???}]
-???
+\begin{lstlisting}[language=isabelle,caption={Definition of addition over \texttt{nat} }]
+fun add :: "nat => nat => nat"
+  where
+    "add 0 n = n" |
+    "add (Suc m) n = Suc(add m n)"
 \end{lstlisting}
 \end{tabular}
 %\end{raggedleft}
 
-\end{frame}
-
-
-
-\begin{frame}{Isabelle: Native GUI}
-\includegraphics[scale=0.38]{img/isabelle.png}
 \end{frame}
 
 
@@ -315,17 +351,18 @@ datatype nat =
 \vspace{10pt}
 \begin{itemize}
   \item a formal proof management system
+  \item based intuitionistic logic \textcolor{dkgray}{ (Calculus of Inductive Constructions) }
   \item created at INRIA (Paris, France) in 1984
-  \item based on Calculus of Inductive Constructions theory (an implementation of intuitionistic logic)
   \item \textcolor{dkgray}{ uses powerful functional language \texttt{Gallina} }
-  \item \textcolor{dkgray}{ has large collection of formalised theories  //TODO }
+  \item \textcolor{dkgray}{ has large collection of formalised theories }
   \item \textcolor{dkgray}{ widely used in software verification (proof code extraction) }
 \end{itemize}
 
+
 \begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
-  \begin{lstlisting}[language=coq, caption={Definition of basic datatypes 
-  %in Isabelle:
-  }]
+\begin{lstlisting}[language=coq, caption={Definition of basic datatypes 
+%in Isabelle:
+}]
 Inductive False : Prop := .
 
 Inductive True : Prop := I : True.
@@ -334,34 +371,91 @@ Inductive nat : Type :=
   | O : nat
   | S : nat -> nat.
 \end{lstlisting}
-  &
-  
-  \begin{lstlisting}[language=isabelle,caption={???}]
-  ???
-  \end{lstlisting}
+&
+
+\begin{lstlisting}[language=isabelle,caption={Definition of addition over \texttt{nat}}]
+Fixpoint add (n m: nat) : nat :=
+  match n with
+    | O => m
+    | S n' => S (n' + m)
+  end
+where "n + m" :=
+  (add n m) : nat_scope.
+\end{lstlisting}
 \end{tabular}
 %\end{raggedleft}
 
 \end{frame}
 
-\begin{frame}{The Coq theorem prover}
-\includegraphics[scale=0.4]{img/coq.png}
-\end{frame}
-
-\begin{frame}{The Coq theorem prover}
-\includegraphics[scale=0.4]{img/coq_qed.png}
-\end{frame}
 
 
 \section{Comparison of the Theorem Provers}
 
-\subsection{Common Features}
+\subsection{Comparison}
+
+\begin{frame}{Comparison}
+\textcolor{dkblue}{Major similarities:}
+\begin{itemize}
+  \item both work in a similar way of \textit{verifying} the proof or \textit{assisting} in creation of the new one
+  \item \textit{premises} $\xrightarrow{tactics}$ \textit{goals} (forward proof)
+  \item \textit{goals} $\xrightarrow{tactics}$ \textit{premises} (backward proof)
+  \item both have large amount of libraries with formalised theories
+  \item both dispose the set of highly automated tactics
+  \item both are being actively developed these days
+\end{itemize}
+
+\vspace{10pt}
+\textcolor{dkblue}{Major differences:}
+\begin{itemize}
+  \item based on different logics $\Rightarrow$
+  \begin{itemize}
+    \item[$\star$] unprovable statements and invalid proofs in Coq
+    \item[$\star$] sometimes more complex proof in Coq
+    \item[$\star$] \textit{constructive} proof in Coq
+    
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\subsection{Examples of Proofs}
+
+\begin{frame}
+%<presentation:0>
+{Isabelle: Proof Example in Propositional Logic}
+\includegraphics[scale=0.38]{img/isabelle_morgan.png}
+\end{frame}
+
+\begin{frame}{Isabelle: Proof Example over \texttt{nat}}
+\includegraphics[scale=0.39]{img/isabelle_arith.png}
+\end{frame}
 
 
 
+\begin{frame}{Coq: Proof Example in Propositional Logic}
+\includegraphics[scale=0.4]{img/coq_morgan.png}
+\end{frame}
+
+\begin{frame}{Coq: Proof Example over \texttt{nat}}
+%\animategraphics[loop,controls,width=\linewidth]{3}{img/gif-coq/gif/something}{0}{21}
+\includegraphics[scale=0.39]{img/gif-coq/coq-arith-6.png}
+\end{frame}
 
 
-\subsection{Major Differences}
+\begin{frame}{Coq: Proof Example over \texttt{nat} + Verified Code Extraction}
+%\includegraphics[scale=0.39]{img/coq_extract.png}
+%\includegraphics[scale=0.39]{img/gif-coq/coq-arith-6.png}
+
+\begin{figure}
+  \begin{tikzpicture}[overlay]
+  \node at (-0.36,-0.44) {\includegraphics[scale=0.39]{img/coq_arith.png}};
+  \node at (0.3,0) {\fcolorbox{yellow}{yellow}{ \includegraphics[scale=0.5]{img/coq_extract.png}} };
+  \end{tikzpicture}
+\end{figure}
+
+\end{frame}
+
 
 %\begin{frame}{Blocks}
 %\begin{block}{Block Title}
@@ -382,23 +476,25 @@ Inductive nat : Type :=
 \begin{frame}{Summary}
   \begin{itemize}
   \item
-    The \alert{first main message} of your talk in one or two lines.
+    Two widespread theorem provers were considered: \textcolor{dkblue}{Isabelle} and \textcolor{dkblue}{Coq}
   \item
-    The \alert{second main message} of your talk in one or two lines.
+    The \textcolor{dkblue}{key difference} between them lie in differences between logical theories
+    they based on
   \item
-    Perhaps a \alert{third message}, but not more than that.
+    Nonetheless, they both may be used to solve applied problems, such as software testing and verification
   \end{itemize}
   
-  \begin{itemize}
-  \item
-    Outlook
-    \begin{itemize}
-    \item
-      Something you haven't solved.
-    \item
-      Something else you haven't solved.
-    \end{itemize}
-  \end{itemize}
+%\begin{itemize}
+%\item
+%  Outlook
+%  \begin{itemize}
+%  \item
+%    Something you haven't solved.
+%  \item
+%    Something else you haven't solved.
+%  \end{itemize}
+%\end{itemize}
+
 \end{frame}
 
 
