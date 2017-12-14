@@ -133,12 +133,12 @@
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-%\AtBeginSubsection[]
-%{
-%  \begin{frame}<beamer>{Outline}
-%    \tableofcontents[currentsection,currentsubsection]
-%  \end{frame}
-%}
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection]%,currentsubsection]
+  \end{frame}
+}
 
 % Let's get started
 \begin{document}
@@ -147,7 +147,8 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{Introduction} {History of logic}
+\section*{Introduction}
+\begin{frame}{Introduction} {Historical note}
   \includegraphics[width=0.443\linewidth]{img/hilbert3.png}
   \hfill
   \includegraphics[width=0.53\linewidth]{img/brouwer3.png}
@@ -175,7 +176,7 @@
 
 \subsection{A formal system}
 
-\begin{frame}{Elements of a Formal System}%{Elements}
+\begin{frame}{Elements of a formal system}%{Elements}
 
 %\setlength{\tabcolsep}{0pt}
 %\setlength\extrarowheight{0pt}
@@ -189,15 +190,16 @@
   & | \ ... 
   \end{align*}
   
+\onslide<2->
 \def\arraystretch{0.5}
-\begin{tabular}{p{0.41\textwidth} p{0\textwidth} p{0.7\textwidth}}  
+\begin{tabular}{p{0.45\textwidth} p{0\textwidth} p{0.7\textwidth}}  
   \item Propositional variables: & \item[$-$] & \item[] $p, q, ... \in V$
   \\
   \item An axiom & \item[$-$] & \item[] $\phi_{A} \in A$ %a judgement evidently claimed to be true
   \\
   \item An inference rule $\tau$ & \item[$-$] & \item[] a transition function $\tau: \Phi \rightarrow \Phi$
   \\
-  \item A formula $\phi$ provable from $\Phi$ & \item[$-$] & \item[] $\Phi \vdash \phi$
+  \item A formula $\phi$ is provable from $\Phi$ & \item[$-$] & \item[] $\Phi \vdash \phi$
   \\
   \item A tautology $\top$ & \item[$-$] & \item[] $\vdash \phi$
   \\
@@ -209,7 +211,7 @@
 
 \begin{frame}{Definition of the formal system}
 
-A \textit{formal system} is a quadruple $\Gamma = \ <A, V, \Omega, R>$, where
+The \textit{formal system} is a quadruple $\Gamma = \ <A, V, \Omega, R>$, where
 \begin{itemize}
   \item $A$ -- set of axioms
   \item $V$ -- set of propositional variables
@@ -217,16 +219,18 @@ A \textit{formal system} is a quadruple $\Gamma = \ <A, V, \Omega, R>$, where
   \item $R$ -- set of inference rules
 \end{itemize} 
 
+\onslide<2->
 \vspace{15pt}
-A \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements 
+The \textit{proof} of the formula $\phi$ is a finite sequence of judgements 
 \newline
-$\psi_1 \xrightarrow{\tau_1} \psi_2 \xrightarrow{\tau_2} ... \xrightarrow{\tau_n} \psi_n$, where $\psi_i \in A \cup \{ \psi_k \}_{k=1}^{i-1}$
+$\psi_1 \xrightarrow{\tau_1} \psi_2 \xrightarrow{\tau_2} ... \xrightarrow{\tau_{n-1}} \psi_n$, where $\psi_i \in A \cup \{ \psi_k \}_{k=1}^{i-1}$
 
+\onslide<3->
 \vspace{15pt}
-Types of written proofs:
+Styles of proof writing:
 \begin{itemize}
-  \item backward proof: \ \textit{goals} $\xrightarrow{\tau}$ \textit{premises}
-  \item forward proof: \ \ \ \textit{premises} $\xrightarrow{\tau}$ \textit{goals}
+  \item forward proof: \ \ \ \ \textit{premises} $\xrightarrow{\tau}$ \textit{goals}
+  \item backward proof: \ \ \textit{goals} $\xleftarrow{\tau}$ \textit{premises}
 \end{itemize}
 \end{frame}
 
@@ -333,33 +337,34 @@ The direct relationship between computer programs and mathematical proofs.
 \subsection{First acquaintance}
 
 \begin{frame}[fragile]{Isabelle \& Coq} {First acquaintance}
-\vspace{-12.5pt}
+\vspace{-10pt}
 \renewcommand{\arraystretch}{0}
 \begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}} %{p{.47\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{.49\linewidth}}
 \begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} &
 \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
 
 % --
+\vspace{-5pt}
 \textcolor{ltdkblue}{$\bullet$} based on \textbf{classical} higher-order logic &
-\textcolor{ltdkblue}{$\bullet$} based on \textbf{intuitionistic} logic \newline \textcolor{dkgray}{ (Calculus of Inductive Constructions) } \\
+\vspace{-5pt} \textcolor{ltdkblue}{$\bullet$} based on \textbf{intuitionistic} logic \newline \textcolor{dkgray}{ (Calculus of Inductive Constructions) } \\
 
-& \\[0.8em] % Empty table row with custom line break spacing.
+& \\[0.7em] % Empty table row with custom line break spacing.
 
 \textcolor{ltdkblue}{$\bullet$} created in 1986 \newline at University of Cambridge and Technische Universit\"{a}t M\"{u}nchen &
 
 \textcolor{ltdkblue}{$\bullet$} created in 1984 \newline at INRIA (Paris, France) \\
 
-& \\[0.8em]
+& \\[0.7em]
 
 \textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ highly automated } & 
 \textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ highly automated } \\
 
-& \\[0.8em]
+& \\[0.7em]
 
 \textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ uses functional language \texttt{HOL} } &
 \textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ uses functional language \texttt{Gallina} } \\
 
-& \\[0.8em]
+& \\[0.7em]
 
 \textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ has large collection of formalised \newline theories } & 
 \textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ has large collection of formalised \newline theories } 
@@ -402,7 +407,7 @@ Inductive nat : Type :=
 
 
 \begin{frame}[fragile]{Isabelle \& Coq} {Definition of a recursive function}
-\vspace{-12.5pt}
+\vspace{-20.5pt}
 \begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}}
   \begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
 
@@ -419,9 +424,9 @@ where
 \onslide<3->
 \begin{lstlisting}[language=coq]
 Fixpoint add (n m: nat) : nat :=
-  match n with
-    | O => m
-    | S n' => S (n' + m)
+match n with
+  | O => m
+  | S n' => S (n' + m)
 end
 \end{lstlisting}
 \end{tabular}
@@ -429,7 +434,7 @@ end
 \end{frame}
 
 
-\subsection{Example of proof}
+\subsection{Proof examples}
 
 \begin{frame}[fragile]{Isabelle \& Coq} {Simple proof}
 \vspace{-12.5pt}
@@ -491,10 +496,21 @@ Qed.
 
 \begin{frame}[fragile]{Coq: Proof process}
 \begin{center}
-  \includegraphics[scale=0.38]{img/coq_arith.png}
+  \includegraphics[scale=0.38]{img/coq_arith_1.png}
 \end{center}
 \end{frame}
 
+\begin{frame}[fragile]{Coq: Proof process}
+\begin{center}
+  \includegraphics[scale=0.38]{img/coq_arith_2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Coq: Proof process}
+\begin{center}
+  \includegraphics[scale=0.38]{img/coq_arith_3.png}
+\end{center}
+\end{frame}
 
 \begin{frame}[fragile]{Coq: Proof process}
 \begin{center}
