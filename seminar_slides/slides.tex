@@ -10,12 +10,12 @@
 % modify this file as you see fit and even to delete this copyright
 % notice. 
 
-\documentclass[aspectratio=169, fleqn]{beamer}
+\documentclass[aspectratio=169, 12pt, fleqn]{beamer}
 
 \usepackage{graphicx} 
 \usepackage{animate}
-
 \usepackage{listliketab}
+%\usepackage{booktabs}% http://ctan.org/pkg/booktabs
 
 \usepackage{../include/cs-seminar}
 \usepackage{../include/lstcoq}
@@ -29,17 +29,21 @@
 
 \lstset{ 
   frame=none,
-  captionpos=t, 
+  captionpos=t,
+  basicstyle=\ttfamily\footnotesize,
 }
-
 \usepackage{caption}
 \DeclareCaptionFont{ninept}{\fontsize{8pt}{11pt}\selectfont #1}
 \captionsetup{singlelinecheck=false, font=ninept}
 \renewcommand*\lstlistingname{Example}  % not Example, not Listing. See
 
+% space saving tips: https://gist.github.com/yig/81b4c993ea13252edc81
+\setlength\lineskip{0pt}
 \setlength{\abovedisplayskip}{0pt}
 \setlength{\belowdisplayskip}{0pt}
-
+%\setlength\abovedisplayshortskip{0pt}
+%\setlength\belowdisplayshortskip{0pt}
+%\setlist{nosep}
 
 % strikeout text : \hcancel[red]{text...}
 \newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
@@ -78,7 +82,10 @@
 %\usetheme{Szeged} % тоже милая
 %\usetheme{Warsaw}
 
-%\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{footline}[frame number]{}
+\beamertemplatenavigationsymbolsempty  %no navigation bar
+\setbeamertemplate{itemize items}[circle]
+%\setbeamertemplate{enumerate subitem}{\alph{enumii}}
 
 \title{Comparison of two theorem provers: \\ Isabelle \& Coq}
 
@@ -138,20 +145,12 @@
   \titlepage
 \end{frame}
 
-
-\begin{frame}{Introduction}%{On the History of Logic}
-%\begin{figure}
-  \includegraphics[width=0.443\linewidth]{img/hilbert3.png}
-  \hfill
-%\end{figure}
-  \includegraphics[width=0.53\linewidth]{img/brouwer3.png}
-\end{frame}
-
 \begin{frame}{Introduction}
   \includegraphics[width=0.443\linewidth]{img/hilbert3.png}
   \hfill
   \includegraphics[width=0.53\linewidth]{img/brouwer3.png}
 \begin{figure}
+  \onslide<2-> 
   \begin{tikzpicture}[overlay]
   
   \node at (-3.6,5.2) {\fcolorbox{yellow}{yellow}{\includegraphics[scale=0.7]{img/isabelle_hol.png}}};
@@ -180,8 +179,7 @@
 %\setlength\extrarowheight{0pt}
 %\begin{tabular}{p{0.3\textwidth}p{0.7\textwidth}}
 
-\begin{itemize} 
-  \setlength\itemsep{0pt}
+\begin{itemize}%[label={-}] %\setlength\itemsep{0pt}
   \item A formula (judgement, statement) $\phi \in \Phi$: 
   \begin{align*} \phi := \ & p \ | \ q \ | \ ... \ \\ 
   & | \ \phi_1 \land \phi_2 \ | \ \phi_1 \lor \phi_2 \ | \ \neg \phi_1 \ | \ \phi_1 \rightarrow \phi_2 \\
@@ -189,6 +187,7 @@
   & | \ ... 
   \end{align*}
   
+\def\arraystretch{0.5}
 \begin{tabular}{p{0.41\textwidth} p{0\textwidth} p{0.7\textwidth}}  
   \item Propositional variables: & \item[$-$] & \item[] $p, q, ... \in V$
   \\
@@ -224,14 +223,14 @@ A \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements
 \end{align*}
 where each $\psi_i$ is either an axiom $\phi_{A_i}$, or a formula inferred from the set of previously derived formulas according the rules of inference.
 
+
 \end{frame}
 
 
 %\subsection{Properties of a Formal System}
-\begin{frame}<presentation:0>{Properties of a formal system}
+\begin{frame}{Properties of a formal system}
 
 A formal system $\Gamma$ is called:
-
 \begin{itemize}
 \item  \textit{consistent}, \ \ \ \ if $\nexists \phi \in \Gamma: \ \Gamma \vdash \phi \land  \Gamma \vdash \neg \phi  \ \Leftrightarrow \ \Gamma \nvdash \bot$; 
 \\ \vspace{3pt}
@@ -277,7 +276,7 @@ A \lor \neg A
 %\end{minipage}
 
 \textcolor{dkblue}{Some provable tautologies:}
-\begin{tabular}{p{.32\linewidth}p{.2\linewidth} p{.3\linewidth}p{.25\linewidth}}
+\begin{tabular}{p{.32\linewidth}p{.17\linewidth} p{.32\linewidth}p{.18\linewidth}}
 $\neg \neg (A \lor \neg A)$ & (nnEM) & $\neg (A \land B) \rightarrow \neg A \lor \neg B $ & (DMdi) \\
 $A \rightarrow \neg \neg A$ & (DNi)  & $\neg (A \lor B) \rightarrow \neg A \land \neg B $ & (DMci) \\
 $\neg \neg A \rightarrow A$ & (DNe)  & $\neg A \land \neg B \rightarrow  \neg (A \lor B) $ & (DMce) \\
@@ -312,8 +311,8 @@ A \rightarrow (B \rightarrow A)
 
 \begin{tabular}{p{.32\linewidth}p{.2\linewidth} p{.3\linewidth}p{.25\linewidth}}
   $\neg \neg (A \lor \neg A)$ & (nnEM) & $\hcancel[red]{ \neg (A \land B) \rightarrow \neg A \lor \neg B }$ & (DMdi) \\
-  $\hcancel[red]{ A \rightarrow \neg \neg A }$ & (DNi)  & $\neg (A \lor B) \rightarrow \neg A \land \neg B $ & (DMci) \\
-  $\neg \neg A \rightarrow A$ & (DNe)  & $\neg A \land \neg B \rightarrow  \neg (A \lor B) $ & (DMce) \\
+  $A \rightarrow \neg \neg A$ & (DNi)  & $\neg (A \lor B) \rightarrow \neg A \land \neg B $ & (DMci) \\
+  $\hcancel[red]{ \neg \neg A \rightarrow A }$ & (DNe)  & $\neg A \land \neg B \rightarrow  \neg (A \lor B) $ & (DMce) \\
   %$(A \rightarrow B) \rightarrow (\neg B \rightarrow \neg A)$ & (CP) &  
   $\hcancel[red]{ ((A \rightarrow B) \rightarrow A) \rightarrow B }$ & (PL) & $\neg A \lor \neg B \rightarrow  \neg (A \land B) $ & (DMde)
 \end{tabular}
@@ -349,8 +348,8 @@ The direct relationship between computer programs and mathematical proofs.
   \item \textcolor{dkgray}{ the proof system core \textit{Isabelle} is extended by various theories: Isabelle/HOL, Isabelle/ZF, Isabelle/CCL, etc. }
 \end{itemize}
 
-\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
-\begin{lstlisting}[language=isabelle, caption={Definition of basic datatypes 
+\begin{tabular}{p{.43\linewidth} p{.58\linewidth}}
+\onslide<2-> \begin{lstlisting}[language=isabelle, caption={Definition of basic datatypes 
 %in Isabelle:
 }]
 datatype bool = 
@@ -360,6 +359,7 @@ datatype nat =
   zero ("0") | Suc nat
 \end{lstlisting}
 &
+\onslide<3->
 \begin{lstlisting}[language=isabelle,caption={Definition of addition over \texttt{nat} }]
 fun add :: "nat => nat => nat"
   where
@@ -389,21 +389,22 @@ fun add :: "nat => nat => nat"
 \end{itemize}
 
 
-\begin{tabular}{p{.45\linewidth} p{.45\linewidth}}
+\begin{tabular}{p{.48\linewidth} p{.53\linewidth}}
+\onslide<2->
 \begin{lstlisting}[language=coq, caption={Definition of basic datatypes 
 %in Isabelle:
 }]
 Inductive False : Prop := .
-
-Inductive True : Prop := I : True.
+Inductive True : Prop := 
+  I : True.
 
 Inductive nat : Type :=
   | O : nat
   | S : nat -> nat.
 \end{lstlisting}
 &
-
-\begin{lstlisting}[language=isabelle,caption={Definition of addition over \texttt{nat}}]
+\onslide<3->
+\begin{lstlisting}[language=coq,caption={Definition of addition over \texttt{nat}}]
 Fixpoint add (n m: nat) : nat :=
   match n with
     | O => m
