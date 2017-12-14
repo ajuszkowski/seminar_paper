@@ -49,6 +49,8 @@
 \newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
 \rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{2pt}}}}#2}
 
+% table space https://en.wikibooks.org/wiki/LaTeX/Tables
+\renewcommand{\arraystretch}{0}
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
 % http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
@@ -85,6 +87,7 @@
 \setbeamertemplate{footline}[frame number]{}
 \beamertemplatenavigationsymbolsempty  %no navigation bar
 \setbeamertemplate{itemize items}[circle]
+\setbeamerfont{framesubtitle}{size=\normalsize}
 %\setbeamertemplate{enumerate subitem}{\alph{enumii}}
 
 \title{Comparison of two theorem provers: \\ Isabelle \& Coq}
@@ -329,96 +332,110 @@ The direct relationship between computer programs and mathematical proofs.
 
 \section{Two Theorem Provers}
 
-\subsection{Isabelle}
+\subsection{Isabelle \& Coq}
 
-\begin{frame}[fragile]{Isabelle: first acquaintance}
+\begin{frame}[fragile]{Isabelle \& Coq} {First acquaintance}
+%\vspace{3pt}
+\begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}} %{p{.47\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{.49\linewidth}}
+\begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
 
-%Isabelle/HOL includes powerful specification tools, e.g. for (co)datatypes, (co)inductive definitions and recursive functions with complex pattern matching.
+% --
+\textcolor{ltdkblue}{$\bullet$} based on \textbf{classical} higher-order logic &
+\textcolor{ltdkblue}{$\bullet$} based on \textbf{intuitionistic} logic \newline \textcolor{dkgray}{ (Calculus of Inductive Constructions) } \\
 
-\vspace{10pt}
-\begin{itemize}
-  \item a generic proof assistant
-  \item based on classical higher-order logic
-  \item created in 1986 by
-    \begin{itemize}
-    \item Larry Paulson \ @ University of Cambridge, and
-    \item Tobias Nipkow @ Technische Universit\"{a}t M\"{u}nchen
-    \end{itemize}
-  \item \textcolor{dkgray}{ uses powerful functional language \texttt{HOL} }
-  \item \textcolor{dkgray}{ the proof system core \textit{Isabelle} is extended by various theories: Isabelle/HOL, Isabelle/ZF, Isabelle/CCL, etc. }
-\end{itemize}
+& \\[0.8em] % Empty table row with custom line break spacing.
 
-\begin{tabular}{p{.43\linewidth} p{.58\linewidth}}
-\onslide<2-> \begin{lstlisting}[language=isabelle, caption={Definition of basic datatypes 
-%in Isabelle:
-}]
+\textcolor{ltdkblue}{$\bullet$} created in 1986 at University of Cambridge and Technische Universit\"{a}t M\"{u}nchen &
+
+\textcolor{ltdkblue}{$\bullet$} created in 1984 at INRIA \newline (Paris, France) \\
+
+& \\[0.8em]
+
+\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ uses functional language \texttt{HOL} } &
+\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ uses functional language \texttt{Gallina} } \\
+
+& \\[0.8em]
+
+\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ has large collection of formalised \newline theories } & 
+\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ has large collection of formalised \newline theories }
+
+\end{tabular} 
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Isabelle \& Coq} {Definition of the basic datatypes}
+\vspace{-12.5pt}
+\begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8Pt}} p{0.56\linewidth} @{}}
+  \begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
+\onslide<2->
+\begin{lstlisting}[language=isabelle]
 datatype bool = 
   True | False
-  
+
 datatype nat = 
   zero ("0") | Suc nat
 \end{lstlisting}
 &
 \onslide<3->
-\begin{lstlisting}[language=isabelle,caption={Definition of addition over \texttt{nat} }]
-fun add :: "nat => nat => nat"
-  where
-    "add 0 n = n" |
-    "add (Suc m) n = Suc(add m n)"
-\end{lstlisting}
-\end{tabular}
-%\end{raggedleft}
-
-\end{frame}
-
-
-
-\subsection{Coq}
-
-
-\begin{frame}[fragile]{Coq: first acquaintance}
-
-\vspace{10pt}
-\begin{itemize}
-  \item a formal proof management system
-  \item based intuitionistic logic \textcolor{dkgray}{ (Calculus of Inductive Constructions) }
-  \item created at INRIA (Paris, France) in 1984
-  \item \textcolor{dkgray}{ uses powerful functional language \texttt{Gallina} }
-  \item \textcolor{dkgray}{ has large collection of formalised theories }
-  \item \textcolor{dkgray}{ widely used in software verification (proof code extraction) }
-\end{itemize}
-
-
-\begin{tabular}{p{.48\linewidth} p{.53\linewidth}}
-\onslide<2->
-\begin{lstlisting}[language=coq, caption={Definition of basic datatypes 
-%in Isabelle:
-}]
+\begin{lstlisting}[language=coq]
 Inductive False : Prop := .
-Inductive True : Prop := 
-  I : True.
+
+Inductive True : Prop := I : True.
 
 Inductive nat : Type :=
   | O : nat
   | S : nat -> nat.
 \end{lstlisting}
-&
-\onslide<3->
-\begin{lstlisting}[language=coq,caption={Definition of addition over \texttt{nat}}]
-Fixpoint add (n m: nat) : nat :=
-  match n with
-    | O => m
-    | S n' => S (n' + m)
-  end
-where "n + m" :=
-  (add n m) : nat_scope.
-\end{lstlisting}
 \end{tabular}
 %\end{raggedleft}
 
 \end{frame}
 
 
+\begin{frame}[fragile]{Isabelle \& Coq} {Definition of a recursive function}
+%\vspace{3pt}
+\vspace{-4.5pt}
+\begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}}
+  \begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
+
+\onslide<2->
+\begin{lstlisting}[language=isabelle]
+fun add :: 
+  "nat => nat => nat"
+where
+  "add 0 n = n"
+  
+  | "add (Suc m) n =
+       Suc(add m n)"
+\end{lstlisting}
+&
+\onslide<3->
+\begin{lstlisting}[language=coq]
+Fixpoint add (n m: nat) : nat :=
+  match n with
+    | O => m
+    | S n' => S (n' + m)
+end
+
+where "n + m" :=
+  (add n m) : nat_scope.
+\end{lstlisting}
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}[fragile]{Isabelle: Native graphical user interface}
+\begin{center}
+\includegraphics[scale=0.4]{img/isabelle_morgan.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Coq: Native graphical user interface}
+\begin{center}
+  \includegraphics[scale=0.42]{img/coq_morgan.png}
+\end{center}
+\end{frame}
 
 \section{Comparison of the theorem provers}
 
