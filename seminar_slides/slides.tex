@@ -38,11 +38,11 @@
 \renewcommand*\lstlistingname{Example}  % not Example, not Listing. See
 
 % space saving tips: https://gist.github.com/yig/81b4c993ea13252edc81
-\setlength\lineskip{0pt}
-\setlength{\abovedisplayskip}{0pt}
-\setlength{\belowdisplayskip}{0pt}
-%\setlength\abovedisplayshortskip{0pt}
-%\setlength\belowdisplayshortskip{0pt}
+%\setlength\lineskip{0pt}
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength\abovedisplayshortskip{5pt}
+\setlength\belowdisplayshortskip{5pt}
 %\setlist{nosep}
 
 % strikeout text : \hcancel[red]{text...}
@@ -50,7 +50,6 @@
 \rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{2pt}}}}#2}
 
 % table space https://en.wikibooks.org/wiki/LaTeX/Tables
-\renewcommand{\arraystretch}{0}
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
 % http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
@@ -148,7 +147,7 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{Introduction}
+\begin{frame}{Introduction} {History of logic}
   \includegraphics[width=0.443\linewidth]{img/hilbert3.png}
   \hfill
   \includegraphics[width=0.53\linewidth]{img/brouwer3.png}
@@ -156,9 +155,9 @@
   \onslide<2-> 
   \begin{tikzpicture}[overlay]
   
-  \node at (-3.6,5.2) {\fcolorbox{yellow}{yellow}{\includegraphics[scale=0.7]{img/isabelle_hol.png}}};
+  \node at (-3.6,7.2) {\fcolorbox{yellow}{yellow}{\includegraphics[scale=0.7]{img/isabelle_hol.png}}};
   
-  \node at (3.3,5.2) 
+  \node at (3.3,7.2) 
   {\fcolorbox{yellow}{yellow}{ \includegraphics[scale=8.5]{img/coq_logo.png}}};
   
   \end{tikzpicture}
@@ -219,19 +218,21 @@ A \textit{formal system} is a quadruple $\Gamma = \ <A, V, \Omega, R>$, where
 \end{itemize} 
 
 \vspace{15pt}
-
 A \textit{formal proof} of the formula $\phi$ is a finite sequence of judgements 
-\begin{align*}
-\psi_1 \xrightarrow{\tau_1} \psi_2 \xrightarrow{\tau_2} ... \xrightarrow{\tau_n} \psi_n 
-\end{align*}
-where each $\psi_i$ is either an axiom $\phi_{A_i}$, or a formula inferred from the set of previously derived formulas according the rules of inference.
+\newline
+$\psi_1 \xrightarrow{\tau_1} \psi_2 \xrightarrow{\tau_2} ... \xrightarrow{\tau_n} \psi_n$, where $\psi_i \in A \cup \{ \psi_k \}_{k=1}^{i-1}$
 
-
+\vspace{15pt}
+Types of written proofs:
+\begin{itemize}
+  \item backward proof: \ \textit{goals} $\xrightarrow{\tau}$ \textit{premises}
+  \item forward proof: \ \ \ \textit{premises} $\xrightarrow{\tau}$ \textit{goals}
+\end{itemize}
 \end{frame}
 
 
 %\subsection{Properties of a Formal System}
-\begin{frame}{Properties of a formal system}
+\begin{frame}<presentation:0>{Properties of a formal system}
 
 A formal system $\Gamma$ is called:
 \begin{itemize}
@@ -241,7 +242,6 @@ A formal system $\Gamma$ is called:
 \\ \vspace{3pt}
 \item \textit{independent}, \ if $\not \exists a \in A: \ A \vdash a$.
 \end{itemize}
-
 \end{frame}
 
 
@@ -255,10 +255,9 @@ A formal system $\Gamma$ is called:
 \begin{frame}{Classical Logic}
 {example: The Hilbert System}
 
-%\vspace{10pt}
+\vspace{10pt}
 \textcolor{dkblue}{Set of axioms:}
-%\noindent \newline
-%\begin{minipage}{0.8\linewidth}
+\vspace{-10pt}
 \begin{gather}
 A \rightarrow (B \rightarrow A)
 \tag{A1} \\
@@ -267,11 +266,9 @@ A \rightarrow (B \rightarrow A)
 A \lor \neg A
 \tag{EM} 
 \end{gather}
-%\end{minipage}
 
 \textcolor{dkblue}{Single inference rule (\textit{Modus Ponens})}
-%q\noindent \newline
-%\begin{minipage}{0.8\linewidth}
+\vspace{-10pt}
 \begin{gather} 
 [\![ A, A \rightarrow B ]\!] \longrightarrow B
 \tag{MP}
@@ -293,8 +290,9 @@ $((A \rightarrow B) \rightarrow A) \rightarrow B$ & (PL) & $\neg A \lor \neg B \
 \begin{frame}{Intuitionistic Logic}
 {a.k.a. Constructive Logic}
 
-%\vspace{10pt}
+\vspace{10pt}
 \textcolor{dkblue}{Set of axioms:}
+\vspace{-10pt}
 \begin{gather}
 A \rightarrow (B \rightarrow A)
 \tag{A1} \\
@@ -305,14 +303,14 @@ A \rightarrow (B \rightarrow A)
 \end{gather}
 
 \textcolor{dkblue}{Single inference rule (\textit{Modus Ponens})}
+\vspace{-10pt}
 \begin{gather} 
 [\![ A, A \rightarrow B ]\!] \longrightarrow B
 \tag{MP}
 \end{gather}
-%\vspace{5pt}
-\textcolor{dkblue}{Some provable tautologies:}
 
-\begin{tabular}{p{.32\linewidth}p{.2\linewidth} p{.3\linewidth}p{.25\linewidth}}
+\textcolor{dkblue}{Some provable tautologies:}
+\begin{tabular}{p{.32\linewidth}p{.17\linewidth} p{.32\linewidth}p{.18\linewidth}}
   $\neg \neg (A \lor \neg A)$ & (nnEM) & $\hcancel[red]{ \neg (A \land B) \rightarrow \neg A \lor \neg B }$ & (DMdi) \\
   $A \rightarrow \neg \neg A$ & (DNi)  & $\neg (A \lor B) \rightarrow \neg A \land \neg B $ & (DMci) \\
   $\hcancel[red]{ \neg \neg A \rightarrow A }$ & (DNe)  & $\neg A \land \neg B \rightarrow  \neg (A \lor B) $ & (DMce) \\
@@ -330,14 +328,16 @@ The direct relationship between computer programs and mathematical proofs.
 \end{frame}
 
 
-\section{Two Theorem Provers}
+\section{Isabelle \& Coq}%{Two Theorem Provers}
 
-\subsection{Isabelle \& Coq}
+\subsection{First acquaintance}
 
 \begin{frame}[fragile]{Isabelle \& Coq} {First acquaintance}
-%\vspace{3pt}
+\vspace{-12.5pt}
+\renewcommand{\arraystretch}{0}
 \begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}} %{p{.47\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{.49\linewidth}}
-\begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
+\begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} &
+\begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
 
 % --
 \textcolor{ltdkblue}{$\bullet$} based on \textbf{classical} higher-order logic &
@@ -345,9 +345,14 @@ The direct relationship between computer programs and mathematical proofs.
 
 & \\[0.8em] % Empty table row with custom line break spacing.
 
-\textcolor{ltdkblue}{$\bullet$} created in 1986 at University of Cambridge and Technische Universit\"{a}t M\"{u}nchen &
+\textcolor{ltdkblue}{$\bullet$} created in 1986 \newline at University of Cambridge and Technische Universit\"{a}t M\"{u}nchen &
 
-\textcolor{ltdkblue}{$\bullet$} created in 1984 at INRIA \newline (Paris, France) \\
+\textcolor{ltdkblue}{$\bullet$} created in 1984 \newline at INRIA (Paris, France) \\
+
+& \\[0.8em]
+
+\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ highly automated } & 
+\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ highly automated } \\
 
 & \\[0.8em]
 
@@ -357,16 +362,18 @@ The direct relationship between computer programs and mathematical proofs.
 & \\[0.8em]
 
 \textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ has large collection of formalised \newline theories } & 
-\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ has large collection of formalised \newline theories }
+\textcolor{ltdkblue}{$\bullet$} \textcolor{dkgray}{ has large collection of formalised \newline theories } 
 
 \end{tabular} 
-
+\renewcommand{\arraystretch}{}
 \end{frame}
 
 
+\subsection{Basic syntax}
+
 \begin{frame}[fragile]{Isabelle \& Coq} {Definition of the basic datatypes}
 \vspace{-12.5pt}
-\begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8Pt}} p{0.56\linewidth} @{}}
+\begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}}
   \begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
 \onslide<2->
 \begin{lstlisting}[language=isabelle]
@@ -387,6 +394,7 @@ Inductive nat : Type :=
   | O : nat
   | S : nat -> nat.
 \end{lstlisting}
+
 \end{tabular}
 %\end{raggedleft}
 
@@ -394,8 +402,7 @@ Inductive nat : Type :=
 
 
 \begin{frame}[fragile]{Isabelle \& Coq} {Definition of a recursive function}
-%\vspace{3pt}
-\vspace{-4.5pt}
+\vspace{-12.5pt}
 \begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}}
   \begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
 
@@ -405,8 +412,7 @@ fun add ::
   "nat => nat => nat"
 where
   "add 0 n = n"
-  
-  | "add (Suc m) n =
+| "add (Suc m) n =
        Suc(add m n)"
 \end{lstlisting}
 &
@@ -417,94 +423,98 @@ Fixpoint add (n m: nat) : nat :=
     | O => m
     | S n' => S (n' + m)
 end
+\end{lstlisting}
+\end{tabular}
 
-where "n + m" :=
-  (add n m) : nat_scope.
+\end{frame}
+
+
+\subsection{Example of proof}
+
+\begin{frame}[fragile]{Isabelle \& Coq} {Simple proof}
+\vspace{-12.5pt}
+\begin{tabular}{@{} p{.45\linewidth} @{\hspace{8pt}}|@{\hspace{8pt}} p{0.56\linewidth} @{}}
+\begin{center} \includegraphics[scale=0.5]{img/isabelle_logo.png} \end{center} & \begin{center} \includegraphics[scale=4]{img/coq_logo.png} \end{center} \\
+
+\onslide<2->
+\vspace{-14pt}
+\begin{lstlisting}[language=isabelle]
+lemma de_morgan:
+  "(\<not>P \<or> \<not>Q) ==> \<not>(P \<and> Q)"
+apply (rule notI)
+apply (erule conjE)
+apply (erule disjE)
+apply 
+  (erule notE, assumption)+
+done
+\end{lstlisting}
+&
+\onslide<3->
+\vspace{-14pt}
+\begin{lstlisting}[language=coq]
+Theorem de_morgan:
+  forall P Q : Prop,
+    (~P \/ ~Q) -> ~(P /\ Q).
+Proof.
+  intros P Q H [Hp Hq].
+  destruct H as [Hnp | Hnq].
+  - apply Hnp. assumption.
+  - apply Hnq. assumption.
+Qed.
 \end{lstlisting}
 \end{tabular}
 \end{frame}
 
-
-\begin{frame}[fragile]{Isabelle: Native graphical user interface}
+\begin{frame}[fragile]{Isabelle: Backward proof example}
 \begin{center}
-\includegraphics[scale=0.4]{img/isabelle_morgan.png}
+  \includegraphics[scale=0.8]{img/isabelle_arith_little.png}
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Coq: Native graphical user interface}
+\begin{frame}<presentation:0>[fragile]{Isabelle: Native graphical user interface}
+\begin{center}
+  \includegraphics[scale=0.4]{img/isabelle_morgan.png}
+\end{center}
+\end{frame}
+\begin{frame}<presentation:0>[fragile]{Coq: Native graphical user interface}
 \begin{center}
   \includegraphics[scale=0.42]{img/coq_morgan.png}
 \end{center}
 \end{frame}
 
-\section{Comparison of the theorem provers}
-
-\subsection{Comparison}
-
-\begin{frame}{Comparison}
-\textcolor{dkblue}{Major similarities:}
-\begin{itemize}
-  \item both work in a similar way of \textit{verifying} the proof or \textit{assisting} in creation of the new one
-  \item \textit{premises} $\xrightarrow{tactics}$ \textit{goals} (forward proof)
-  \item \textit{goals} $\xrightarrow{tactics}$ \textit{premises} (backward proof)
-  \item both have large amount of libraries with formalised theories
-  \item both dispose the set of highly automated tactics
-  \item both are being actively developed these days
-\end{itemize}
-
-\vspace{10pt}
-\textcolor{dkblue}{Major differences:}
-\begin{itemize}
-  \item based on different logics $\Rightarrow$
-  \begin{itemize}
-    \item[$\star$] unprovable statements and invalid proofs in Coq
-    \item[$\star$] sometimes more complex proof in Coq
-    \item[$\star$] \textit{constructive} proof in Coq
-    
-  \end{itemize}
-\end{itemize}
-
+\begin{frame}[fragile]{Isabelle: Proof process} %Native graphical user interface}
+\begin{center}
+  \includegraphics[scale=0.38]{img/isabelle_arith.png}
+\end{center}
 \end{frame}
 
 
-\subsection{Proof examples}
-
-\begin{frame}
-%<presentation:0>
-{Isabelle: proof example in propositional logic}
-\includegraphics[scale=0.39]{img/isabelle_morgan.png}
-\end{frame}
-
-\begin{frame}{Isabelle: proof example over \texttt{nat}}
-\includegraphics[scale=0.39]{img/isabelle_arith.png}
+\begin{frame}[fragile]{Coq: Proof process}
+\begin{center}
+  \includegraphics[scale=0.38]{img/coq_arith.png}
+\end{center}
 \end{frame}
 
 
-
-\begin{frame}
-%<presentation:0>
-{Coq: proof example in propositional logic}
-\includegraphics[scale=0.42]{img/coq_morgan.png}
+\begin{frame}[fragile]{Coq: Proof process}
+\begin{center}
+  \includegraphics[scale=0.38]{img/coq_arith_complete.png}
+\end{center}
 \end{frame}
 
-\begin{frame}{Coq: proof example over \texttt{nat}}
-%\animategraphics[loop,controls,width=\linewidth]{3}{img/gif-coq/gif/something}{0}{21}
-\includegraphics[scale=0.39]{img/gif-coq/coq-arith-6.png}
+\begin{frame}[fragile]{Coq: Proof process + verified code extraction}
+\begin{center}
+  \includegraphics[scale=0.38]{img/coq_arith_complete.png}
+\end{center}
+  \begin{figure}
+    \begin{tikzpicture}[overlay]
+    %\node at (-0.36,-0.44) {\includegraphics[scale=0.39]{img/coq_arith.png}};
+    \node at (0.1,5) {\fcolorbox{yellow}{yellow}{
+        \includegraphics[scale=0.63]{img/coq_extract.png}} };
+    \end{tikzpicture}
+  \end{figure}
 \end{frame}
 
-
-\begin{frame}{Coq: proof example over \texttt{nat} + verified code extraction}
-%\includegraphics[scale=0.39]{img/coq_extract.png}
-%\includegraphics[scale=0.39]{img/gif-coq/coq-arith-6.png}
-
-\begin{figure}
-  \begin{tikzpicture}[overlay]
-  \node at (-0.36,-0.44) {\includegraphics[scale=0.39]{img/coq_arith.png}};
-  \node at (0.25,0.1) {\fcolorbox{yellow}{yellow}{ \includegraphics[scale=0.5]{img/coq_extract.png}} };
-  \end{tikzpicture}
-\end{figure}
-
-\end{frame}
 
 
 %\begin{frame}{Blocks}
@@ -519,6 +529,10 @@ where "n + m" :=
 %\end{example}
 %\end{frame}
 
+
+
+
+
 % Placing a * after \section means it will not show in the
 % outline or table of contents.
 \section*{Summary}
@@ -528,12 +542,18 @@ where "n + m" :=
   \item
     Two widespread theorem provers were considered: \textcolor{dkblue}{Isabelle} and \textcolor{dkblue}{Coq}
   \item
-    The \textcolor{dkblue}{key difference} between them lie in differences between logical theories
-    they based on
+    %The \textcolor{dkblue}{key difference} between them lie in differences between logical theories they based on $\Rightarrow$
+    The tools are based on \textcolor{dkblue}{different logics} $\Rightarrow$
+    \begin{itemize}
+      \item[$\circ$] unprovable statements and invalid classical proofs in Coq
+      \item[$\circ$] sometimes more complex proof in Coq
+      \item[$\star$] \textit{constructive} proof in Coq
+    \end{itemize}
   \item
     Nonetheless, they both may be used to solve applied problems, such as software testing and verification
-  \end{itemize}
-  
+   
+ \end{itemize}
+
 %\begin{itemize}
 %\item
 %  Outlook
