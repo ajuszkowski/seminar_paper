@@ -1,0 +1,162 @@
+[Slide 1]
+
+Actual {
+	Good afternoon, Ladies and Gentlements, let me introduce you the work about kinda practical application of mathematical theoreis. Well, ah, yeah.
+}
+Better {
+	Good afternoon, Ladies and Gentlements. MY NAME IS ARTEM, I'M THE MSC STUDENT IN AALTO, AND THIS SEMESTER I'VE BEEN WORKING UNDER THE SUPERVISION OF PROF. STAVROS ON THE PAPER CONCERNING SOME APPLICATION ASPECTS OF FUNDAMENTAL MATHEMATICAL THEORIES. Well, ah, yeah.
+}
+
+
+[Slide 2(1)]
+
+Actual {
+	Previous century was pretty hard time not only in people's life, but also in science. Mathematics, by the way, was surviving very deep crisis, which could be illustrated by these two works. The first one by D. Hilbert. It was the work defining the formal approach, trying to axiomatise all the mathematics and build the whole theory based on one single ground. And the second work was by Dutch researcher Brouwer, this work made start of developing the intuitionistic logic, which ... 
+}
+Better {
+	Previous century was A CRUCIAL TIME not only in people’s life, but also in science. IN mathematics, IT WAS THE TIME OF FINDINGS FOR A FORMAL DEFINITION OF THE VERY BASIS, THE TIME WHEN THE ESSENCE OF MATHEMATICAL REASONING WAS QUESTIONED. THIS HAS LED TO THE IMPETUOUS DEVELOPMENT OF MATHEMATICAL LOGICS AND COMPUTER SCIENCE. LET ME STAY NEAR TWO FUNDAMENTAL WORKS OF THAT TIME. The first WAS CREATED by D. Hilbert. It was AN ATTEMPT OF definiTION the formal approach, IN ORDER to axiomatise all the mathematics and build the whole theory based on A single ground. THE second work WAS CREATED by Dutch researcher Brouwer, IT CAN BE CONSIDERED AS A startPOINT of developing the intuitionistic logic, which ...
+}
+
+
+[Slide 2(2)]
+
+Actual {
+	So, in this work we were comparing two common tools for automated theorem proving, called proof assistances. First one, Isabelle/HOL, based on classical higher-order logic, and the second one, Coq (is for Rooster in English), based on constructive logic.
+}
+
+Better {
+	SO, IN ORDER TO VERIFY THE MATHEMATIC PROOFS AUTOMATICALLY, THE THEOREM PROVERS WERE IMPLEMENTED. In this work we HAVE comparED two common tools for automated theorem proving, Isabelle and Coq. THE first one, Isabelle/HOL, IS based on classical higher-order logic, WHILE the second one, Coq (is for Rooster in English), IS based on constructive logic.
+}
+
+
+[Slide 3-4]
+
+Actual {
+	So, yeah, first of all, we are going to describe the foundations of formal approach, and then we, ehh, compare these tools.
+}
+
+Better {
+	IN THE FIRST PART OF THIS PRESENTATION we are going to describe the foundations of formal approach, and then we WILL compare these tools.
+}
+
+
+
+[Slide 5(1,2)]
+
+Actual {
+	Yeah. So, the basic element of the formal system is formula, some statement defined in a formal language...
+}
+
+Better {
+	The basic element of the formal system is formula, some statement defined in a formal language...
+}
+
+
+[Slide 6(1,2,3)]
+
+Actual {
+	Well, ehh, the formal system is simply a ...
+}
+
+Better {
+	THUS, the formal system is simply a ...
+}
+
+
+[Slide 8]
+
+Actual {
+	So, yeah, let's have an example of classical logic...
+}
+
+Better {
+	So, let's have an example of classical logic...
+}
+
+
+[Slide 9]
+
+Actual {
+	What happen if we exclude this axiom from our system (if we doesn't consider it as true)? Well, we get the intuitionistic logic, where ...
+}
+
+Better {
+	What happen if we exclude this axiom from our system? Well, we'll get the intuitionistic logic, where ...
+}
+
+
+[Slide 12]
+
+Actual {
+	So, yeah, let's go to the tools...
+}
+
+Better {
+	LET'S THEN MOVE TO CONCRETE EXAMPLES OF THESE FORMAL SYSTEMS APPLICATIONS...
+}
+
+
+[Slide 13-15]
+
+Actual {
+	Well, yeah, let's have a look at basic syntax of these...
+}
+
+Better {
+	Let's have a look at basic syntax of these...
+}
+
+
+[Slide 16]
+
+Actual {
+	This is the example of ...
+}
+
+Better {
+}
+
+
+[Slide 19]
+
+Actual {
+	This is how it looks in ...
+}
+
+Better {
+}
+
+
+[Slide 20]
+
+Actual {
+	Quite different looks ...
+}
+
+Better {
+}
+
+
+[Slide 24]
+
+Actual {
+	And then we have some very good thing...
+}
+
+Better {
+	AND HERE IS THE PLACE WHERE THE COQ'S MAGIC HAPPENS...
+}
+
+
+[Slide 25]
+
+Actual {
+	Well, yeah we... To conclude we... have considered two ...
+}
+
+Better {
+	Well, to conclude, IN THIS WORK WE WERE COMPARING two ...
+}
+
+
+
