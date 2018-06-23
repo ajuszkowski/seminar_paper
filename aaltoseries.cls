@@ -298,26 +298,26 @@
 	\AaltoSeriesChapterHeader\gdef\AaltoSeriesChapterHeader{}}%
 	\setlength{\AaltoSeriesChapterHeadHeight}{6.5cm}%
 }
-\renewcommand\section{%
-	\@startsection{section}{1}{0mm}{-1pt}{15.4pt}{%
-		\vskip29.8pt\flushleft\bfseries\sffamily\fontsize{12pt}{12pt}\selectfont}%
-}
-\renewcommand\subsection{%
-	\@startsection{subsection}{2}{0mm}{-1pt}{15.4pt}{%
-		\vskip14.4pt\flushleft\bfseries\rmfamily\fontsize{11pt}{11pt}\selectfont}%
-}
-\renewcommand\subsubsection{%
-	\@startsection{subsubsection}{3}{0mm}{-1pt}{0.1pt}{%
-		\vskip14.4pt\flushleft\itshape\rmfamily\fontsize{11pt}{11pt}\selectfont}%
-}
-\renewcommand\paragraph{%
-	\@startsection{paragraph}{4}{0mm}{-1pt}{-1em}{%
-		\flushleft\bfseries\sffamily\normalsize}%
-}
-\renewcommand\subparagraph{%
-	\@startsection{subparagraph}{5}{0mm}{-1pt}{-1em}{%
-		\flushleft\itshape\rmfamily\normalsize}%
-}
+%\renewcommand\section{%
+%	\@startsection{section}{1}{0mm}{-1pt}{15.4pt}{%
+%		\vskip29.8pt\flushleft\bfseries\sffamily\fontsize{12pt}{12pt}\selectfont}%
+%}
+%\renewcommand\subsection{%
+%	\@startsection{subsection}{2}{0mm}{-1pt}{15.4pt}{%
+%		\vskip14.4pt\flushleft\bfseries\rmfamily\fontsize{11pt}{11pt}\selectfont}%
+%}
+%\renewcommand\subsubsection{%
+%	\@startsection{subsubsection}{3}{0mm}{-1pt}{0.1pt}{%
+%		\vskip14.4pt\flushleft\itshape\rmfamily\fontsize{11pt}{11pt}\selectfont}%
+%}
+%\renewcommand\paragraph{%
+%	\@startsection{paragraph}{4}{0mm}{-1pt}{-1em}{%
+%		\flushleft\bfseries\sffamily\normalsize}%
+%}
+%\renewcommand\subparagraph{%
+%	\@startsection{subparagraph}{5}{0mm}{-1pt}{-1em}{%
+%		\flushleft\itshape\rmfamily\normalsize}%
+%}
 \makeatother
 
 %%% Set the header and footer

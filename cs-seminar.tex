@@ -3,6 +3,26 @@
 \usepackage{include/lstcoq}
 \usepackage{include/lstisabelle}
 
+% ---------------------------------------------------------------------------
+% Font selection
+%\usepackage{palatino}
+%\usepackage[sc]{mathpazo}
+\usepackage{kpfonts}
+%\usepackage{tgpagella}
+%\usepackage{garamond}
+%\usepackage{lmodern}
+% Inconsolata monospace font for verbatim environment
+\usepackage{inconsolata}
+
+% The titlesec package can be used to alter the look of the titles
+% of sections, chapters, and so on. This example uses the ``medium''
+% package option which sets the titles to a medium size, making them
+% a bit smaller than what is the default. You can fine-tune the
+% title fonts and sizes by using the package options. See the package
+% documentation.
+\usepackage[medium]{titlesec}
+% ---------------------------------------------------------------------------
+
 \usepackage{listings}  % already imported in cs-seminar.sty, here is needed for correct syntax highlighting in TeXstudio.
 %\usepackage[titletoc]{appendix}
 
@@ -20,9 +40,8 @@
 %=========================================================
 
 \title{Comparison of Two Theorem Provers:\\ Isabelle and Coq}
-
-\author{Artem Yushkovskiy
-\\\textnormal{\texttt{artem.yushkovskiy@aalto.fi}}}
+\author{Artem Yushkovskiy \\
+\textnormal{\texttt{artem.yushkovskiy@aalto.fi}}}
 
 \affiliation{\textbf{Tutor}: Stavros Tripakis}
 
